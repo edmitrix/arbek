@@ -30,7 +30,7 @@ Original v6 prototype kept at `docs/design/prototype-v6-reference.html`.
   `gold-dot-midi`, `grey-power-suit`, `olive-pleat-set`, `ivory-dot-tiered` (web JPGs in `public/images/products/clothing/`).
 - Category tile photos for hair, perfumes, lip-balms, beauty from the single image in each Photos folder (`category.jpg`).
 - Hair atelier spotlight photo: `public/images/products/hair/spotlight.jpg` from `Photos/hair/hairfront.png` (added 2026-09-17, session 2).
-- Perfumes spotlight photo: `public/images/products/perfumes/spotlight.jpg` from `Photos/perfumes/valentino.png` (landscape, cover-cropped at `58% 50%` in the 4:5 box). Shows Valentino branding.
+- Perfumes spotlight photo: `public/images/products/perfumes/spotlight.jpg` from `Photos/perfumes/valentino.png` (landscape, cover-cropped at `68% 50%` in the 4:5 box). Shows Valentino branding.
 - Other products (wig, bundles, two perfumes, lip balm, glow oil) are still placeholder entries with generated art.
 - Conversion snippet for new photos: `scripts/README.md`.
 
