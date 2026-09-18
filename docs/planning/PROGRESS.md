@@ -43,11 +43,26 @@ Original v6 prototype kept at `docs/design/prototype-v6-reference.html`.
 
 ---
 
+## 2026-09-17 — Session 2 (shipped to production)
+
+### Git + hosting
+- Repo initialised on `main` and pushed to GitHub `edmitrix/arbek` (public). 106 files in the first commit; `Photos/` originals are tracked (32 MB, not used by the site).
+- Vercel project `arbek` imported from GitHub, Framework Preset "Other", no build step. Every push to `main` deploys to production in about a minute; other branches get preview URLs.
+- `vercel.json` sets `"outputDirectory": "."`. Without it Vercel served `public/` as the site root (because that folder exists) and `index.html` returned 404.
+
+### Domain
+- **www.arbek.co** is live with HTTPS; `arbek.co` 308-redirects to www. Fallback: `arbek.vercel.app`.
+- Registrar is GoDaddy, but the nameservers are delegated to `ns1/ns2.vercel-dns.com`, so **all DNS records live in Vercel** (project → Settings → Domains → DNS Records). GoDaddy's DNS page is dead weight and refuses edits with `DNSZoneExternalNameserver`.
+- Gotcha hit on the way: the domain was first added to Vercel as `arbek.com` instead of `arbek.co`.
+- `.env.example` `NEXT_PUBLIC_SITE_URL` now points at `https://www.arbek.co`.
+
+---
+
 ## Open items / next steps
 - [ ] Photos for the remaining products (wig, bundles, perfumes, lip balm, beauty), three per piece, named `<id>-1..3.jpg`.
 - [ ] Replace branded third-party product photos (Chanel, Victoria's Secret, Bath & Body Works) before launch unless ARBEK retails them.
 - [ ] Real product names, descriptions and prices (current ones are placeholders).
-- [ ] Decide domain (arbek.co vs arbek.us) and set `NEXT_PUBLIC_SITE_URL`.
+- [x] Domain: arbek.co, live on Vercel (see Session 2).
 - [ ] Checkout / payments (Stripe assumed), accounts, newsletter backend (Supabase was mentioned in the v6 prototype).
 - [ ] Account page, Privacy, Terms, Instagram/TikTok links are still `#` placeholders.
 - [ ] Consider self-hosting the two Google Fonts.
