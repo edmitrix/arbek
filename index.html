@@ -13,7 +13,7 @@
   <link rel="preload" as="image" href="public/images/banners/hero.jpg" fetchpriority="high" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&family=Allura&display=swap" rel="stylesheet" />
   <style>
     /* ============================================================
        ARBEK — Design tokens
@@ -35,10 +35,11 @@
       --line-soft: rgba(244,239,230,.08);
       --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
       --sans: "Jost", Inter, "Helvetica Neue", Arial, sans-serif;
+      --script: "Allura", "Brush Script MT", cursive;
       --ease: cubic-bezier(.22,1,.36,1);
       --ease-out: cubic-bezier(.16,1,.3,1);
       --header-h: 84px;
-      --bar-h: 36px;
+      --bar-h: 0px;
       --gutter: clamp(20px, 4vw, 64px);
     }
 
@@ -166,9 +167,9 @@
     @media (max-width: 900px) { .bar .hide-m { display: none; } .bar .sep { display: none; } }
 
     header.site {
-      position: fixed; top: var(--bar-h); left: 0; right: 0; z-index: 50;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: #050404;
       transition: background .6s var(--ease), border-color .6s var(--ease), transform .6s var(--ease), top .6s var(--ease);
-      border-bottom: 1px solid transparent;
+      border-bottom: 1px solid var(--line-soft);
     }
     header.site.solid {
       background: rgba(7,6,6,.82); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
@@ -178,10 +179,11 @@
     header.site.hidden { transform: translateY(-110%); }
     .nav {
       height: var(--header-h);
-      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
+      display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px;
     }
     .nav-links, .nav-actions { display: flex; align-items: center; gap: 34px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
-    .nav-actions { justify-content: flex-end; }
+    .nav-links { justify-content: flex-end; }
+    .nav-actions { justify-content: flex-end; margin-left: 28px; }
     .nav a, .nav button { position: relative; padding: 8px 0; opacity: .85; transition: opacity .4s; }
     .nav a:hover, .nav button:hover { opacity: 1; }
     .nav-links > li > a::after, .nav-actions .u::after {
@@ -189,7 +191,9 @@
       background: var(--gold); transform: scaleX(0); transform-origin: right; transition: transform .5s var(--ease);
     }
     .nav-links > li:hover > a::after, .nav-actions .u:hover::after { transform: scaleX(1); transform-origin: left; }
-    .brand-mark { display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .brand-mark { display: flex; align-items: center; justify-content: flex-start; gap: 12px; }
+    .brand-mark .stack { display: grid; gap: 5px; justify-items: start; }
+    .brand-mark .tag { font-size: 8px; letter-spacing: .32em; text-transform: uppercase; color: var(--gold); opacity: .9; white-space: nowrap; }
     .brand-mark .emblem { width: 34px; height: 34px; transition: transform .6s var(--ease); }
     .brand-mark:hover .emblem { transform: translateY(-2px); }
     .brand-mark .word { width: 118px; height: auto; }
@@ -236,20 +240,20 @@
        Hero
        ============================================================ */
     .hero {
-      position: relative; min-height: 100svh; display: grid; align-items: end;
-      padding: calc(var(--bar-h) + var(--header-h) + 40px) 0 56px;
+      position: relative; min-height: clamp(540px, 78vh, 820px); display: grid; align-items: center;
+      margin-top: var(--header-h); padding: 48px 0 56px;
       overflow: hidden; isolation: isolate;
       background: var(--bg);
     }
     .hero-bg { position: absolute; inset: 0; z-index: -3; }
-    .hero-bg .photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 42% 25%; }
+    .hero-bg .photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; }
     .hero-bg .veil {
       position: absolute; inset: 0;
       background:
-        linear-gradient(180deg, rgba(7,6,6,.28) 0%, rgba(7,6,6,.08) 32%, rgba(7,6,6,.58) 68%, rgba(7,6,6,.94) 100%),
-        linear-gradient(90deg, rgba(7,6,6,.60) 0%, rgba(7,6,6,.26) 42%, rgba(7,6,6,0) 72%);
+        linear-gradient(90deg, rgba(7,6,6,.78) 0%, rgba(7,6,6,.46) 34%, rgba(7,6,6,0) 58%),
+        linear-gradient(180deg, rgba(7,6,6,.22) 0%, rgba(7,6,6,0) 30%, rgba(7,6,6,0) 70%, rgba(7,6,6,.5) 100%);
     }
-    .hero-bg .glow { opacity: .45; }
+    .hero-bg .glow { opacity: .35; }
     .hero-emblem { display: none; }
     .hero-bg .glow {
       position: absolute; inset: -20%;
@@ -276,15 +280,31 @@
       -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,1) 20%, rgba(0,0,0,.35) 80%, transparent);
               mask-image: linear-gradient(180deg, rgba(0,0,0,1) 20%, rgba(0,0,0,.35) 80%, transparent);
     }
-    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.2fr .8fr; align-items: end; gap: 40px; }
-    .hero h1 { margin: 26px 0 30px; }
-    .hero h1 .it { color: var(--gold-2); }
-    .hero .lede { color: var(--ivory-2); }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
-    .hero-aside { display: grid; gap: 22px; justify-items: end; text-align: right; padding-bottom: 6px; }
-    .hero-aside .spec { display: grid; gap: 6px; }
-    .hero-aside .spec b { font-family: var(--serif); font-weight: 300; font-size: 36px; color: var(--ivory); line-height: 1; }
-    .hero-aside .spec span { font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; align-items: center; gap: 40px; }
+    .hero .eyebrow::before { display: none; }
+    .hero h1 {
+      margin: 18px 0 22px; text-transform: uppercase; font-weight: 400;
+      font-size: clamp(38px, 4.5vw, 68px); line-height: 1.02; letter-spacing: .02em;
+    }
+    .hero h1 .it {
+      font-style: normal; color: var(--gold);
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-2) 60%, var(--gold) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero .lede { color: var(--ivory-2); font-size: clamp(14.5px, 1.05vw, 16.5px); line-height: 1.65; max-width: 48ch; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+    .hero-feats { list-style: none; margin: 34px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 18px 36px; }
+    .hero-feats li { display: flex; align-items: center; gap: 12px; font-size: 9.5px; letter-spacing: .22em; text-transform: uppercase; line-height: 1.55; color: var(--ivory-2); }
+    .hero-feats svg { width: 26px; height: 26px; flex: none; fill: none; stroke: var(--gold); stroke-width: 1.1; stroke-linejoin: round; stroke-linecap: round; }
+    .hero-aside { display: grid; gap: 22px; justify-items: end; text-align: right; align-self: center; padding-right: 2%; }
+    .hero-script {
+      font-family: var(--script); font-size: clamp(44px, 4.4vw, 68px); line-height: .92; color: var(--gold);
+      transform: rotate(-8deg); transform-origin: right center; margin-bottom: 10px;
+      text-shadow: 0 2px 24px rgba(0,0,0,.45);
+    }
+    .hero-script.reveal { transform: rotate(-8deg) translateY(28px); }
+    .hero-script.reveal.in { transform: rotate(-8deg); }
+    .hero-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--ivory-2); }
     .hero-foot {
       position: relative; z-index: 1; margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--line-soft);
       display: flex; justify-content: space-between; align-items: center; gap: 20px;
@@ -742,12 +762,14 @@
       .nav-actions .hide-m, .menu-btn .hide-m { display: none; }
       .menu-btn { display: inline-flex; }
       .brand-mark { justify-self: center; }
-      .brand-mark .word { display: none; }
+      .brand-mark .word, .brand-mark .tag { display: none; }
       .brand-mark .emblem { width: 40px; height: 40px; }
       .hero-grid { grid-template-columns: 1fr; }
-      .hero-aside { justify-items: start; text-align: left; grid-template-columns: repeat(3, auto); gap: 30px; }
+      .hero-aside { justify-items: start; text-align: left; padding-right: 0; }
+      .hero-script { transform-origin: left center; }
+      .hero-list { display: flex; flex-wrap: wrap; gap: 8px 22px; }
       .hero-emblem { right: -6%; top: 30%; width: 44vw; opacity: .12; }
-      .hero { padding-top: calc(var(--bar-h) + var(--header-h) + 46vh); }
+      .hero { min-height: 0; padding-top: 46vh; }
       .hero-bg .photo { object-position: 44% 0%; }
       .hero-bg .veil { background: linear-gradient(180deg, rgba(7,6,6,.30) 0%, rgba(7,6,6,.04) 20%, rgba(7,6,6,.30) 38%, rgba(7,6,6,.84) 54%, rgba(7,6,6,.97) 100%); }
       .section-head { grid-template-columns: 1fr; align-items: start; }
@@ -771,7 +793,7 @@
       .thumbs { display: none; }
     }
     @media (max-width: 600px) {
-      :root { --bar-h: 32px; }
+      :root { --bar-h: 0px; }
       body { font-size: 15px; }
       h1 { font-size: clamp(56px, 17vw, 96px); }
       .hero { padding-bottom: 36px; }
@@ -1024,14 +1046,6 @@
 </div>
 
 <!-- Announcement bar -->
-<div class="bar" id="bar">
-  <span>Complimentary shipping on orders over $250</span>
-  <span class="sep">·</span>
-  <span class="hide-m">Private appointments now open</span>
-  <span class="sep">·</span>
-  <span class="hide-m">Ships worldwide</span>
-</div>
-
 <!-- Header -->
 <header class="site" id="header">
   <div class="shell-wide nav-wrap">
@@ -1040,6 +1054,14 @@
         <span class="lines"><span></span><span></span></span>
         <span class="hide-m">Menu</span>
       </button>
+
+      <a class="brand-mark" href="#top" aria-label="ARBEK home">
+        <svg class="emblem" viewBox="0 0 314 580"><use href="#arbek-emblem"/></svg>
+        <span class="stack">
+          <svg class="word" viewBox="0 0 1000 170"><use href="#arbek-word"/></svg>
+          <span class="tag">Fashion &middot; Beauty &middot; Lifestyle</span>
+        </span>
+      </a>
 
       <ul class="nav-links">
         <li class="has-mega">
@@ -1058,15 +1080,10 @@
         <li><a href="#hair">Hair</a></li>
         <li><a href="#fragrance">Fragrance</a></li>
         <li><a href="#story">The House</a></li>
+        <li><a href="#services">Services</a></li>
       </ul>
 
-      <a class="brand-mark" href="#top" aria-label="ARBEK home">
-        <svg class="emblem" viewBox="0 0 314 580"><use href="#arbek-emblem"/></svg>
-        <svg class="word" viewBox="0 0 1000 170"><use href="#arbek-word"/></svg>
-      </a>
-
       <div class="nav-actions">
-        <a class="u hide-m" href="#services">Services</a>
         <button class="icon-btn u" id="searchOpen" aria-label="Search">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
           <span class="hide-m">Search</span>
@@ -1103,29 +1120,30 @@
   <div class="shell">
     <div class="hero-grid">
       <div class="hero-copy in">
-        <div class="eyebrow reveal-line"><span>Fashion · Fragrance · Hair · Beauty</span></div>
+        <div class="eyebrow reveal-line"><span>Five worlds, one presence.</span></div>
         <h1>
-          <span class="reveal-line" style="--d:.15s"><span>Wear</span></span>
-          <span class="reveal-line" style="--d:.3s"><span>the <em class="it">presence.</em></span></span>
+          <span class="reveal-line" style="--d:.15s"><span>Confidence</span></span>
+          <span class="reveal-line" style="--d:.3s"><span>looks good</span></span>
+          <span class="reveal-line" style="--d:.45s"><span><em class="it">on you</em></span></span>
         </h1>
-        <p class="lede reveal" style="--d:.55s">
-          ARBEK is a modern luxury house bringing together statement fashion, signature perfumes,
-          premium hair and refined beauty. Designed for clients who value presence, detail, confidence and distinction.
+        <p class="lede reveal in" style="--d:.6s">
+          ARBEK brings together fashion, fragrance, hair, beauty, and a lifestyle of distinction &mdash;
+          pieces chosen to elevate how you look, feel, and are remembered.
         </p>
-        <div class="hero-actions reveal" style="--d:.7s">
-          <a class="btn filled" href="#worlds">Explore the collection <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+        <div class="hero-actions reveal in" style="--d:.75s">
+          <a class="btn filled" href="#worlds">Shop the collection <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
           <a class="btn" href="#story">Discover the house</a>
         </div>
+        <ul class="hero-feats reveal in" style="--d:.9s">
+          <li><svg viewBox="0 0 24 24"><path d="M3 9l4-5h10l4 5-9 11z"/><path d="M3 9h18M9 4l3 5 3-5M9 9l3 11 3-11"/></svg><span>Premium<br>quality</span></li>
+          <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg><span>Global<br>inspiration</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 20c-3-2-5-5-5-9 0-2 1-4 2-5 .6 1.6 1.4 2.6 3 3.4 1.6-.8 2.4-1.8 3-3.4 1 1 2 3 2 5 0 4-2 7-5 9z"/><path d="M12 20c-4 0-7-2-9-5 2.2-.4 4.2 0 6 1.2M12 20c4 0 7-2 9-5-2.2-.4-4.2 0-6 1.2"/></svg><span>Confidence<br>everyday</span></li>
+        </ul>
       </div>
       <div class="hero-aside in">
-        <div class="spec reveal" style="--d:.8s"><b>05</b><span>Worlds</span></div>
-        <div class="spec reveal" style="--d:.9s"><b>01</b><span>House</span></div>
-        <div class="spec reveal" style="--d:1s"><b class="serif it">Limited</b><span>Seasonal capsules</span></div>
+        <div class="hero-script reveal in" style="--d:.7s">More<br>than<br>beauty</div>
+        <ul class="hero-list reveal in" style="--d:.9s"><li>Style</li><li>Scent</li><li>Self</li><li>Always</li></ul>
       </div>
-    </div>
-    <div class="hero-foot reveal in" style="--d:1.1s">
-      <a class="scroll-cue" href="#worlds"><i></i> Scroll to enter</a>
-      <span>The House of ARBEK · Est. MMXXVI</span>
     </div>
   </div>
 </section>
@@ -1635,7 +1653,7 @@ let lastY = 0;
 function onScroll() {
   const y = scrollY;
   header.classList.toggle('solid', y > 20);
-  header.classList.toggle('pinned', y > bar.offsetHeight);
+  header.classList.toggle('pinned', y > (bar ? bar.offsetHeight : 0));
   header.classList.toggle('hidden', y > 600 && y > lastY + 4 && !document.body.classList.contains('lock'));
   totop.classList.toggle('show', y > innerHeight * 1.2);
   lastY = y;

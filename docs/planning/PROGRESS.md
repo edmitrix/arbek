@@ -62,6 +62,14 @@ Original v6 prototype kept at `docs/design/prototype-v6-reference.html`.
 - Phone (≤900px): hero gets `46vh` extra top padding so the face sits clear above the headline; image anchored `44% 0%`.
 - Flagged: the hero shows Bath & Body Works and Nine West branding, same concern as the category photos.
 
+### Header + hero redesign (from the user's mockup)
+- Announcement bar removed (`--bar-h: 0`, markup gone; JS null-safe on `#bar`). Header is solid jet black `#050404` with a soft bottom rule.
+- Logo (emblem + wordmark + "Fashion · Beauty · Lifestyle" tag) sits at the left; nav order is Shop | Collection | Hair | Fragrance | The House | Services, then Search / Account / Bag. Nav grid is `auto 1fr auto`.
+- Hero is a banner (`min-height: clamp(540px, 78vh, 820px)`, content vertically centred, `margin-top: var(--header-h)`) rather than full-viewport. Photo anchored `50% 28%`, left-side veil for the copy.
+- Copy: eyebrow "Five worlds, one presence." / uppercase serif h1 "Confidence looks good **on you**" (gold gradient) / short lede / buttons "Shop the collection" + "Discover the house" / feature row Premium quality · Global inspiration · Confidence everyday (inline SVG icons).
+- Right column: script "More than beauty" in **Allura** (new Google Font, `--script`), rotated -8°, with the list Style · Scent · Self · Always.
+- Hero reveals carry `in` in the markup so they animate on load and never wait for the scroll observer. Old stats (05/01/Limited) and the scroll cue are gone.
+
 ---
 
 ## Open items / next steps
