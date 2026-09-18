@@ -468,12 +468,6 @@
     .statement .big { font-size: clamp(48px, 8vw, 150px); line-height: .95; letter-spacing: -.02em; max-width: 14ch; margin: 28px auto 0; }
     .statement .big .it { color: var(--gold-2); }
     .statement .lede { margin: 40px auto 0; text-align: center; }
-    .pillars { margin-top: clamp(60px, 7vw, 110px); display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-soft); border-left: 1px solid var(--line-soft); }
-    .pillar { border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); padding: 40px 32px; text-align: left; display: grid; gap: 14px; align-content: start; min-height: 260px; transition: background .5s; }
-    .pillar:hover { background: var(--bg-3); }
-    .pillar .n { font-family: var(--serif); font-size: 15px; letter-spacing: .05em; color: var(--gold); }
-    .pillar h3 { font-size: 30px; }
-    .pillar p { font-size: 14px; color: var(--muted); }
 
     /* Spotlights */
     .spot { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 110px); align-items: center; }
@@ -759,7 +753,7 @@
       .world:nth-child(1) { grid-column: span 12; grid-row: span 1; }
       .world:nth-child(2), .world:nth-child(3) { grid-column: span 6; }
       .world:nth-child(4), .world:nth-child(5) { grid-column: span 6; }
-      .pillars, .service-grid { grid-template-columns: repeat(2, 1fr); }
+      .service-grid { grid-template-columns: repeat(2, 1fr); }
       .search-results { grid-template-columns: repeat(3, 1fr); }
       .col-grid { grid-template-columns: repeat(3, 1fr); }
     }
@@ -817,8 +811,7 @@
       .world .btn-text { opacity: 1; transform: none; }
       .product .quick { opacity: 1; transform: none; }
       .rail { grid-auto-columns: 78vw; }
-      .pillars, .service-grid { grid-template-columns: 1fr; }
-      .pillar { min-height: 0; }
+      .service-grid { grid-template-columns: 1fr; }
       .spec-list li { grid-template-columns: 30px 1fr; }
       .spec-list .d { grid-column: 2; }
       .qa-q { grid-template-columns: 30px 1fr 30px; gap: 14px; font-size: 21px; }
@@ -1226,12 +1219,6 @@
         and a signature bird emblem. Fashion, fragrance, hair and beauty live under one name because each
         is part of the final presence: what you wear, how you enter a room, and how you are remembered.
       </p>
-    </div>
-    <div class="pillars">
-      <div class="pillar reveal" style="--d:.05s"><span class="n">I</span><h3>Presence</h3><p>Pieces chosen to hold a room. Silhouette, finish and proportion before trend.</p></div>
-      <div class="pillar reveal" style="--d:.15s"><span class="n">II</span><h3>Detail</h3><p>Hand-finished edges, considered closures, textures selected to be seen up close.</p></div>
-      <div class="pillar reveal" style="--d:.25s"><span class="n">III</span><h3>Rarity</h3><p>Limited drops and seasonal capsules. When a piece is gone, it is gone.</p></div>
-      <div class="pillar reveal" style="--d:.35s"><span class="n">IV</span><h3>Service</h3><p>Private appointments, hair consultations and a client team that remembers your name.</p></div>
     </div>
   </div>
 </section>

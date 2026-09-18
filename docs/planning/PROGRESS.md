@@ -71,6 +71,7 @@ Original v6 prototype kept at `docs/design/prototype-v6-reference.html`.
 - Copy: eyebrow "Five worlds, one presence." / uppercase serif h1 "Confidence looks good **on you**" (gold gradient) / short lede / buttons "Shop the collection" + "Discover the house" / feature row Premium quality · Global inspiration · Confidence everyday (inline SVG icons).
 - Right column: script "More than beauty" in **Allura** (new Google Font, `--script`), rotated -8°, with the list Style · Scent · Self · Always.
 - Hero reveals carry `in` in the markup so they animate on load and never wait for the scroll observer. Old stats (05/01/Limited) and the scroll cue are gone.
+- Removed the four-pillar block (Presence / Detail / Rarity / Service) from The House section by request; markup and CSS deleted.
 
 ---
 
