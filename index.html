@@ -744,8 +744,16 @@
     /* ============================================================
        Responsive
        ============================================================ */
+    @media (max-width: 1280px) {
+      .nav-links a, .brand-mark .tag { white-space: nowrap; }
+      .nav-links { gap: 20px; font-size: 10.5px; letter-spacing: .16em; }
+      .nav-actions { gap: 22px; margin-left: 18px; }
+      .nav-actions span.hide-m { display: none; }
+      .brand-mark .word { width: 104px; }
+    }
     @media (max-width: 1100px) {
-      .nav-links { gap: 24px; }
+      .nav-links { gap: 16px; }
+      .brand-mark .tag { display: none; }
       .world-grid { grid-template-rows: repeat(3, minmax(260px, 34vh)); }
       .world:nth-child(1) { grid-column: span 12; grid-row: span 1; }
       .world:nth-child(2), .world:nth-child(3) { grid-column: span 6; }
