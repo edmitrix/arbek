@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARBEK — Luxury Fashion, Fragrance, Hair &amp; Beauty</title>
+  <meta name="description" content="ARBEK is a modern luxury house uniting statement fashion, signature perfumes, premium wigs and weaves, nourishing lip balms and refined beauty. Wear the presence." />
+  <meta name="theme-color" content="#070606" />
+  <meta property="og:title" content="ARBEK — Wear the presence." />
+  <meta property="og:description" content="Luxury fashion, fragrance, hair and beauty from the House of ARBEK." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="public/images/brand/arbek-logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       ARBEK — Design tokens
+       ============================================================ */
+    :root {
+      --bg: #070606;
+      --bg-2: #0c0a09;
+      --bg-3: #131010;
+      --bg-4: #1a1614;
+      --ivory: #f4efe6;
+      --ivory-2: #d3cbbc;
+      --muted: #8d857a;
+      --gold: #c9a45c;
+      --gold-2: #e8d09a;
+      --gold-3: #9c7c3c;
+      --bordeaux: #7d1a20;
+      --line: rgba(201,164,92,.22);
+      --line-strong: rgba(201,164,92,.45);
+      --line-soft: rgba(244,239,230,.08);
+      --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+      --sans: "Jost", Inter, "Helvetica Neue", Arial, sans-serif;
+      --ease: cubic-bezier(.22,1,.36,1);
+      --ease-out: cubic-bezier(.16,1,.3,1);
+      --header-h: 84px;
+      --bar-h: 36px;
+      --gutter: clamp(20px, 4vw, 64px);
+    }
+
+    /* ============================================================
+       Base
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ivory);
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body.lock { overflow: hidden; }
+    ::selection { background: var(--gold); color: #000; }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+    ul { list-style: none; margin: 0; padding: 0; }
+    p { margin: 0; color: var(--ivory-2); }
+    code { font-family: ui-monospace, Consolas, monospace; font-size: .9em; color: var(--gold-2); }
+    h1, h2, h3, h4, .serif { font-family: var(--serif); font-weight: 300; margin: 0; letter-spacing: -.01em; }
+    h1 { font-size: clamp(64px, 10.5vw, 168px); line-height: .92; }
+    h2 { font-size: clamp(44px, 6vw, 96px); line-height: .96; }
+    h3 { font-size: clamp(28px, 3vw, 44px); line-height: 1.05; }
+    em, .it { font-style: italic; font-weight: 300; }
+    .gold { color: var(--gold); }
+
+    .shell { width: min(1440px, 100% - var(--gutter) * 2); margin-inline: auto; }
+    .shell-wide { width: min(1680px, 100% - var(--gutter) * 2); margin-inline: auto; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 14px;
+      text-transform: uppercase; letter-spacing: .28em; font-size: 10.5px; font-weight: 400;
+      color: var(--gold);
+    }
+    .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--gold); opacity: .7; }
+    .eyebrow.center::after { content: ""; width: 28px; height: 1px; background: var(--gold); opacity: .7; }
+
+    .lede { font-size: clamp(17px, 1.25vw, 20px); line-height: 1.65; max-width: 62ch; }
+    .small { font-size: 12px; letter-spacing: .06em; color: var(--muted); }
+
+    /* Buttons */
+    .btn {
+      position: relative; isolation: isolate; overflow: hidden;
+      display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+      min-height: 54px; padding: 0 30px;
+      border: 1px solid var(--line-strong); color: var(--ivory);
+      text-transform: uppercase; letter-spacing: .2em; font-size: 11px; font-weight: 400;
+      transition: color .5s var(--ease), border-color .5s var(--ease), transform .5s var(--ease);
+    }
+    .btn::before {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background: var(--gold);
+      transform: translateY(101%); transition: transform .6s var(--ease);
+    }
+    .btn:hover::before, .btn:focus-visible::before { transform: translateY(0); }
+    .btn:hover, .btn:focus-visible { color: #0a0806; border-color: var(--gold); }
+    .btn.filled { background: var(--gold); color: #0a0806; border-color: var(--gold); }
+    .btn.filled::before { background: var(--gold-2); }
+    .btn .arrow { width: 16px; height: 16px; transition: transform .5s var(--ease); }
+    .btn:hover .arrow { transform: translateX(4px); }
+    .btn-text {
+      display: inline-flex; align-items: center; gap: 12px;
+      text-transform: uppercase; letter-spacing: .22em; font-size: 11px; color: var(--ivory);
+      padding-bottom: 6px; position: relative;
+    }
+    .btn-text::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      transform-origin: left; transition: transform .5s var(--ease);
+    }
+    .btn-text:hover::after { transform: scaleX(.4); }
+    .btn-text .arrow { width: 14px; height: 14px; transition: transform .5s var(--ease); }
+    .btn-text:hover .arrow { transform: translateX(5px); }
+
+    :focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+    .skip {
+      position: absolute; left: 16px; top: -60px; z-index: 200;
+      background: var(--gold); color: #000; padding: 10px 16px; font-size: 12px; letter-spacing: .1em;
+    }
+    .skip:focus { top: 16px; }
+
+    /* Reveal system */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease-out), transform 1.1s var(--ease-out); transition-delay: var(--d, 0s); }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal-line { display: block; overflow: hidden; }
+    .reveal-line > span { display: block; transform: translateY(110%); transition: transform 1.3s var(--ease-out); transition-delay: var(--d, 0s); }
+    .in .reveal-line > span { transform: none; }
+
+    /* ============================================================
+       Preloader
+       ============================================================ */
+    .loader {
+      position: fixed; inset: 0; z-index: 1000; background: var(--bg);
+      display: grid; place-items: center;
+      transition: opacity .9s var(--ease), visibility .9s;
+    }
+    .loader.done { opacity: 0; visibility: hidden; }
+    .loader-inner { display: grid; justify-items: center; gap: 28px; }
+    .loader-emblem { width: 84px; height: auto; opacity: 0; animation: fadeUp 1.2s var(--ease-out) .1s forwards; }
+    .loader-word { width: 190px; height: auto; opacity: 0; animation: fadeUp 1.2s var(--ease-out) .5s forwards; }
+    .loader-bar { width: 160px; height: 1px; background: var(--line-soft); overflow: hidden; }
+    .loader-bar span { display: block; height: 100%; width: 100%; background: var(--gold); transform-origin: left; transform: scaleX(0); animation: grow 1.6s var(--ease) .3s forwards; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    @keyframes grow { to { transform: scaleX(1); } }
+
+    /* ============================================================
+       Announcement bar + Header
+       ============================================================ */
+    .bar {
+      height: var(--bar-h); display: flex; align-items: center; justify-content: center;
+      background: var(--gold); color: #0a0806;
+      font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; font-weight: 400;
+      position: relative; z-index: 60;
+    }
+    .bar .sep { margin: 0 18px; opacity: .5; }
+    .bar span { white-space: nowrap; }
+    @media (max-width: 900px) { .bar .hide-m { display: none; } .bar .sep { display: none; } }
+
+    header.site {
+      position: fixed; top: var(--bar-h); left: 0; right: 0; z-index: 50;
+      transition: background .6s var(--ease), border-color .6s var(--ease), transform .6s var(--ease), top .6s var(--ease);
+      border-bottom: 1px solid transparent;
+    }
+    header.site.solid {
+      background: rgba(7,6,6,.82); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
+      border-color: var(--line-soft);
+    }
+    header.site.pinned { top: 0; }
+    header.site.hidden { transform: translateY(-110%); }
+    .nav {
+      height: var(--header-h);
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
+    }
+    .nav-links, .nav-actions { display: flex; align-items: center; gap: 34px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
+    .nav-actions { justify-content: flex-end; }
+    .nav a, .nav button { position: relative; padding: 8px 0; opacity: .85; transition: opacity .4s; }
+    .nav a:hover, .nav button:hover { opacity: 1; }
+    .nav-links > li > a::after, .nav-actions .u::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 2px; height: 1px;
+      background: var(--gold); transform: scaleX(0); transform-origin: right; transition: transform .5s var(--ease);
+    }
+    .nav-links > li:hover > a::after, .nav-actions .u:hover::after { transform: scaleX(1); transform-origin: left; }
+    .brand-mark { display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .brand-mark .emblem { width: 34px; height: 34px; transition: transform .6s var(--ease); }
+    .brand-mark:hover .emblem { transform: translateY(-2px); }
+    .brand-mark .word { width: 118px; height: auto; }
+    .icon-btn { display: inline-flex; align-items: center; gap: 10px; }
+    .icon-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.2; }
+    .bag-count {
+      display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 5px;
+      border-radius: 999px; background: var(--gold); color: #000; font-size: 9.5px; letter-spacing: 0; font-weight: 500;
+      transition: transform .4s var(--ease);
+    }
+    .bag-count.pop { transform: scale(1.35); }
+    .menu-btn { display: none; align-items: center; gap: 12px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
+    .menu-btn .lines { width: 26px; display: grid; gap: 6px; }
+    .menu-btn .lines span { display: block; height: 1px; background: var(--ivory); }
+
+    /* Mega menu */
+    .nav-wrap { position: relative; }
+    .has-mega { position: static; }
+    .mega {
+      position: absolute; left: 0; right: 0; top: 100%; transform: translateY(10px);
+      padding: 36px 40px 40px;
+      background: rgba(10,8,8,.96); border: 1px solid var(--line-soft);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      display: grid; grid-template-columns: 1.1fr 3fr; gap: 40px;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity .45s var(--ease), transform .45s var(--ease), visibility .45s;
+    }
+    /* The list item spans the full header height so the pointer never leaves it on the way down to the panel */
+    .nav-links > li { display: flex; align-items: center; height: var(--header-h); }
+    .mega::before { content: ""; position: absolute; left: 0; right: 0; top: -28px; height: 28px; }
+    .has-mega:hover .mega, .has-mega.open .mega, .has-mega:focus-within .mega { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
+    .mega-intro h4 { font-size: 30px; margin-bottom: 12px; }
+    .mega-intro p { font-size: 13px; color: var(--muted); max-width: 26ch; margin-bottom: 20px; }
+    .mega-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .mega-item { display: grid; gap: 12px; padding: 0 !important; text-transform: none; letter-spacing: 0; opacity: 1 !important; }
+    .mega-item .art { aspect-ratio: 3 / 4; }
+    .mega-item .art .emb { width: 40%; }
+    .mega-item .art::before { transition: transform 1.2s var(--ease); }
+    .mega-item:hover .art::before { transform: scale(1.06); }
+    .mega-item strong { display: block; font-family: var(--serif); font-weight: 400; font-size: 20px; }
+    .mega-item small { display: block; font-size: 11px; letter-spacing: .08em; color: var(--muted); margin-top: 2px; }
+
+    /* ============================================================
+       Hero
+       ============================================================ */
+    .hero {
+      position: relative; min-height: 100svh; display: grid; align-items: end;
+      padding: calc(var(--bar-h) + var(--header-h) + 40px) 0 56px;
+      overflow: hidden; isolation: isolate;
+      background: var(--bg);
+    }
+    .hero-bg { position: absolute; inset: 0; z-index: -3; }
+    .hero-bg .glow {
+      position: absolute; inset: -20%;
+      background:
+        radial-gradient(ellipse 34% 42% at 70% 38%, rgba(201,164,92,.22), transparent 70%),
+        radial-gradient(ellipse 40% 34% at 22% 82%, rgba(125,26,32,.16), transparent 70%),
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(244,239,230,.05), transparent 70%);
+      animation: drift 22s ease-in-out infinite alternate;
+    }
+    @keyframes drift { from { transform: translate3d(-1.5%, -1%, 0) scale(1); } to { transform: translate3d(1.5%, 1.5%, 0) scale(1.06); } }
+    .hero-bg .grain {
+      position: absolute; inset: 0; opacity: .5; mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+      background-size: 200px 200px;
+    }
+    .hero-bg .rules { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(6, 1fr); pointer-events: none; }
+    .hero-bg .rules span { border-left: 1px solid rgba(244,239,230,.045); }
+    .hero-bg .rules span:last-child { border-right: 1px solid rgba(244,239,230,.045); }
+    .hero-emblem {
+      position: absolute; right: 4%; top: 50%; z-index: -2;
+      width: clamp(200px, 22vw, 380px); transform: translateY(-52%);
+      opacity: .16; filter: saturate(.8);
+      transition: transform .4s ease-out;
+      -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,1) 20%, rgba(0,0,0,.35) 80%, transparent);
+              mask-image: linear-gradient(180deg, rgba(0,0,0,1) 20%, rgba(0,0,0,.35) 80%, transparent);
+    }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.2fr .8fr; align-items: end; gap: 40px; }
+    .hero h1 { margin: 26px 0 30px; }
+    .hero h1 .it { color: var(--gold-2); }
+    .hero .lede { color: var(--ivory-2); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
+    .hero-aside { display: grid; gap: 22px; justify-items: end; text-align: right; padding-bottom: 6px; }
+    .hero-aside .spec { display: grid; gap: 6px; }
+    .hero-aside .spec b { font-family: var(--serif); font-weight: 300; font-size: 36px; color: var(--ivory); line-height: 1; }
+    .hero-aside .spec span { font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+    .hero-foot {
+      position: relative; z-index: 1; margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--line-soft);
+      display: flex; justify-content: space-between; align-items: center; gap: 20px;
+      font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted);
+    }
+    .scroll-cue { display: inline-flex; align-items: center; gap: 14px; }
+    .scroll-cue i { display: block; width: 1px; height: 46px; background: linear-gradient(180deg, var(--gold), transparent); position: relative; overflow: hidden; }
+    .scroll-cue i::after { content: ""; position: absolute; left: 0; top: -100%; width: 100%; height: 100%; background: var(--ivory); animation: cue 2.2s var(--ease) infinite; }
+    @keyframes cue { to { top: 110%; } }
+
+    /* Marquee */
+    .marquee { border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); overflow: hidden; background: var(--bg-2); }
+    .marquee-track { display: flex; width: max-content; animation: marquee 48s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    .marquee-track ul { display: flex; align-items: center; gap: 0; padding: 22px 0; }
+    .marquee-track li { display: inline-flex; align-items: center; gap: 34px; padding-right: 34px; font-family: var(--serif); font-size: 26px; font-style: italic; color: var(--ivory-2); white-space: nowrap; }
+    .marquee-track li::after { content: ""; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    /* ============================================================
+       Sections
+       ============================================================ */
+    section { position: relative; }
+    .pad { padding: clamp(96px, 10vw, 170px) 0; }
+    .section-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px; margin-bottom: clamp(44px, 5vw, 80px); }
+    .section-head h2 { margin-top: 20px; }
+    .section-head .side { max-width: 40ch; display: grid; gap: 22px; justify-items: start; }
+    .section-head .side p { font-size: 15px; color: var(--muted); }
+
+    /* Placeholder art — swaps out automatically once real photos exist */
+    .art {
+      position: relative; overflow: hidden; background: var(--bg-3); isolation: isolate;
+    }
+    .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s var(--ease), transform 1.4s var(--ease); z-index: 2; }
+    .art img.loaded { opacity: 1; }
+    /* Once a real photo has loaded: drop the emblem watermark, keep the text gradient only where copy sits on the image */
+    .art:has(img.loaded) .emb { opacity: 0; }
+    .art:has(img.loaded)::after { opacity: 0; }
+    .world .art:has(img.loaded)::after { opacity: 1; background: linear-gradient(to top, rgba(7,6,6,.92), rgba(7,6,6,.25) 45%, transparent 70%); }
+    .product .art img, .li-view .art img, .mega-item .art img, .thumbs .art img { object-position: 50% 12%; }
+    /* Product centred in the frame; a soft scrim over the top-left corner keeps the copy legible */
+    .world .art img { object-position: 50% 20%; }
+    .world[data-cat="hair"] .art img { object-position: 50% 26%; }
+    .world[data-cat="perfumes"] .art img { object-position: 50% 42%; }
+    .world[data-cat="lip-balms"] .art img { object-position: 50% 45%; }
+    .world[data-cat="beauty"] .art img { object-position: 50% 42%; }
+    /* darken the top edge too so the number and kicker stay legible on bright photos */
+    .world .art:has(img.loaded)::after { opacity: 1; background: linear-gradient(to bottom, rgba(7,6,6,.6), transparent 32%), linear-gradient(to top, rgba(7,6,6,.92), rgba(7,6,6,.3) 45%, transparent 68%); }
+    .slide .art img { object-fit: contain; object-position: 50% 50%; background: var(--bg-3); }
+    .art::before, .art::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+    .art::after { z-index: 3; }
+    .art .emb { position: absolute; left: 50%; top: 50%; width: 46%; transform: translate(-50%, -50%); opacity: .13; z-index: 1; filter: saturate(.7); }
+    .art[data-cat="clothing"]::before {
+      background:
+        linear-gradient(160deg, rgba(201,164,92,.16), transparent 50%),
+        repeating-linear-gradient(90deg, rgba(244,239,230,.035) 0 1px, transparent 1px 54px),
+        linear-gradient(180deg, #171312, #0b0909);
+    }
+    .art[data-cat="clothing"]::after { background: linear-gradient(to top, rgba(7,6,6,.85), transparent 55%); }
+    .art[data-cat="perfumes"]::before {
+      background:
+        radial-gradient(ellipse 40% 32% at 50% 62%, rgba(232,208,154,.35), rgba(201,164,92,.1) 60%, transparent 75%),
+        radial-gradient(circle at 50% 30%, rgba(244,239,230,.1), transparent 25%),
+        linear-gradient(180deg, #14100d, #090707);
+    }
+    .art[data-cat="perfumes"]::after { background: linear-gradient(to top, rgba(7,6,6,.85), transparent 55%); }
+    .art[data-cat="hair"]::before {
+      background:
+        repeating-radial-gradient(ellipse 60% 100% at 50% -10%, rgba(201,164,92,.13) 0 1.5px, transparent 2px 22px),
+        radial-gradient(ellipse 50% 40% at 50% 40%, rgba(125,26,32,.28), transparent 70%),
+        linear-gradient(180deg, #17100f, #0a0808);
+    }
+    .art[data-cat="hair"]::after { background: linear-gradient(to top, rgba(7,6,6,.88), transparent 55%); }
+    .art[data-cat="lip-balms"]::before {
+      background:
+        radial-gradient(circle at 50% 48%, rgba(125,26,32,.5), rgba(125,26,32,.12) 38%, transparent 55%),
+        radial-gradient(circle at 35% 30%, rgba(244,239,230,.08), transparent 30%),
+        linear-gradient(180deg, #150e0e, #090707);
+    }
+    .art[data-cat="lip-balms"]::after { background: linear-gradient(to top, rgba(7,6,6,.85), transparent 55%); }
+    .art[data-cat="beauty"]::before {
+      background:
+        radial-gradient(circle at 30% 38%, rgba(232,208,154,.28), transparent 32%),
+        radial-gradient(circle at 70% 60%, rgba(244,239,230,.12), transparent 30%),
+        radial-gradient(circle at 55% 80%, rgba(201,164,92,.18), transparent 35%),
+        linear-gradient(180deg, #141110, #090707);
+    }
+    .art[data-cat="beauty"]::after { background: linear-gradient(to top, rgba(7,6,6,.85), transparent 55%); }
+    .art .frame { position: absolute; inset: 14px; border: 1px solid var(--line); z-index: 3; opacity: .6; pointer-events: none; }
+
+    /* Categories — editorial grid */
+    .world-grid {
+      display: grid; gap: 14px;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: repeat(2, minmax(300px, 38vh));
+    }
+    .world { position: relative; overflow: hidden; display: block; color: var(--ivory); }
+    .world .art { position: absolute; inset: 0; }
+    .world:nth-child(1) { grid-column: span 5; grid-row: span 2; }
+    .world:nth-child(2) { grid-column: span 4; }
+    .world:nth-child(3) { grid-column: span 3; }
+    .world:nth-child(4) { grid-column: span 3; }
+    .world:nth-child(5) { grid-column: span 4; }
+    /* Tile copy: number and kicker across the top, heading and blurb bottom-left, Discover on hover */
+    .world-body { position: absolute; inset: 0; z-index: 4; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; }
+    .world-top { display: flex; justify-content: space-between; align-items: flex-start; font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--ivory-2); text-shadow: 0 1px 8px rgba(0,0,0,.7); }
+    .world-top .idx { font-family: var(--serif); font-size: 15px; letter-spacing: .05em; color: var(--gold); }
+    .world h3 { font-size: clamp(30px, 3.2vw, 52px); text-shadow: 0 2px 18px rgba(0,0,0,.6); }
+    .world:nth-child(1) h3 { font-size: clamp(40px, 4.6vw, 76px); }
+    .world p { font-size: 13.5px; color: var(--ivory-2); max-width: 36ch; margin-top: 8px; opacity: .9; text-shadow: 0 1px 10px rgba(0,0,0,.7); }
+    .world .btn-text { margin-top: 18px; opacity: 0; transform: translateY(10px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+    .world:hover .btn-text, .world:focus-visible .btn-text { opacity: 1; transform: none; }
+    .world .art::before, .world .art img { transition: transform 1.4s var(--ease), opacity 1s var(--ease); }
+    .world:hover .art::before, .world:hover .art img { transform: scale(1.05); }
+    .world .art .emb { transition: transform 1.4s var(--ease), opacity .8s; }
+    .world:hover .art .emb { transform: translate(-50%, -50%) scale(1.06); opacity: .2; }
+
+    /* Products */
+    .edit { background: var(--bg-2); border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+    .rail {
+      display: grid; grid-auto-flow: column; grid-auto-columns: clamp(250px, 24vw, 340px); gap: 14px;
+      overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px;
+      scrollbar-width: none; cursor: grab;
+      -webkit-overflow-scrolling: touch;
+    }
+    .rail::-webkit-scrollbar { display: none; }
+    .rail.dragging { cursor: grabbing; scroll-snap-type: none; }
+    .rail.dragging * { pointer-events: none; }
+    .rail-ctrl { display: flex; gap: 10px; }
+    .rail-ctrl button { width: 52px; height: 52px; border: 1px solid var(--line-soft); display: grid; place-items: center; transition: border-color .4s, background .4s, color .4s; }
+    .rail-ctrl button:hover { border-color: var(--gold); background: var(--gold); color: #000; }
+    .rail-ctrl svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.2; }
+    .product { scroll-snap-align: start; display: grid; gap: 16px; align-content: start; }
+    .product .media { position: relative; }
+    .product .art { aspect-ratio: 3 / 4; }
+    .product .art::before, .product .art img { transition: transform 1.4s var(--ease), opacity 1s var(--ease); }
+    .product:hover .art::before, .product:hover .art img { transform: scale(1.05); }
+    .product .tag { position: absolute; top: 14px; left: 14px; z-index: 4; font-size: 9.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--ivory); padding: 7px 10px; border: 1px solid var(--line); background: rgba(7,6,6,.5); backdrop-filter: blur(6px); }
+    .product .quick {
+      position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 4;
+      min-height: 48px; padding: 0 18px;
+      background: rgba(244,239,230,.94); color: #0a0806; border: 0;
+      text-transform: uppercase; letter-spacing: .2em; font-size: 10.5px;
+      display: flex; align-items: center; justify-content: space-between;
+      transform: translateY(14px); opacity: 0; transition: opacity .5s var(--ease), transform .5s var(--ease), background .3s;
+    }
+    .product .quick:hover { background: var(--gold); }
+    .product:hover .quick, .product:focus-within .quick { opacity: 1; transform: none; }
+    .product .wish { position: absolute; top: 14px; right: 14px; z-index: 4; width: 34px; height: 34px; display: grid; place-items: center; color: var(--ivory); opacity: 0; transition: opacity .4s; }
+    .product:hover .wish, .product .wish.on { opacity: 1; }
+    .product .wish svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.2; transition: fill .3s; }
+    .product .wish.on svg { fill: var(--gold); stroke: var(--gold); }
+    .product-info { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: baseline; }
+    .product-name { font-family: var(--serif); font-size: 21px; font-weight: 400; color: var(--ivory); }
+    .product-price { font-size: 13px; letter-spacing: .06em; color: var(--gold-2); }
+    .product-cat { grid-column: 1 / -1; font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+    .rail-note { margin-top: 26px; font-size: 12px; color: var(--muted); letter-spacing: .04em; }
+
+    /* Statement */
+    .statement { text-align: center; overflow: hidden; }
+    .statement .big { font-size: clamp(48px, 8vw, 150px); line-height: .95; letter-spacing: -.02em; max-width: 14ch; margin: 28px auto 0; }
+    .statement .big .it { color: var(--gold-2); }
+    .statement .lede { margin: 40px auto 0; text-align: center; }
+    .pillars { margin-top: clamp(60px, 7vw, 110px); display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-soft); border-left: 1px solid var(--line-soft); }
+    .pillar { border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); padding: 40px 32px; text-align: left; display: grid; gap: 14px; align-content: start; min-height: 260px; transition: background .5s; }
+    .pillar:hover { background: var(--bg-3); }
+    .pillar .n { font-family: var(--serif); font-size: 15px; letter-spacing: .05em; color: var(--gold); }
+    .pillar h3 { font-size: 30px; }
+    .pillar p { font-size: 14px; color: var(--muted); }
+
+    /* Spotlights */
+    .spot { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 110px); align-items: center; }
+    .spot + .spot { margin-top: clamp(96px, 10vw, 170px); }
+    .spot.flip .spot-art { order: 2; }
+    .spot-art { position: relative; }
+    .spot-art .art { aspect-ratio: 4 / 5; }
+    .spot-art .art .emb { width: 34%; opacity: .18; }
+    .spot-art .plate {
+      position: absolute; right: -8%; bottom: -8%; width: 46%; aspect-ratio: 1; z-index: 5;
+      border: 1px solid var(--line-strong); background: rgba(7,6,6,.9); backdrop-filter: blur(10px);
+      display: grid; align-content: end; gap: 10px; padding: 24px;
+    }
+    .spot.flip .spot-art .plate { right: auto; left: -8%; }
+    .spot-art .plate b { font-family: var(--serif); font-weight: 300; font-size: clamp(38px, 4vw, 64px); line-height: 1; color: var(--gold-2); }
+    .spot-art .plate span { font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+    .spot-copy h2 { margin: 22px 0 26px; font-size: clamp(40px, 4.6vw, 76px); }
+    .spot-copy .lede { font-size: 17px; }
+    .spec-list { margin: 34px 0 38px; border-top: 1px solid var(--line-soft); }
+    .spec-list li { display: grid; grid-template-columns: 34px 1fr auto; gap: 18px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line-soft); }
+    .spec-list .k { font-family: var(--serif); color: var(--gold); font-size: 15px; }
+    .spec-list .v { font-size: 15px; color: var(--ivory); }
+    .spec-list .d { font-size: 12px; letter-spacing: .06em; color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+    /* Services */
+    .services { background: var(--bg-2); border-top: 1px solid var(--line-soft); }
+    .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .service { border: 1px solid var(--line-soft); padding: 36px 30px; min-height: 300px; display: grid; align-content: space-between; gap: 30px; transition: border-color .5s, transform .6s var(--ease); background: var(--bg); }
+    .service:hover { border-color: var(--line-strong); transform: translateY(-6px); }
+    .service svg { width: 34px; height: 34px; stroke: var(--gold); fill: none; stroke-width: 1; }
+    .service h3 { font-size: 27px; margin-bottom: 10px; }
+    .service p { font-size: 14px; color: var(--muted); }
+
+    /* Q&A */
+    .qa-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(40px, 6vw, 110px); }
+    .qa-intro { position: sticky; top: 140px; align-self: start; display: grid; gap: 22px; justify-items: start; }
+    .qa-intro h2 { margin-top: 6px; }
+    .qa-item { border-top: 1px solid var(--line-soft); }
+    .qa-item:last-child { border-bottom: 1px solid var(--line-soft); }
+    .qa-q { width: 100%; display: grid; grid-template-columns: 44px 1fr 30px; align-items: center; gap: 20px; padding: 28px 0; text-align: left; font-family: var(--serif); font-size: clamp(22px, 2vw, 28px); font-weight: 300; }
+    .qa-q .n { font-size: 14px; color: var(--gold); letter-spacing: .05em; font-family: var(--serif); }
+    .qa-q .pm { position: relative; width: 30px; height: 30px; border: 1px solid var(--line); display: grid; place-items: center; transition: background .4s, border-color .4s; }
+    .qa-q .pm::before, .qa-q .pm::after { content: ""; position: absolute; width: 12px; height: 1px; background: var(--ivory); transition: transform .5s var(--ease), background .4s; }
+    .qa-q .pm::after { transform: rotate(90deg); }
+    .qa-q[aria-expanded="true"] .pm { background: var(--gold); border-color: var(--gold); }
+    .qa-q[aria-expanded="true"] .pm::before, .qa-q[aria-expanded="true"] .pm::after { background: #000; }
+    .qa-q[aria-expanded="true"] .pm::after { transform: rotate(0); }
+    .qa-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .6s var(--ease); }
+    .qa-a > div { overflow: hidden; }
+    .qa-a p { padding: 0 44px 30px 64px; font-size: 16px; max-width: 64ch; color: var(--ivory-2); }
+    .qa-item.open .qa-a { grid-template-rows: 1fr; }
+
+    /* Newsletter */
+    .private { position: relative; overflow: hidden; text-align: center; background: var(--bg-2); border-top: 1px solid var(--line-soft); }
+    .private::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 60% at 50% 100%, rgba(201,164,92,.16), transparent 70%); }
+    .private .shell { position: relative; }
+    .private h2 { margin: 22px auto 24px; max-width: 16ch; }
+    .private .lede { margin: 0 auto; }
+    .signup { width: min(640px, 100%); margin: 44px auto 0; display: grid; grid-template-columns: 1fr auto; border-bottom: 1px solid var(--line-strong); transition: border-color .4s; }
+    .signup:focus-within { border-color: var(--gold); }
+    .signup input { min-width: 0; background: none; border: 0; color: var(--ivory); padding: 18px 0; font: inherit; font-size: 16px; letter-spacing: .04em; outline: none; }
+    .signup input::placeholder { color: var(--muted); }
+    .signup button { padding: 0 6px 0 24px; text-transform: uppercase; letter-spacing: .22em; font-size: 11px; color: var(--gold); display: inline-flex; align-items: center; gap: 12px; }
+    .signup button .arrow { width: 16px; height: 16px; transition: transform .4s var(--ease); }
+    .signup button:hover .arrow { transform: translateX(5px); }
+    .signup-msg { min-height: 24px; margin-top: 16px; font-size: 12.5px; letter-spacing: .06em; color: var(--muted); }
+    .signup-msg.ok { color: var(--gold-2); }
+    .signup-msg.err { color: #d98b8b; }
+    .fine { margin-top: 10px; font-size: 11px; color: var(--muted); letter-spacing: .04em; }
+
+    /* Footer */
+    footer { position: relative; overflow: hidden; border-top: 1px solid var(--line-soft); padding: clamp(70px, 8vw, 120px) 0 40px; }
+    .foot-grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 40px; }
+    .foot-brand { display: grid; gap: 22px; align-content: start; justify-items: start; }
+    .foot-brand .emblem { width: 56px; }
+    .foot-brand p { font-size: 14px; color: var(--muted); max-width: 32ch; }
+    .foot-col strong { display: block; font-size: 10.5px; letter-spacing: .26em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; font-weight: 400; }
+    .foot-col a { display: block; padding: 6px 0; font-size: 14px; color: var(--ivory-2); transition: color .3s, transform .4s var(--ease); }
+    .foot-col a:hover { color: var(--ivory); transform: translateX(4px); }
+    .foot-word { margin-top: clamp(60px, 8vw, 120px); width: 100%; opacity: .9; }
+    .foot-word svg { width: 100%; height: auto; }
+    .foot-bottom { margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--line-soft); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .foot-bottom .links { display: flex; gap: 26px; }
+
+    /* Drawers / overlays */
+    .scrim { position: fixed; inset: 0; z-index: 90; background: rgba(4,3,3,.6); backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: opacity .5s, visibility .5s; }
+    .scrim.show { opacity: 1; visibility: visible; }
+    .drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 100; width: min(460px, 100%);
+      background: var(--bg-2); border-left: 1px solid var(--line-soft);
+      transform: translateX(100%); transition: transform .7s var(--ease);
+      display: grid; grid-template-rows: auto 1fr auto;
+    }
+    .drawer.show { transform: none; }
+    .drawer-head { display: flex; justify-content: space-between; align-items: center; padding: 26px 30px; border-bottom: 1px solid var(--line-soft); }
+    .drawer-head h3 { font-size: 26px; }
+    .x { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--line-soft); transition: border-color .3s, background .3s, color .3s; }
+    .x:hover { border-color: var(--gold); background: var(--gold); color: #000; }
+    .x svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.4; fill: none; }
+    .drawer-body { overflow-y: auto; padding: 10px 30px; }
+    .cart-empty { padding: 60px 0; text-align: center; display: grid; gap: 18px; justify-items: center; }
+    .cart-empty p { color: var(--muted); font-size: 14px; }
+    .line-item { display: grid; grid-template-columns: 84px 1fr; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--line-soft); }
+    .line-item .art { aspect-ratio: 3 / 4; }
+    .line-item .art .emb { width: 60%; }
+    .line-item .li-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+    .line-item .name { font-family: var(--serif); font-size: 19px; }
+    .line-item .price { font-size: 13px; color: var(--gold-2); }
+    .line-item .cat { font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+    .li-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+    .qty { display: inline-flex; border: 1px solid var(--line-soft); }
+    .qty button { width: 32px; height: 32px; display: grid; place-items: center; font-size: 16px; transition: background .3s, color .3s; }
+    .qty button:hover { background: var(--ivory); color: #000; }
+    .qty span { min-width: 34px; display: grid; place-items: center; font-size: 13px; }
+    .remove { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); transition: color .3s; }
+    .remove:hover { color: var(--ivory); }
+    .drawer-foot { padding: 24px 30px 30px; border-top: 1px solid var(--line-soft); display: grid; gap: 14px; }
+    .totals { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+    .totals b { font-family: var(--serif); font-weight: 400; font-size: 26px; color: var(--ivory); letter-spacing: 0; }
+    .drawer-foot .small { text-align: center; }
+
+    /* Menu overlay */
+    .menu {
+      position: fixed; inset: 0; z-index: 100; background: var(--bg);
+      display: grid; grid-template-rows: auto 1fr auto; padding: 0 var(--gutter) 30px;
+      clip-path: inset(0 0 100% 0); transition: clip-path .8s var(--ease);
+    }
+    .menu.show { clip-path: inset(0 0 0 0); }
+    .menu-head { height: var(--header-h); display: flex; justify-content: space-between; align-items: center; }
+    .menu-body { display: grid; align-content: center; gap: 6px; }
+    .menu-body a { font-family: var(--serif); font-size: clamp(38px, 8vw, 72px); line-height: 1.1; display: flex; align-items: baseline; gap: 18px; padding: 6px 0; opacity: 0; transform: translateY(20px); transition: opacity .6s var(--ease), transform .7s var(--ease); }
+    .menu.show .menu-body a { opacity: 1; transform: none; }
+    .menu-body a small { font-family: var(--sans); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+    .menu-foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+
+    /* Search overlay */
+    .search {
+      position: fixed; inset: 0; z-index: 100; background: rgba(7,6,6,.96); backdrop-filter: blur(20px);
+      display: grid; align-content: start; padding: calc(var(--header-h) + 40px) var(--gutter) 40px; overflow-y: auto;
+      opacity: 0; visibility: hidden; transition: opacity .5s, visibility .5s;
+    }
+    .search.show { opacity: 1; visibility: visible; }
+    .search-box { width: min(900px, 100%); margin: 0 auto; display: grid; gap: 30px; }
+    .search-box .row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 20px; border-bottom: 1px solid var(--line-strong); }
+    .search-box input { background: none; border: 0; color: var(--ivory); font-family: var(--serif); font-size: clamp(30px, 5vw, 60px); padding: 14px 0; outline: none; min-width: 0; }
+    .search-box input::placeholder { color: var(--muted); }
+    .search-results { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .search-hint { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .search-hint button { color: var(--ivory-2); margin-right: 16px; padding-bottom: 2px; border-bottom: 1px solid var(--line); }
+
+    /* Product card: the picture opens the gallery */
+    .product .view { position: absolute; inset: 0; z-index: 3; cursor: zoom-in; background: none; }
+    .product .view:focus-visible { outline-offset: -4px; }
+    .product-name[data-view] { cursor: pointer; transition: color .3s; }
+    .product-name[data-view]:hover { color: var(--gold-2); }
+    .li-view { display: block; padding: 0; text-align: left; }
+    .li-view .art { aspect-ratio: 3 / 4; }
+
+    /* Placeholder variants so the three gallery pictures read as different shots */
+    .art[data-variant="2"]::before { filter: brightness(1.18) saturate(1.15); transform: scaleX(-1); }
+    .art[data-variant="2"] .emb { width: 72%; opacity: .09; top: 58%; }
+    .art[data-variant="3"]::before { filter: brightness(.78) hue-rotate(-10deg); }
+    .art[data-variant="3"] .emb { width: 30%; opacity: .22; left: 34%; top: 42%; }
+
+    /* Collection view */
+    .collection {
+      position: fixed; inset: 0; z-index: 110; background: var(--bg); overflow-y: auto; overscroll-behavior: contain;
+      padding: 0 var(--gutter) 80px;
+      opacity: 0; visibility: hidden; transform: translateY(24px);
+      transition: opacity .6s var(--ease), transform .7s var(--ease), visibility .6s;
+    }
+    .collection.show { opacity: 1; visibility: visible; transform: none; }
+    .col-shell { width: min(1440px, 100%); margin: 0 auto; }
+    .col-head {
+      position: sticky; top: 0; z-index: 3; padding: 28px 0 34px;
+      background: linear-gradient(var(--bg) 72%, transparent);
+      display: flex; justify-content: space-between; align-items: flex-end; gap: 24px;
+    }
+    .col-head h2 { margin-top: 14px; font-size: clamp(40px, 5.5vw, 84px); }
+    .col-meta { display: flex; align-items: center; gap: 22px; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; }
+    .col-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 34px 14px; }
+    .col-grid .product .quick { opacity: 1; transform: none; }
+    .col-note { margin-top: 44px; font-size: 12px; color: var(--muted); letter-spacing: .04em; display: flex; gap: 14px; align-items: center; }
+    .col-note::before { content: ""; width: 28px; height: 1px; background: var(--gold); opacity: .7; flex: none; }
+
+    /* Gallery modal */
+    .gallery {
+      position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: var(--gutter);
+      background: rgba(5,4,4,.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      opacity: 0; visibility: hidden; transition: opacity .5s, visibility .5s;
+    }
+    .gallery.show { opacity: 1; visibility: visible; }
+    .gallery-inner {
+      position: relative; width: min(1180px, 100%); max-height: calc(100vh - var(--gutter) * 2);
+      background: var(--bg-2); border: 1px solid var(--line-soft);
+      display: grid; grid-template-columns: 1.1fr .9fr; overflow: hidden;
+      transform: translateY(20px) scale(.985); transition: transform .7s var(--ease);
+    }
+    .gallery.show .gallery-inner { transform: none; }
+    .gal-x { position: absolute; top: 16px; right: 16px; z-index: 6; background: rgba(7,6,6,.6); }
+    .gal-media { position: relative; background: var(--bg-3); }
+    .slides {
+      display: flex; height: min(78vh, 760px); overflow-x: auto; overflow-y: hidden;
+      scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    }
+    .slides::-webkit-scrollbar { display: none; }
+    .slide { flex: 0 0 100%; scroll-snap-align: start; scroll-snap-stop: always; position: relative; }
+    .slide .art { position: absolute; inset: 0; }
+    .slide .art .emb { width: 42%; }
+    .slide .cap { position: absolute; left: 22px; bottom: 22px; z-index: 5; font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--ivory-2); }
+    .gal-nav {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 48px; height: 48px;
+      border: 1px solid var(--line); background: rgba(7,6,6,.55); backdrop-filter: blur(6px);
+      display: grid; place-items: center; transition: background .3s, color .3s, border-color .3s;
+    }
+    .gal-nav:hover { background: var(--gold); color: #000; border-color: var(--gold); }
+    .gal-nav svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.2; }
+    .gal-nav.prev { left: 16px; } .gal-nav.next { right: 16px; }
+    .gal-count { position: absolute; top: 18px; left: 22px; z-index: 5; font-family: var(--serif); font-size: 16px; letter-spacing: .08em; color: var(--ivory-2); }
+    .thumbs { position: absolute; right: 20px; bottom: 18px; z-index: 5; display: flex; gap: 8px; }
+    .thumbs button { position: relative; width: 44px; height: 56px; border: 1px solid var(--line-soft); overflow: hidden; opacity: .5; transition: opacity .3s, border-color .3s; }
+    .thumbs button .art { position: absolute; inset: 0; }
+    .thumbs button .art .emb { width: 60%; }
+    .thumbs button.on { opacity: 1; border-color: var(--gold); }
+    .gal-info { padding: 44px 40px 36px; display: grid; align-content: start; gap: 18px; overflow-y: auto; max-height: min(78vh, 760px); }
+    .gal-info h3 { font-size: clamp(30px, 3vw, 46px); }
+    .gal-price { font-size: 15px; letter-spacing: .08em; color: var(--gold-2); }
+    .gal-info p { font-size: 15px; color: var(--ivory-2); }
+    .gal-sizes { display: grid; gap: 10px; }
+    .gal-sizes .lbl { display: flex; justify-content: space-between; gap: 12px; font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+    .gal-sizes .lbl .need { color: #d98b8b; opacity: 0; transition: opacity .3s; }
+    .gal-sizes.need .lbl .need { opacity: 1; }
+    .sizes { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sizes button { min-width: 50px; height: 44px; padding: 0 14px; border: 1px solid var(--line-soft); font-size: 12px; letter-spacing: .1em; transition: border-color .3s, background .3s, color .3s; }
+    .sizes button:hover { border-color: var(--gold); }
+    .sizes button.on { background: var(--ivory); color: #000; border-color: var(--ivory); }
+    .gal-sizes.need .sizes button:not(.on) { border-color: rgba(217,139,139,.55); }
+    .gal-actions { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; margin-top: 6px; align-items: stretch; }
+    .gal-actions .btn.done { background: var(--ivory); border-color: var(--ivory); }
+    .gal-actions .dot { width: 5px; height: 5px; background: currentColor; transform: rotate(45deg); opacity: .6; }
+    .gal-actions .wish-btn { width: 54px; border: 1px solid var(--line-strong); display: grid; place-items: center; transition: border-color .3s, background .3s; }
+    .gal-actions .wish-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.2; transition: fill .3s; }
+    .gal-actions .wish-btn:hover { border-color: var(--gold); }
+    .gal-actions .wish-btn.on svg { fill: var(--gold); stroke: var(--gold); }
+    .gal-viewbag { justify-self: start; }
+    .gal-notes { display: grid; gap: 8px; border-top: 1px solid var(--line-soft); padding-top: 18px; font-size: 12px; color: var(--muted); letter-spacing: .04em; }
+    .gal-notes li { display: flex; gap: 12px; }
+    .gal-notes li::before { content: ""; width: 5px; height: 5px; margin-top: 8px; background: var(--gold); transform: rotate(45deg); flex: none; }
+
+    /* Toast + back to top */
+    .toast {
+      position: fixed; left: 50%; bottom: 30px; z-index: 120; transform: translate(-50%, 20px);
+      background: var(--ivory); color: #0a0806; padding: 14px 22px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 14px; opacity: 0; visibility: hidden; transition: opacity .4s, transform .5s var(--ease), visibility .4s;
+    }
+    .toast.show { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+    .toast i { width: 6px; height: 6px; background: var(--gold-3); transform: rotate(45deg); }
+    .totop {
+      position: fixed; right: 26px; bottom: 26px; z-index: 80; width: 48px; height: 48px;
+      border: 1px solid var(--line); background: rgba(7,6,6,.7); backdrop-filter: blur(8px); display: grid; place-items: center;
+      opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity .4s, transform .5s var(--ease), visibility .4s, background .3s, color .3s;
+    }
+    .totop.show { opacity: 1; visibility: visible; transform: none; }
+    .totop:hover { background: var(--gold); color: #000; }
+    .totop svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.3; }
+
+    /* ============================================================
+       Responsive
+       ============================================================ */
+    @media (max-width: 1100px) {
+      .nav-links { gap: 24px; }
+      .world-grid { grid-template-rows: repeat(3, minmax(260px, 34vh)); }
+      .world:nth-child(1) { grid-column: span 12; grid-row: span 1; }
+      .world:nth-child(2), .world:nth-child(3) { grid-column: span 6; }
+      .world:nth-child(4), .world:nth-child(5) { grid-column: span 6; }
+      .pillars, .service-grid { grid-template-columns: repeat(2, 1fr); }
+      .search-results { grid-template-columns: repeat(3, 1fr); }
+      .col-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      :root { --header-h: 72px; }
+      .nav { grid-template-columns: auto 1fr auto; }
+      .nav-links { display: none; }
+      .nav-actions { gap: 20px; }
+      .nav-actions .hide-m, .menu-btn .hide-m { display: none; }
+      .menu-btn { display: inline-flex; }
+      .brand-mark { justify-self: center; }
+      .brand-mark .word { display: none; }
+      .brand-mark .emblem { width: 40px; height: 40px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-aside { justify-items: start; text-align: left; grid-template-columns: repeat(3, auto); gap: 30px; }
+      .hero-emblem { right: -6%; top: 30%; width: 44vw; opacity: .12; }
+      .section-head { grid-template-columns: 1fr; align-items: start; }
+      .spot, .qa-grid { grid-template-columns: 1fr; }
+      .spot.flip .spot-art { order: 0; }
+      .spot-art .plate { width: 52%; right: 0; bottom: -6%; }
+      .spot.flip .spot-art .plate { left: 0; }
+      .qa-intro { position: static; }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+      .foot-brand { grid-column: 1 / -1; }
+      .search-results { grid-template-columns: repeat(2, 1fr); }
+      .col-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 12px; }
+      .col-head { align-items: flex-start; flex-direction: column; gap: 10px; }
+      .col-meta { padding-bottom: 0; width: 100%; justify-content: space-between; }
+      .gallery { padding: 0; align-items: end; }
+      .gallery-inner { width: 100%; max-height: 100dvh; grid-template-columns: 1fr; overflow-y: auto; border: 0; }
+      .slides { height: 62vh; }
+      .gal-info { max-height: none; overflow: visible; padding: 28px 22px 34px; }
+      .gal-actions { grid-template-columns: 1fr auto; }
+      .gal-actions #galBack { grid-column: 1 / -1; }
+      .thumbs { display: none; }
+    }
+    @media (max-width: 600px) {
+      :root { --bar-h: 32px; }
+      body { font-size: 15px; }
+      h1 { font-size: clamp(56px, 17vw, 96px); }
+      .hero { padding-bottom: 36px; }
+      .hero-actions .btn { flex: 1 1 100%; }
+      .hero-aside { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .hero-foot { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .world-grid { grid-template-rows: none; grid-auto-rows: minmax(240px, 46vw); }
+      .world:nth-child(n) { grid-column: span 12; }
+      .world:nth-child(1) { grid-row: span 2; }
+      .world[data-cat="clothing"] .art img { object-position: 50% 15%; }
+      .world-body { padding: 22px; }
+      .world .btn-text { opacity: 1; transform: none; }
+      .product .quick { opacity: 1; transform: none; }
+      .rail { grid-auto-columns: 78vw; }
+      .pillars, .service-grid { grid-template-columns: 1fr; }
+      .pillar { min-height: 0; }
+      .spec-list li { grid-template-columns: 30px 1fr; }
+      .spec-list .d { grid-column: 2; }
+      .qa-q { grid-template-columns: 30px 1fr 30px; gap: 14px; font-size: 21px; }
+      .qa-a p { padding-left: 44px; padding-right: 0; }
+      .signup { grid-template-columns: 1fr; }
+      .signup button { padding: 0 0 18px; justify-content: space-between; }
+      .foot-grid { grid-template-columns: 1fr; }
+      .totop { right: 16px; bottom: 16px; }
+      .drawer-head, .drawer-body, .drawer-foot { padding-left: 20px; padding-right: 20px; }
+      .search-results { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; transition-duration: .001s !important; scroll-behavior: auto !important; }
+      .reveal, .reveal-line > span { opacity: 1; transform: none; }
+      .marquee-track { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ==========================================================
+     Brand assets: one copy of the logo paths, cropped via symbols
+     #arbek-logo   = emblem + wordmark
+     #arbek-emblem = emblem only
+     #arbek-word   = wordmark only
+     Source file: public/images/brand/arbek-logo.svg
+     ========================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <g id="arbek-paths">
+      <path d="M 670.00,858.00 L 664.00,859.50 L 670.00,860.00 Z" fill="#2e2118"/>
+      <path d="M 610.00,393.50 L 608.50,393.50 L 608.00,397.00 L 606.50,398.00 L 607.50,400.00 L 609.00,398.50 Z" fill="#2e2118"/>
+      <path d="M 611.00,387.50 L 609.50,388.00 L 609.00,391.50 L 611.00,391.00 Z" fill="#2e2118"/>
+      <path d="M 645.00,378.50 L 647.00,391.50 L 649.00,399.00 L 650.00,399.00 L 651.00,397.00 L 650.00,397.50 L 649.00,396.50 L 646.50,378.50 Z" fill="#2e2118"/>
+      <path d="M 644.50,370.50 L 644.50,375.50 L 646.00,375.50 L 646.00,370.50 Z" fill="#2e2118"/>
+      <path d="M 613.00,366.50 L 611.50,366.50 L 610.00,385.50 L 611.50,385.50 Z" fill="#2e2118"/>
+      <path d="M 612.00,355.00 L 612.00,360.50 L 613.00,360.50 L 613.50,355.00 Z" fill="#2e2118"/>
+      <path d="M 644.00,354.00 L 644.50,363.50 L 645.50,363.50 L 645.00,354.00 Z" fill="#2e2118"/>
+      <path d="M 643.50,340.00 L 644.00,352.00 L 645.00,352.00 L 645.00,340.00 Z" fill="#2e2118"/>
+      <path d="M 612.50,337.50 L 612.50,350.50 L 613.50,350.50 L 614.00,337.50 Z" fill="#2e2118"/>
+      <path d="M 626.00,329.00 L 627.50,331.00 L 627.50,385.00 L 628.50,401.50 L 628.50,330.00 Z" fill="#2e2118"/>
+      <path d="M 643.50,321.00 L 643.00,334.50 L 643.50,337.00 L 644.50,337.00 Z" fill="#2e2118"/>
+      <path d="M 558.50,321.00 L 560.00,322.50 L 560.00,321.50 Z" fill="#2e2118"/>
+      <path d="M 613.00,319.50 L 613.00,321.50 L 614.00,321.50 L 614.00,319.50 Z" fill="#2e2118"/>
+      <path d="M 637.50,202.50 L 637.50,204.00 L 643.00,207.00 L 644.50,211.00 L 646.00,229.50 L 647.50,230.50 L 649.00,247.50 L 651.50,251.00 L 651.50,252.00 L 650.00,252.50 L 650.00,254.00 L 651.50,255.50 L 652.00,258.50 L 654.00,259.00 L 653.50,261.50 L 655.50,264.00 L 655.50,266.00 L 657.50,268.00 L 657.50,279.00 L 659.00,279.50 L 660.00,288.00 L 662.00,290.00 L 671.00,281.50 L 682.50,274.00 L 683.50,263.00 L 681.50,247.00 L 674.50,230.00 L 667.00,220.00 L 656.50,210.50 L 645.00,205.50 L 644.50,203.50 L 642.00,203.00 L 642.00,204.00 L 640.50,204.50 L 640.00,202.50 Z" fill="#2e2118"/>
+      <path d="M 208.50,848.50 L 144.00,946.50 L 145.50,946.00 L 203.00,858.50 Z" fill="#6c3219"/>
+      <path d="M 218.00,834.50 L 211.00,844.50 L 212.50,843.50 Z" fill="#6c3219"/>
+      <path d="M 628.00,522.00 L 628.00,552.00 L 629.00,558.50 L 629.00,522.00 Z" fill="#6c3219"/>
+      <path d="M 639.00,457.00 L 637.50,464.00 L 637.00,479.00 L 638.00,476.50 Z" fill="#6c3219"/>
+      <path d="M 640.00,446.50 L 639.00,446.50 L 638.50,451.50 L 639.50,451.50 Z" fill="#6c3219"/>
+      <path d="M 641.50,407.50 L 641.50,409.00 L 642.50,409.00 L 642.50,407.50 Z" fill="#6c3219"/>
+      <path d="M 644.00,392.00 L 643.00,392.00 L 642.50,396.00 L 643.50,396.00 Z" fill="#6c3219"/>
+      <path d="M 656.50,385.00 L 656.50,386.50 L 655.00,387.00 L 655.00,388.00 L 657.00,387.50 Z" fill="#6c3219"/>
+      <path d="M 644.50,378.00 L 643.00,389.00 L 644.00,389.00 Z" fill="#6c3219"/>
+      <path d="M 614.50,322.00 L 614.50,336.50 L 616.00,337.00 L 619.00,345.00 L 619.00,353.50 L 621.00,360.00 L 621.00,365.00 L 623.00,370.00 L 622.50,384.50 L 624.00,388.50 L 626.50,404.50 L 625.50,421.50 L 627.00,428.00 L 626.00,452.00 L 627.00,454.50 L 626.50,481.00 L 628.00,518.00 L 628.00,510.00 L 629.00,509.50 L 629.00,505.00 L 628.00,504.50 L 628.00,490.00 L 629.00,489.50 L 629.00,486.00 L 628.00,485.50 L 628.00,477.50 L 629.00,477.00 L 629.00,473.00 L 628.00,472.50 L 628.00,462.00 L 629.00,461.50 L 629.00,453.50 L 628.00,453.00 L 629.00,410.00 L 628.00,409.50 L 627.00,385.00 L 627.00,331.00 L 624.00,329.00 L 624.50,328.00 L 625.50,328.50 L 625.00,327.50 L 623.00,328.50 L 623.00,326.50 Z" fill="#6c3219"/>
+      <path d="M 708.50,299.00 L 706.00,302.50 L 705.00,306.50 Z" fill="#6c3219"/>
+      <path d="M 642.50,321.00 L 633.50,327.50 L 628.00,328.00 L 629.50,329.50 L 629.00,560.50 L 627.50,552.00 L 627.50,518.50 L 626.00,481.00 L 626.50,454.50 L 625.50,452.00 L 625.50,440.50 L 626.50,438.50 L 626.50,428.00 L 625.00,421.50 L 626.00,404.50 L 623.50,388.50 L 622.00,384.50 L 622.50,370.00 L 620.50,365.00 L 620.50,360.00 L 618.50,353.50 L 618.50,345.00 L 615.50,337.00 L 614.50,344.50 L 613.00,375.00 L 614.50,407.50 L 619.50,459.00 L 623.50,519.50 L 629.00,571.50 L 631.00,561.50 L 637.50,507.50 L 656.50,389.50 L 656.00,388.50 L 651.00,399.50 L 649.50,400.50 L 648.00,399.00 L 646.50,392.00 L 645.50,392.50 L 637.50,506.50 L 636.50,508.00 L 635.50,507.00 L 635.50,492.50 L 638.00,459.00 L 637.00,444.00 L 638.50,444.50 L 639.00,442.50 L 638.00,433.50 L 639.50,433.00 L 640.00,426.50 L 639.00,426.00 L 638.50,421.00 L 639.00,417.00 L 640.00,417.00 L 640.50,420.00 L 643.50,380.50 L 643.00,343.00 L 642.00,335.50 Z" fill="#d32929"/>
+      <path d="M 848.00,942.50 L 859.50,944.00 L 853.50,945.00 L 884.50,945.00 L 884.50,942.00 Z" fill="#9b6e38"/>
+      <path d="M 768.50,936.50 L 769.50,941.50 L 769.50,937.00 Z" fill="#9b6e38"/>
+      <path d="M 473.00,919.50 L 475.50,923.50 L 475.50,921.00 L 476.50,920.50 L 481.00,924.00 L 482.00,926.00 L 482.00,928.50 L 481.00,929.50 L 481.50,931.50 L 488.00,939.50 L 489.00,938.00 L 496.00,945.50 L 492.50,946.50 L 539.00,946.50 L 535.00,945.50 L 537.50,944.50 L 518.00,922.00 L 517.50,922.50 L 519.00,924.00 L 518.50,925.00 L 515.00,920.50 L 516.50,920.00 L 512.00,915.00 L 511.50,915.50 L 513.00,917.00 L 512.50,918.00 L 510.00,916.00 L 510.00,918.00 L 507.50,917.50 L 507.00,919.00 L 505.50,918.00 L 502.50,918.00 L 501.00,919.00 L 494.50,913.50 L 494.00,915.50 L 487.00,910.00 L 485.50,911.00 L 482.50,910.00 L 482.00,911.00 L 480.50,910.50 L 481.00,911.50 L 480.00,913.00 L 478.00,912.00 L 478.00,914.50 L 476.50,914.00 L 475.50,915.00 L 476.00,917.00 L 475.00,918.50 L 476.00,920.50 L 475.00,921.00 Z" fill="#9b6e38"/>
+      <path d="M 163.50,908.50 L 143.50,937.00 L 143.50,939.00 L 141.50,940.00 L 141.50,942.00 L 139.50,943.00 L 138.50,946.00 L 143.50,946.00 L 166.00,912.50 L 164.00,913.00 L 164.00,911.00 L 162.50,911.00 Z" fill="#9b6e38"/>
+      <path d="M 1046.00,895.00 L 1046.00,896.00 L 1044.50,896.00 L 1044.50,897.00 L 1041.50,899.50 L 1034.00,902.50 L 1034.00,904.50 L 1033.00,905.00 L 1032.00,908.50 L 1030.50,909.50 L 1031.00,912.00 L 1029.00,915.00 L 1029.00,918.50 L 1027.00,919.00 L 1047.00,939.50 L 1046.00,940.50 L 1047.50,941.50 L 1046.50,940.50 L 1047.00,939.50 L 1050.00,940.50 L 1052.50,938.50 L 1056.50,937.50 L 1061.00,934.00 L 1062.50,934.00 L 1063.50,932.50 L 1065.00,932.50 L 1064.50,930.00 L 1066.50,925.00 L 1072.50,920.00 Z" fill="#9b6e38"/>
+      <path d="M 715.50,890.50 L 714.50,893.00 L 711.50,893.00 L 707.00,895.00 L 705.00,897.00 L 701.00,897.50 L 700.00,899.00 L 699.00,898.00 L 694.50,899.00 L 690.50,906.00 L 691.50,918.00 L 693.50,920.50 L 694.00,934.50 L 697.00,934.00 L 697.00,935.50 L 703.50,931.00 L 709.00,925.50 L 708.00,924.00 L 713.50,915.00 L 714.50,916.50 L 714.00,911.50 L 715.00,909.50 L 715.50,902.00 L 717.00,899.50 L 716.50,894.50 L 715.00,894.50 L 716.00,893.50 Z" fill="#9b6e38"/>
+      <path d="M 945.00,877.50 L 945.00,880.50 L 944.00,882.00 L 945.00,884.00 L 945.00,888.00 L 947.00,887.50 L 947.50,889.00 L 947.00,891.00 L 944.50,892.50 L 944.50,896.00 L 946.00,900.00 L 948.00,902.00 L 949.00,907.00 L 948.00,925.00 L 947.00,926.00 L 945.50,933.50 L 945.50,943.50 L 948.50,944.50 L 946.00,945.50 L 969.00,945.50 L 968.50,944.50 L 970.00,944.00 L 968.50,929.00 L 970.00,882.00 L 969.50,891.00 L 968.50,893.50 L 967.50,892.00 L 958.00,890.00 L 953.50,885.50 L 953.50,883.00 L 950.00,882.00 L 949.00,880.50 L 947.00,881.00 L 946.50,878.00 Z" fill="#9b6e38"/>
+      <path d="M 283.00,881.50 L 281.50,884.00 L 293.00,906.00 L 292.00,908.00 L 297.00,921.00 L 297.00,930.00 L 298.00,933.00 L 300.00,935.00 L 302.50,940.50 L 302.00,944.00 L 305.50,945.50 L 301.00,946.50 L 345.50,946.50 L 343.00,942.00 L 341.00,942.00 L 340.50,941.00 L 341.50,940.00 L 340.50,941.00 L 337.00,936.00 L 337.00,933.00 L 335.00,932.00 L 335.50,931.00 L 334.00,931.00 L 334.50,929.50 L 333.00,929.50 L 333.50,928.00 L 332.50,929.00 L 331.00,927.00 L 331.50,925.00 L 330.50,925.50 L 330.50,923.50 L 329.00,923.50 L 330.00,922.00 L 328.00,919.50 L 328.50,918.00 L 327.00,918.00 L 323.00,912.00 L 323.50,910.50 L 303.50,880.00 L 300.00,877.00 L 300.50,876.00 L 298.00,877.50 L 295.50,876.00 L 295.00,877.00 L 292.50,877.00 L 292.00,879.50 L 289.50,878.00 L 288.00,879.00 L 287.50,881.00 Z" fill="#9b6e38"/>
+      <path d="M 591.00,875.50 L 590.50,880.50 L 589.50,881.50 L 588.50,880.50 L 588.50,883.00 L 589.50,882.00 L 592.50,887.00 L 593.00,895.50 L 594.50,897.00 L 595.50,903.00 L 595.00,916.50 L 596.00,923.50 L 594.50,937.00 L 593.00,941.00 L 591.00,943.00 L 594.00,944.50 L 590.00,945.50 L 623.00,945.50 L 622.00,944.00 L 619.00,943.50 L 619.00,941.50 L 618.00,941.00 L 618.00,917.50 L 619.00,917.00 L 618.50,884.50 L 617.50,890.00 L 616.50,886.50 L 615.00,885.50 L 610.00,886.00 L 608.50,882.50 L 606.00,883.00 L 603.50,880.50 L 602.00,881.00 L 600.00,880.00 L 598.50,877.50 Z" fill="#9b6e38"/>
+      <path d="M 768.50,861.50 L 769.00,895.00 L 770.00,884.00 L 771.00,888.00 L 772.50,889.50 L 772.00,891.00 L 773.00,891.00 L 773.50,888.00 L 774.50,889.00 L 774.50,897.00 L 777.50,906.50 L 777.50,924.00 L 775.00,933.00 L 775.00,939.00 L 773.00,943.00 L 775.00,945.00 L 807.50,945.50 L 806.00,944.50 L 810.50,943.00 L 810.00,942.00 L 803.00,942.00 L 800.50,940.00 L 800.50,882.50 L 799.50,886.00 L 798.50,884.00 L 796.50,884.00 L 795.00,885.50 L 790.50,885.50 L 790.00,883.50 L 786.00,885.50 L 784.50,883.00 L 780.50,881.50 L 776.50,874.00 L 772.50,871.50 L 771.50,869.00 L 770.00,880.50 L 769.50,863.00 Z" fill="#9b6e38"/>
+      <path d="M 586.00,853.00 L 586.50,896.00 L 586.50,887.00 L 587.50,883.00 L 586.50,879.50 L 587.50,857.00 Z" fill="#9b6e38"/>
+      <path d="M 722.50,646.50 L 721.50,646.50 L 722.00,647.50 L 720.50,650.00 L 718.50,649.00 L 716.00,651.50 L 716.50,653.50 L 713.50,657.50 L 714.00,663.00 L 712.00,663.00 L 710.00,665.50 L 710.50,668.00 L 709.50,669.50 L 711.50,674.50 L 710.50,675.00 L 708.50,672.50 L 710.00,678.50 L 708.00,681.00 L 710.50,681.50 L 710.00,683.50 L 711.50,685.00 L 710.00,695.00 L 708.00,693.00 L 711.50,712.50 L 712.00,720.50 L 711.00,741.50 L 714.00,736.50 L 713.50,736.00 L 713.00,737.50 L 712.00,737.50 L 712.50,725.00 L 714.00,722.50 L 715.50,724.00 L 717.50,722.00 L 715.00,719.00 L 714.00,721.50 L 713.00,720.00 L 712.00,710.50 L 713.00,710.00 L 714.00,712.50 L 717.50,715.50 L 716.50,717.50 L 718.50,717.00 L 721.50,709.00 L 722.50,711.50 L 725.50,694.50 L 726.50,664.00 L 725.50,653.00 L 724.50,655.00 Z" fill="#9b6e38"/>
+      <path d="M 490.00,616.00 L 492.50,637.50 L 496.50,652.00 L 496.00,655.50 L 497.00,655.50 L 498.50,658.00 L 502.50,670.50 L 510.50,686.50 L 510.00,688.50 L 511.50,688.50 L 511.00,690.50 L 512.50,690.50 L 519.50,703.50 L 522.50,706.50 L 521.50,701.50 L 520.00,701.50 L 520.50,697.50 L 520.00,699.50 L 519.00,699.50 L 519.00,697.00 L 520.00,696.00 L 516.50,682.00 L 514.50,667.50 L 513.00,628.00 L 515.00,618.00 L 514.00,618.00 L 514.00,619.00 L 505.50,626.50 L 505.00,626.00 L 511.00,619.00 L 507.50,621.00 L 503.00,620.50 L 501.50,621.50 L 500.00,619.00 L 500.50,616.00 L 499.50,616.00 L 496.50,619.50 L 496.00,618.50 L 497.00,616.50 L 495.00,618.00 L 494.00,617.50 L 495.00,615.00 L 493.00,616.00 L 492.00,618.00 Z" fill="#9b6e38"/>
+      <path d="M 763.00,594.00 L 762.00,594.00 L 761.00,597.00 L 759.00,596.50 L 759.00,599.50 L 757.50,598.50 L 758.00,600.00 L 757.00,601.00 L 755.00,600.00 L 755.50,601.50 L 754.50,602.50 L 754.00,606.50 L 753.00,606.00 L 752.00,600.50 L 750.00,600.00 L 751.00,604.00 L 750.00,604.50 L 750.50,605.50 L 747.50,606.50 L 745.50,609.50 L 743.00,608.50 L 744.00,611.00 L 743.00,612.00 L 740.50,612.50 L 738.50,609.50 L 742.50,641.00 L 742.50,660.00 L 741.50,666.00 L 742.50,673.50 L 741.50,673.50 L 741.00,671.00 L 740.50,678.50 L 738.50,687.00 L 739.50,690.50 L 738.00,690.50 L 737.50,692.50 L 738.50,694.00 L 737.00,694.50 L 734.00,706.50 L 741.50,694.50 L 749.50,678.00 L 761.50,643.50 L 766.00,616.50 Z" fill="#9b6e38"/>
+      <path d="M 580.50,517.00 L 578.00,522.00 L 578.50,523.50 L 577.00,524.50 L 571.50,537.50 L 572.00,538.00 L 574.50,534.00 L 575.00,536.50 L 579.00,540.50 L 580.50,540.50 L 580.50,533.50 L 579.50,531.00 L 580.50,526.00 L 579.50,521.00 Z" fill="#9b6e38"/>
+      <path d="M 637.00,495.00 L 636.00,495.00 L 636.00,507.00 L 636.50,500.00 L 637.50,499.50 Z" fill="#9b6e38"/>
+      <path d="M 618.00,475.00 L 619.50,493.50 L 621.00,499.50 L 621.50,493.50 L 620.00,491.50 L 619.00,475.00 Z" fill="#9b6e38"/>
+      <path d="M 616.50,453.50 L 616.50,459.00 L 615.00,459.50 L 615.50,466.00 L 615.50,462.50 L 616.50,462.00 L 617.50,463.50 L 617.50,461.00 L 616.50,460.50 Z" fill="#9b6e38"/>
+      <path d="M 612.00,396.50 L 611.00,400.00 L 612.00,399.50 Z" fill="#9b6e38"/>
+      <path d="M 705.50,302.00 L 704.50,305.50 L 705.50,304.50 Z" fill="#9b6e38"/>
+      <path d="M 710.50,272.00 L 707.00,278.00 L 706.00,276.00 L 707.00,292.50 L 705.50,301.00 L 707.00,300.50 L 711.50,287.50 L 712.00,282.00 L 711.00,281.50 L 711.00,279.50 L 712.50,280.00 L 712.50,275.00 L 711.50,278.00 Z" fill="#9b6e38"/>
+      <path d="M 547.00,271.50 L 546.50,284.50 L 550.50,303.00 L 553.50,307.50 L 551.50,299.00 L 551.00,283.00 L 549.50,284.50 L 547.50,282.00 Z" fill="#9b6e38"/>
+      <path d="M 630.00,944.00 L 627.00,943.50 L 626.50,944.50 L 623.50,945.00 L 630.00,945.00 Z" fill="#bd8e4d"/>
+      <path d="M 831.50,942.50 L 840.50,943.50 L 841.00,944.50 L 854.00,944.00 L 845.50,943.00 L 845.00,942.00 Z" fill="#bd8e4d"/>
+      <path d="M 815.50,942.50 L 811.50,942.00 L 810.50,943.50 L 807.00,944.50 L 812.50,944.50 L 813.50,943.00 Z" fill="#bd8e4d"/>
+      <path d="M 667.00,937.00 L 663.00,939.00 L 662.00,940.50 L 661.00,940.00 L 660.50,941.50 L 658.00,941.00 L 658.00,942.50 L 654.50,942.00 L 650.50,943.00 L 650.50,944.00 L 652.50,943.50 L 653.00,945.00 L 665.00,944.00 L 666.00,941.50 L 665.00,939.00 Z" fill="#bd8e4d"/>
+      <path d="M 531.00,936.00 L 534.00,940.50 L 538.00,944.00 L 538.00,945.50 L 540.00,946.00 Z" fill="#bd8e4d"/>
+      <path d="M 1036.50,929.50 L 1038.50,932.50 L 1042.00,935.00 Z" fill="#bd8e4d"/>
+      <path d="M 1048.00,941.00 L 1054.00,947.50 L 1101.50,947.50 L 1074.00,920.50 L 1073.00,921.50 L 1071.00,921.00 L 1067.00,925.00 L 1067.50,926.50 L 1065.00,930.00 L 1065.50,933.50 L 1063.50,933.00 L 1057.50,937.50 L 1052.50,939.00 L 1050.00,941.00 Z" fill="#bd8e4d"/>
+      <path d="M 517.50,920.50 L 527.50,931.50 L 522.50,925.00 Z" fill="#bd8e4d"/>
+      <path d="M 969.50,909.00 L 969.00,929.00 L 970.00,930.50 Z" fill="#bd8e4d"/>
+      <path d="M 716.50,902.00 L 714.50,912.50 L 716.50,907.50 Z" fill="#bd8e4d"/>
+      <path d="M 474.00,896.50 L 474.00,897.50 L 462.00,905.50 L 471.50,919.00 L 473.50,919.00 L 476.00,921.00 L 476.50,926.00 L 478.00,927.00 L 481.50,932.50 L 481.00,933.50 L 484.50,936.50 L 484.00,937.50 L 485.50,938.00 L 488.00,942.50 L 492.00,945.50 L 494.50,945.50 L 490.50,940.00 L 489.00,941.00 L 481.00,932.00 L 479.00,928.00 L 480.00,927.50 L 481.50,928.50 L 481.50,926.00 L 479.50,923.00 L 475.50,920.50 L 474.50,918.50 L 475.50,917.00 L 474.50,914.50 L 476.00,914.50 L 476.50,913.50 L 478.00,914.00 L 477.50,912.00 L 479.00,911.50 L 480.00,912.50 L 480.50,910.00 L 482.00,910.50 L 483.50,909.50 L 485.50,910.50 L 487.00,909.50 L 492.50,914.00 L 493.50,912.50 L 501.00,918.50 L 502.50,917.50 L 505.50,917.50 L 507.00,918.50 L 507.50,917.00 L 509.50,917.50 L 509.50,916.00 L 511.00,915.00 L 508.00,911.00 L 508.00,909.50 L 496.00,896.00 L 496.00,897.50 L 493.50,898.00 L 493.00,899.00 L 492.00,897.50 L 489.50,898.50 L 487.00,896.50 L 485.50,897.50 L 483.50,896.00 L 480.00,896.00 L 479.50,897.00 L 477.50,896.50 L 477.00,898.00 Z" fill="#bd8e4d"/>
+      <path d="M 1041.50,890.00 L 1040.00,891.00 L 1034.50,891.00 L 1032.00,892.00 L 1030.00,891.00 L 1029.50,892.00 L 1028.00,891.50 L 1027.50,893.00 L 1025.50,892.00 L 1024.00,893.50 L 1022.50,899.00 L 1019.00,903.50 L 1018.50,907.50 L 1019.50,909.00 L 1018.50,909.50 L 1017.00,908.00 L 1016.50,908.50 L 1023.50,916.00 L 1025.50,916.50 L 1025.00,917.50 L 1026.00,918.50 L 1028.50,918.50 L 1028.50,915.00 L 1030.50,912.00 L 1030.00,909.50 L 1031.50,908.50 L 1031.50,907.00 L 1033.50,904.50 L 1033.00,902.00 L 1039.00,900.50 L 1045.50,895.50 L 1046.00,894.00 Z" fill="#bd8e4d"/>
+      <path d="M 177.00,888.50 L 169.00,899.00 L 169.50,900.00 L 168.00,900.50 L 168.50,902.00 L 167.00,902.00 L 167.50,903.00 L 166.00,903.50 L 166.50,905.00 L 165.00,905.00 L 165.50,906.50 L 164.00,908.50 L 164.00,910.00 L 165.00,910.50 L 164.50,912.00 L 166.50,910.50 L 173.50,900.00 L 172.00,900.00 L 173.00,898.00 L 172.50,895.50 L 174.00,896.00 L 173.00,895.00 L 173.50,894.00 L 175.00,894.50 L 177.00,892.00 L 176.00,890.50 Z" fill="#bd8e4d"/>
+      <path d="M 770.00,887.00 L 769.50,904.00 L 768.50,904.50 L 768.50,927.00 L 769.50,927.50 L 770.00,937.00 L 769.50,944.50 L 774.00,944.50 L 772.50,942.50 L 774.50,939.00 L 774.50,933.00 L 776.50,928.00 L 777.00,906.50 L 774.00,897.00 L 774.00,889.00 L 773.50,891.00 L 772.00,891.50 L 772.00,889.50 Z" fill="#bd8e4d"/>
+      <path d="M 590.00,883.00 L 587.50,883.50 L 586.00,900.50 L 586.00,938.00 L 587.00,945.00 L 591.50,944.50 L 590.50,943.00 L 592.50,941.00 L 594.00,937.00 L 595.50,923.50 L 594.50,916.50 L 595.00,903.00 L 594.00,897.00 L 592.50,895.50 L 591.50,886.00 L 590.50,885.50 Z" fill="#bd8e4d"/>
+      <path d="M 707.00,879.00 L 703.50,882.00 L 700.00,882.00 L 697.50,884.00 L 694.00,884.00 L 693.50,885.50 L 691.50,885.50 L 686.00,897.50 L 683.00,900.50 L 682.00,899.50 L 680.00,917.00 L 682.50,916.50 L 687.50,937.00 L 690.50,937.00 L 690.00,938.50 L 695.50,935.50 L 693.50,934.50 L 693.00,920.50 L 691.00,918.00 L 690.00,906.00 L 693.00,900.00 L 695.50,898.00 L 699.00,897.50 L 700.00,898.50 L 701.00,897.00 L 705.00,896.50 L 707.00,894.50 L 714.50,892.00 L 714.50,889.00 L 710.50,881.00 L 709.50,881.50 Z" fill="#bd8e4d"/>
+      <path d="M 442.00,864.50 L 437.50,864.00 L 431.50,865.50 L 432.00,866.50 L 434.00,866.00 L 434.50,867.50 L 436.50,867.50 L 438.50,865.50 Z" fill="#bd8e4d"/>
+      <path d="M 859.50,859.50 L 860.50,861.00 L 861.00,859.50 Z" fill="#bd8e4d"/>
+      <path d="M 280.00,846.00 L 280.50,847.00 L 279.00,847.50 L 279.00,850.00 L 277.00,853.50 L 278.00,855.50 L 277.00,856.50 L 274.50,854.00 L 271.00,856.00 L 268.00,853.50 L 266.50,853.50 L 266.50,856.00 L 265.00,856.00 L 270.00,866.50 L 269.00,874.00 L 271.00,878.50 L 270.00,880.50 L 274.50,887.00 L 279.00,896.50 L 278.00,898.00 L 283.00,910.50 L 285.00,918.50 L 284.00,920.00 L 285.50,919.50 L 291.50,931.50 L 293.50,932.00 L 292.50,933.50 L 293.50,932.50 L 294.50,933.00 L 295.00,934.50 L 293.50,935.00 L 294.50,938.50 L 296.50,940.00 L 296.00,941.00 L 297.50,941.50 L 297.00,942.50 L 298.50,943.00 L 298.00,944.50 L 299.00,944.00 L 300.50,946.00 L 302.50,945.50 L 301.50,944.00 L 302.00,940.50 L 296.50,930.00 L 296.50,921.00 L 291.50,908.00 L 292.50,906.00 L 281.00,884.00 L 283.00,881.00 L 285.50,880.00 L 287.50,880.50 L 287.50,879.00 L 289.50,877.50 L 292.00,878.50 L 291.50,877.00 L 293.50,876.00 L 295.00,876.50 L 295.50,875.00 L 297.50,876.50 L 299.50,875.50 L 283.50,850.50 L 283.00,851.50 L 284.00,852.50 L 283.00,853.00 L 283.00,855.00 L 281.00,855.00 L 279.50,852.00 L 281.00,851.00 L 282.00,852.00 L 282.50,849.00 Z" fill="#bd8e4d"/>
+      <path d="M 1001.50,844.00 L 997.50,846.50 L 994.00,850.50 L 993.00,850.00 L 993.00,851.00 L 990.00,853.50 L 989.00,853.00 L 989.00,854.50 L 985.00,857.50 L 984.00,857.00 L 984.00,858.50 L 982.50,858.50 L 980.00,861.50 L 979.00,861.00 L 974.50,865.50 L 974.00,867.00 L 975.50,867.50 L 984.00,876.50 L 990.50,871.50 L 999.50,857.00 L 1002.00,854.50 L 1002.50,852.00 L 1000.50,850.00 L 1000.50,847.50 L 1003.00,845.00 L 1002.00,845.50 Z" fill="#bd8e4d"/>
+      <path d="M 939.00,831.00 L 938.50,853.00 L 939.50,853.50 L 940.00,895.00 L 939.50,903.50 L 938.50,904.00 L 938.50,931.00 L 939.50,931.50 L 939.50,944.50 L 945.50,945.00 L 945.00,933.50 L 946.00,930.50 L 945.50,929.00 L 947.50,925.00 L 948.50,907.00 L 947.00,903.50 L 947.50,902.00 L 945.00,900.00 L 945.50,898.50 L 944.00,896.00 L 944.00,892.50 L 946.50,891.00 L 947.00,888.00 L 945.50,889.00 L 944.50,888.00 L 944.50,884.00 L 943.50,882.50 L 944.00,878.00 L 945.50,876.50 L 947.00,878.00 L 947.00,880.50 L 949.00,880.00 L 951.00,882.00 L 952.50,881.50 L 954.00,883.00 L 955.50,887.50 L 958.00,889.50 L 964.50,890.50 L 968.50,892.50 L 969.50,866.50 L 967.50,866.00 L 968.00,861.00 L 966.50,861.00 L 966.50,863.50 L 962.00,867.50 L 960.50,865.00 L 956.00,864.00 L 951.00,860.00 L 943.00,844.50 L 942.50,839.50 L 939.50,837.00 Z" fill="#bd8e4d"/>
+      <path d="M 768.50,830.00 L 770.00,875.50 L 771.00,866.50 L 772.50,871.00 L 773.50,870.50 L 777.00,874.00 L 781.00,881.50 L 784.50,882.50 L 785.50,884.50 L 789.00,884.00 L 789.50,883.00 L 793.00,885.00 L 795.00,885.00 L 796.50,883.50 L 799.50,884.00 L 800.00,869.50 L 798.50,868.00 L 798.00,862.00 L 795.50,862.00 L 795.50,864.50 L 794.00,865.50 L 791.50,862.50 L 788.00,862.00 L 786.00,863.50 L 784.00,861.00 L 783.00,861.50 L 781.50,860.50 L 782.00,859.50 L 778.50,854.00 L 778.50,851.50 L 773.50,841.00 L 770.50,840.00 L 770.50,842.00 L 769.50,842.00 L 769.50,833.00 Z" fill="#bd8e4d"/>
+      <path d="M 586.00,830.00 L 585.50,846.00 L 586.50,846.50 L 586.50,852.50 L 588.00,857.00 L 588.00,868.00 L 587.00,873.00 L 587.50,880.50 L 590.00,880.50 L 590.00,876.00 L 591.00,875.00 L 596.50,875.50 L 600.00,879.00 L 603.50,880.00 L 606.00,882.50 L 608.00,881.50 L 610.00,885.00 L 616.50,885.50 L 617.50,888.00 L 618.50,868.50 L 617.50,872.50 L 616.50,864.00 L 611.00,864.50 L 608.50,861.50 L 605.00,862.00 L 601.00,861.00 L 599.50,859.50 L 595.50,849.00 L 586.50,837.00 Z" fill="#bd8e4d"/>
+      <path d="M 674.00,826.50 L 673.00,833.50 L 674.00,831.50 Z" fill="#bd8e4d"/>
+      <path d="M 700.50,825.00 L 688.50,825.00 L 684.50,826.00 L 682.00,829.50 L 680.00,829.00 L 678.00,831.50 L 675.50,831.00 L 678.50,834.50 L 677.50,837.00 L 679.00,838.00 L 678.50,840.00 L 679.50,841.50 L 680.00,849.50 L 682.50,851.50 L 682.00,852.50 L 691.00,846.50 L 697.50,839.50 L 702.00,828.50 Z" fill="#bd8e4d"/>
+      <path d="M 514.50,824.50 L 513.50,826.50 L 512.50,824.00 L 495.00,825.00 L 491.50,826.00 L 489.00,829.50 L 488.00,827.50 L 487.00,828.50 L 486.00,827.00 L 484.00,827.50 L 483.00,825.50 L 482.00,836.50 L 483.00,836.00 L 484.00,830.50 L 485.00,831.50 L 485.00,836.50 L 487.00,838.00 L 490.50,846.50 L 490.00,855.00 L 492.50,855.50 L 496.50,853.50 L 508.50,842.50 L 512.50,834.50 Z" fill="#bd8e4d"/>
+      <path d="M 711.50,730.00 L 710.00,731.50 L 710.50,736.00 Z" fill="#bd8e4d"/>
+      <path d="M 721.50,710.50 L 719.00,717.50 L 717.50,717.50 L 717.00,718.50 L 716.00,717.50 L 717.00,715.50 L 712.50,710.50 L 713.50,720.00 L 714.50,718.00 L 716.50,720.00 L 717.50,718.00 L 718.50,719.00 L 718.00,722.00 L 715.50,725.00 L 713.50,723.50 L 712.50,736.50 L 717.50,726.50 Z" fill="#bd8e4d"/>
+      <path d="M 520.50,706.00 L 524.50,712.50 L 522.50,707.50 Z" fill="#bd8e4d"/>
+      <path d="M 734.00,703.00 L 733.00,705.50 L 734.00,705.00 Z" fill="#bd8e4d"/>
+      <path d="M 513.00,693.00 L 519.00,703.50 L 517.00,698.50 Z" fill="#bd8e4d"/>
+      <path d="M 740.00,675.50 L 734.50,700.00 L 736.00,698.00 L 738.00,690.00 Z" fill="#bd8e4d"/>
+      <path d="M 741.50,636.00 L 740.50,670.50 L 742.00,660.00 Z" fill="#bd8e4d"/>
+      <path d="M 490.50,628.50 L 490.50,634.50 L 494.00,648.50 L 495.00,649.50 Z" fill="#bd8e4d"/>
+      <path d="M 718.50,626.50 L 716.00,630.50 L 715.00,629.50 L 714.00,631.00 L 712.00,630.00 L 712.50,634.00 L 710.00,635.00 L 706.50,641.00 L 704.00,639.50 L 705.00,644.00 L 702.50,643.50 L 700.00,647.50 L 700.50,650.00 L 696.50,654.50 L 699.00,659.00 L 699.00,664.00 L 697.00,661.50 L 696.00,657.00 L 694.00,655.50 L 700.50,672.00 L 700.00,674.50 L 702.00,680.50 L 703.50,681.00 L 703.00,683.50 L 704.50,683.50 L 705.50,686.50 L 705.00,690.00 L 706.50,690.50 L 706.00,693.50 L 709.00,704.50 L 709.50,712.50 L 710.50,713.00 L 710.00,724.50 L 711.50,723.50 L 711.00,712.50 L 707.50,691.00 L 708.50,691.00 L 708.50,692.50 L 710.00,694.00 L 711.00,689.00 L 710.50,684.00 L 707.50,681.00 L 709.50,678.50 L 707.50,672.50 L 709.00,672.00 L 711.00,674.50 L 708.50,668.50 L 710.00,668.00 L 709.50,665.50 L 711.50,663.00 L 713.50,663.00 L 712.50,656.50 L 714.50,656.50 L 716.00,653.50 L 715.50,651.50 L 718.50,648.50 L 721.00,649.00 L 721.50,646.00 L 723.00,646.50 L 724.50,651.50 L 722.50,636.00 L 721.00,635.00 Z" fill="#bd8e4d"/>
+      <path d="M 490.00,619.00 L 489.00,626.00 L 490.00,625.50 Z" fill="#bd8e4d"/>
+      <path d="M 547.00,595.50 L 545.00,600.00 L 546.00,599.50 Z" fill="#bd8e4d"/>
+      <path d="M 495.50,575.00 L 490.50,594.50 L 489.50,602.50 L 490.50,604.00 L 490.50,611.50 L 489.50,612.50 L 492.00,617.00 L 495.50,613.50 L 496.50,614.50 L 495.50,616.00 L 497.50,616.50 L 497.00,618.00 L 500.50,615.50 L 501.50,621.00 L 503.00,620.00 L 507.50,620.50 L 511.00,618.50 L 510.50,622.00 L 513.50,619.00 L 514.50,616.00 L 515.50,618.50 L 513.50,628.00 L 514.00,635.50 L 515.50,622.00 L 517.50,614.50 L 516.50,613.50 L 517.00,608.50 L 519.00,603.00 L 520.00,596.00 L 518.00,598.00 L 517.00,596.00 L 513.50,594.50 L 512.00,595.00 L 511.00,592.00 L 509.50,593.50 L 508.50,592.00 L 506.50,593.00 L 506.00,591.50 L 504.50,591.50 L 504.00,588.00 L 502.00,591.00 L 500.00,590.00 L 500.50,588.00 L 496.50,590.00 L 495.00,588.00 L 494.00,589.00 L 493.50,583.50 L 496.00,576.00 Z" fill="#bd8e4d"/>
+      <path d="M 758.50,572.50 L 757.50,576.50 L 756.50,576.00 L 755.50,577.50 L 753.50,576.50 L 752.50,578.50 L 751.00,578.00 L 750.00,580.50 L 748.00,578.50 L 748.00,583.00 L 745.50,584.50 L 744.50,586.50 L 741.00,586.50 L 742.00,589.00 L 739.00,592.00 L 736.50,589.50 L 736.00,592.50 L 734.00,591.50 L 734.00,594.50 L 737.50,607.00 L 737.00,612.00 L 740.50,632.50 L 741.00,629.00 L 738.00,609.50 L 739.00,608.50 L 740.50,612.00 L 742.00,611.00 L 743.00,611.50 L 743.00,608.00 L 745.50,609.00 L 747.50,605.50 L 749.50,606.00 L 749.50,604.50 L 750.50,604.00 L 749.50,601.50 L 750.00,599.00 L 752.50,600.50 L 754.00,606.00 L 754.00,602.50 L 755.00,601.50 L 754.50,599.00 L 755.00,598.50 L 756.00,600.00 L 757.50,600.00 L 757.50,598.00 L 759.00,599.00 L 758.50,594.50 L 759.00,594.00 L 759.50,595.50 L 761.00,596.00 L 762.50,590.50 L 764.50,598.00 L 765.50,610.00 L 764.50,588.00 L 763.00,587.50 Z" fill="#bd8e4d"/>
+      <path d="M 676.00,517.00 L 675.00,517.00 L 672.00,582.50 L 673.50,577.00 L 675.50,577.50 L 675.50,575.00 L 677.00,575.00 L 677.50,570.50 L 676.00,566.50 L 677.50,565.00 L 677.00,560.50 L 680.00,558.00 L 680.00,556.50 L 677.00,554.50 L 676.00,555.50 L 674.50,555.00 L 676.00,547.50 L 677.00,549.00 L 677.50,545.50 L 681.00,549.50 L 679.50,544.00 L 680.50,543.50 L 683.00,537.00 L 685.00,539.00 L 681.00,528.00 L 679.00,526.00 L 679.50,524.50 L 678.00,523.50 L 678.00,521.00 L 676.00,519.00 Z" fill="#bd8e4d"/>
+      <path d="M 581.50,517.00 L 580.00,521.00 L 581.00,523.00 L 581.00,541.50 L 579.00,541.00 L 574.00,535.00 L 562.50,560.50 L 560.00,562.50 L 560.50,564.00 L 558.00,567.00 L 554.00,576.00 L 554.50,577.50 L 553.00,578.50 L 547.00,594.00 L 547.50,594.50 L 552.00,585.00 L 552.50,587.00 L 554.50,588.50 L 551.50,591.50 L 552.50,592.50 L 551.50,595.50 L 553.50,594.50 L 555.00,598.00 L 556.50,599.00 L 558.00,606.00 L 559.00,606.50 L 559.50,605.50 L 559.00,602.00 L 560.00,601.50 L 562.50,604.50 L 563.50,609.50 L 565.00,608.50 L 565.50,611.00 L 569.00,612.00 L 569.50,613.00 L 568.50,614.50 L 572.00,612.00 L 576.50,617.50 L 576.00,619.50 L 577.50,620.00 L 577.50,621.50 L 579.00,619.50 L 583.00,606.00 L 584.50,587.00 L 585.50,586.50 L 585.50,581.50 L 585.00,584.50 L 584.00,584.50 L 584.00,577.00 L 585.00,575.50 L 582.00,539.50 Z" fill="#bd8e4d"/>
+      <path d="M 621.00,509.50 L 624.50,532.00 L 622.50,510.00 Z" fill="#bd8e4d"/>
+      <path d="M 618.50,495.00 L 620.50,507.00 L 621.50,507.00 L 622.00,500.50 L 621.00,503.00 L 619.50,495.00 Z" fill="#bd8e4d"/>
+      <path d="M 618.50,488.50 L 618.00,492.50 L 619.00,493.50 Z" fill="#bd8e4d"/>
+      <path d="M 617.50,481.00 L 617.00,485.50 L 618.50,485.50 Z" fill="#bd8e4d"/>
+      <path d="M 614.50,465.00 L 614.00,467.50 L 615.50,467.50 Z" fill="#bd8e4d"/>
+      <path d="M 640.00,459.00 L 639.00,468.50 L 640.00,466.50 Z" fill="#bd8e4d"/>
+      <path d="M 613.50,458.00 L 613.00,461.00 L 613.50,462.50 L 614.50,462.50 L 614.50,459.00 Z" fill="#bd8e4d"/>
+      <path d="M 617.00,454.00 L 618.00,469.50 L 617.00,469.50 L 617.00,464.00 L 616.00,462.50 L 616.50,470.00 L 615.50,470.50 L 615.00,473.50 L 616.50,474.00 L 616.00,479.00 L 617.50,479.50 L 618.00,473.00 L 619.00,473.00 L 621.00,491.50 L 619.00,459.00 L 618.00,454.00 Z" fill="#bd8e4d"/>
+      <path d="M 641.00,449.50 L 640.00,451.50 L 640.00,457.50 Z" fill="#bd8e4d"/>
+      <path d="M 642.50,435.50 L 641.50,435.50 L 641.00,440.50 L 642.00,440.50 Z" fill="#bd8e4d"/>
+      <path d="M 642.50,422.50 L 642.00,426.00 L 643.00,428.00 Z" fill="#bd8e4d"/>
+      <path d="M 644.00,408.00 L 643.00,414.50 L 644.00,413.50 Z" fill="#bd8e4d"/>
+      <path d="M 610.50,396.50 L 610.00,399.50 L 608.00,402.00 L 604.50,398.00 L 604.00,405.50 L 605.50,405.50 L 606.00,402.50 L 607.00,403.50 L 607.00,407.50 L 605.50,408.50 L 605.00,411.00 L 606.50,412.00 L 609.00,429.00 L 610.00,427.50 L 610.50,432.50 L 609.50,433.00 L 610.00,436.00 L 610.50,433.50 L 611.50,433.50 L 611.50,438.50 L 610.50,440.00 L 611.00,441.50 L 612.50,442.00 L 611.50,443.00 L 611.00,448.00 L 613.50,449.00 L 612.50,452.50 L 613.00,454.00 L 614.50,453.50 L 615.00,458.00 L 616.00,459.00 L 615.50,453.50 L 618.00,449.00 L 617.50,445.50 L 615.00,446.00 L 615.00,440.00 L 617.00,436.50 L 616.50,432.50 L 615.00,433.50 L 615.00,436.50 L 614.00,436.50 L 614.00,428.00 L 615.00,427.50 L 615.00,425.00 L 616.00,424.00 L 614.50,422.50 L 613.00,422.50 L 613.00,419.00 L 614.00,418.50 L 615.00,413.50 L 613.50,411.00 L 613.00,413.00 L 612.00,413.00 L 613.00,400.00 L 612.00,400.00 L 611.50,402.00 Z" fill="#bd8e4d"/>
+      <path d="M 645.00,393.50 L 644.00,401.00 L 645.00,399.00 Z" fill="#bd8e4d"/>
+      <path d="M 645.50,387.50 L 644.50,391.00 L 645.50,391.00 Z" fill="#bd8e4d"/>
+      <path d="M 659.00,325.00 L 657.50,326.50 L 657.50,329.00 L 658.50,330.00 L 659.50,329.00 L 660.50,329.50 L 661.00,333.50 L 658.00,336.50 L 656.00,333.50 L 654.00,338.50 L 652.00,339.50 L 648.50,336.50 L 648.50,334.00 L 647.50,334.50 L 647.50,365.00 L 648.50,381.50 L 649.50,384.50 L 649.00,391.00 L 650.50,392.00 L 652.50,391.00 L 652.00,389.50 L 653.50,389.00 L 653.00,387.50 L 654.50,387.00 L 658.50,377.00 L 658.00,375.00 L 659.50,374.50 L 660.50,372.00 L 660.00,370.00 L 661.50,369.50 L 662.50,367.50 L 662.00,365.00 L 663.50,365.00 L 663.50,362.50 L 664.50,363.00 L 664.00,361.00 L 668.50,351.50 L 666.00,348.50 L 668.00,346.00 L 669.50,347.50 L 670.50,347.00 L 672.50,340.50 L 672.50,338.00 L 669.00,338.00 L 663.00,335.00 L 663.00,333.50 L 661.00,332.00 L 661.00,329.00 Z" fill="#bd8e4d"/>
+      <path d="M 548.50,297.00 L 548.00,298.00 L 549.00,299.00 Z" fill="#bd8e4d"/>
+      <path d="M 587.00,289.50 L 588.00,292.00 L 587.00,292.50 L 587.00,294.00 L 583.50,300.00 L 581.50,299.50 L 582.00,303.50 L 583.50,304.50 L 583.00,310.50 L 584.00,309.00 L 584.50,309.50 L 584.50,315.50 L 583.50,316.00 L 583.50,337.50 L 584.50,342.50 L 585.00,339.00 L 588.00,336.00 L 588.50,334.00 L 592.00,330.00 L 595.50,328.50 L 595.50,306.00 L 596.50,302.50 L 597.50,302.00 L 596.00,299.00 L 594.00,298.00 L 594.50,297.00 L 593.50,297.50 L 591.00,293.00 Z" fill="#bd8e4d"/>
+      <path d="M 706.50,287.00 L 704.00,302.00 L 705.00,301.50 Z" fill="#bd8e4d"/>
+      <path d="M 548.00,262.00 L 547.00,267.00 L 548.00,271.50 L 548.00,282.00 L 550.00,283.50 L 550.50,276.00 L 552.50,268.50 L 551.50,270.00 L 550.50,267.00 L 548.50,266.50 Z" fill="#bd8e4d"/>
+      <path d="M 706.00,258.50 L 705.50,262.50 L 704.50,263.50 L 706.50,275.50 L 707.50,275.50 L 710.00,271.50 L 712.00,274.50 L 711.50,264.00 L 710.50,266.00 L 708.50,258.50 Z" fill="#bd8e4d"/>
+      <path d="M 649.00,943.00 L 641.00,944.00 L 634.00,943.50 L 633.50,945.00 L 649.00,945.00 L 647.50,944.00 Z" fill="#dab068"/>
+      <path d="M 813.50,943.50 L 814.50,944.50 L 819.50,944.50 L 822.00,943.00 L 824.50,943.50 L 825.00,944.50 L 838.00,944.50 L 838.00,943.50 L 831.50,943.50 L 830.00,942.00 L 816.50,942.00 L 815.50,943.50 Z" fill="#dab068"/>
+      <path d="M 286.00,922.00 L 288.00,927.00 L 291.00,931.00 Z" fill="#dab068"/>
+      <path d="M 682.00,917.00 L 680.00,918.50 L 679.00,918.00 L 676.00,926.50 L 671.50,932.00 L 671.00,934.00 L 666.00,939.00 L 667.00,940.00 L 665.50,943.50 L 680.00,941.50 L 689.50,938.00 L 687.00,937.00 Z" fill="#dab068"/>
+      <path d="M 485.50,884.00 L 484.50,885.00 L 476.00,885.50 L 467.50,888.50 L 467.00,890.50 L 463.50,893.00 L 462.00,893.00 L 457.00,899.00 L 459.50,903.50 L 459.00,904.50 L 461.50,906.00 L 461.00,907.00 L 462.00,907.00 L 463.00,909.50 L 464.50,910.00 L 465.50,913.00 L 472.50,922.00 L 473.00,921.50 L 461.50,905.00 L 473.50,897.50 L 474.00,895.50 L 476.00,897.00 L 477.50,896.00 L 479.50,896.50 L 480.00,895.50 L 483.50,895.50 L 486.00,897.00 L 486.00,895.00 L 490.00,898.00 L 491.00,897.00 L 495.50,897.50 L 495.00,895.50 L 496.00,895.00 L 504.50,904.50 L 499.50,898.00 L 493.00,892.00 L 493.50,891.00 L 492.50,891.00 Z" fill="#dab068"/>
+      <path d="M 1029.00,878.00 L 1024.00,881.00 L 1020.00,882.00 L 1017.00,881.50 L 1014.00,883.00 L 1014.00,885.50 L 1010.50,891.00 L 1010.50,893.50 L 1007.00,897.50 L 1008.50,900.50 L 1008.00,901.50 L 1023.50,917.00 L 1024.00,916.50 L 1015.50,907.50 L 1016.50,907.00 L 1019.00,909.00 L 1017.50,906.50 L 1023.50,895.50 L 1023.00,893.00 L 1025.50,891.50 L 1027.50,892.00 L 1029.50,890.50 L 1040.00,890.50 L 1041.00,889.50 L 1032.50,879.50 Z" fill="#dab068"/>
+      <path d="M 706.50,876.00 L 704.50,875.00 L 703.50,875.50 L 702.00,873.00 L 696.50,870.00 L 694.50,870.00 L 689.00,874.00 L 685.00,881.50 L 680.50,886.00 L 680.50,887.50 L 679.00,888.00 L 679.50,891.50 L 680.50,892.00 L 681.00,899.00 L 682.00,896.50 L 683.00,899.50 L 685.50,897.50 L 689.50,887.50 L 692.00,884.50 L 693.50,885.00 L 694.00,883.50 L 696.00,884.00 L 698.50,883.00 L 700.50,881.00 L 703.50,881.50 L 706.00,879.50 L 706.00,877.50 L 708.50,879.50 Z" fill="#dab068"/>
+      <path d="M 835.00,860.00 L 836.50,861.00 L 855.50,860.50 L 856.00,859.50 L 859.00,859.00 Z" fill="#dab068"/>
+      <path d="M 196.50,859.00 L 195.00,860.00 L 179.50,883.50 L 177.00,889.50 L 177.50,892.00 L 173.50,898.00 L 185.50,881.50 L 185.00,880.00 L 187.00,876.00 L 186.50,874.50 L 188.50,874.00 L 190.50,871.50 L 191.50,872.00 L 191.00,871.00 L 193.50,869.00 L 193.00,867.50 L 194.50,867.50 L 194.00,866.00 L 195.50,866.00 L 195.50,864.00 L 196.50,864.50 L 196.00,863.00 L 197.50,860.50 Z" fill="#dab068"/>
+      <path d="M 472.50,859.00 L 470.50,858.00 L 471.50,857.00 L 470.50,857.00 L 466.50,860.00 L 458.50,863.00 L 451.00,864.00 L 441.00,863.50 L 442.50,864.50 L 442.00,865.50 L 438.50,866.00 L 435.50,868.50 L 433.00,867.50 L 434.00,866.50 L 432.00,867.00 L 429.50,865.00 L 433.00,864.00 L 420.50,864.50 L 424.50,864.50 L 433.00,868.50 L 446.50,886.50 L 450.50,880.50 L 454.50,877.50 L 456.50,873.00 L 458.50,872.50 L 460.00,870.50 L 460.00,864.00 L 463.50,863.50 L 466.00,865.00 L 469.00,865.00 L 469.00,861.50 Z" fill="#dab068"/>
+      <path d="M 280.50,852.00 L 281.50,855.00 L 282.50,855.00 L 282.50,852.50 Z" fill="#dab068"/>
+      <path d="M 1002.50,850.50 L 1002.00,851.00 L 1004.00,853.00 L 1000.00,857.00 L 991.00,871.50 L 985.00,876.00 L 988.00,880.50 L 994.00,879.00 L 1001.00,872.50 L 1009.00,859.00 L 1008.00,857.00 L 1008.50,856.00 Z" fill="#dab068"/>
+      <path d="M 244.00,845.00 L 244.00,847.00 L 247.00,846.00 L 247.00,844.50 L 245.50,845.50 L 245.00,844.50 Z" fill="#dab068"/>
+      <path d="M 484.50,834.50 L 483.50,835.00 L 482.50,838.50 L 481.00,838.00 L 479.50,844.50 L 473.00,854.50 L 475.50,854.00 L 476.00,859.00 L 479.50,859.00 L 480.50,860.00 L 489.50,856.50 L 490.00,846.50 L 486.50,838.00 L 484.50,836.50 Z" fill="#dab068"/>
+      <path d="M 1021.50,828.50 L 1010.00,837.00 L 1007.00,840.50 L 1006.00,840.00 L 1002.50,844.50 L 1013.50,837.00 L 1013.50,835.50 L 1017.00,834.50 L 1021.00,831.50 L 1020.00,830.50 Z" fill="#dab068"/>
+      <path d="M 266.00,824.50 L 264.50,827.50 L 261.50,828.00 L 259.00,830.00 L 257.50,830.00 L 253.00,834.00 L 251.50,834.00 L 251.50,836.50 L 249.00,839.50 L 250.00,842.50 L 248.50,843.00 L 248.50,847.00 L 251.50,851.50 L 249.00,855.00 L 248.00,858.50 L 263.00,882.00 L 282.00,915.50 L 284.00,917.50 L 280.50,904.00 L 277.50,898.00 L 278.50,896.50 L 274.00,887.00 L 269.50,880.50 L 270.50,878.50 L 268.50,878.00 L 269.50,876.50 L 268.50,874.00 L 268.50,868.00 L 269.50,866.50 L 264.00,856.00 L 265.00,855.00 L 266.00,855.50 L 267.00,852.50 L 270.50,855.00 L 274.50,853.50 L 277.00,855.50 L 276.50,853.50 L 279.50,845.50 Z" fill="#dab068"/>
+      <path d="M 939.00,812.50 L 938.50,824.50 L 939.50,825.00 L 940.00,837.00 L 942.50,838.50 L 944.00,841.50 L 944.00,845.00 L 951.50,860.00 L 953.00,861.50 L 960.50,864.50 L 962.50,867.00 L 965.50,864.00 L 966.00,861.00 L 968.50,860.50 L 969.00,839.00 L 968.00,838.50 L 967.00,835.00 L 963.50,838.00 L 953.50,835.50 L 952.50,832.50 L 948.50,827.50 L 947.00,822.50 L 939.50,816.50 Z" fill="#dab068"/>
+      <path d="M 586.00,807.50 L 585.50,824.50 L 586.50,825.00 L 587.50,838.00 L 596.00,849.00 L 598.00,855.50 L 601.00,860.50 L 605.00,861.50 L 608.50,861.00 L 611.00,864.00 L 616.50,863.50 L 617.50,866.50 L 618.00,843.00 L 617.00,842.50 L 615.50,833.50 L 613.00,831.50 L 608.00,831.00 L 606.00,832.00 L 604.50,830.50 L 602.00,832.00 L 598.00,829.00 L 595.00,821.00 L 592.50,818.00 L 587.50,815.50 Z" fill="#dab068"/>
+      <path d="M 698.50,808.50 L 697.50,809.00 L 696.00,807.00 L 691.50,808.50 L 690.50,811.00 L 681.50,814.50 L 675.00,818.50 L 673.00,818.50 L 672.50,829.00 L 674.00,825.50 L 674.50,831.50 L 673.00,835.00 L 672.00,833.00 L 670.00,842.00 L 667.00,847.50 L 667.50,848.50 L 666.00,849.00 L 659.50,856.00 L 655.50,858.00 L 655.00,859.50 L 652.50,859.00 L 646.50,861.00 L 653.00,861.50 L 660.50,863.50 L 666.00,866.50 L 672.00,872.50 L 674.00,871.50 L 679.00,864.00 L 673.50,862.50 L 661.50,861.50 L 660.00,860.00 L 660.50,857.50 L 670.50,856.50 L 681.50,852.00 L 679.00,847.50 L 678.50,838.00 L 677.00,837.00 L 677.50,834.50 L 675.00,831.00 L 676.00,830.00 L 678.00,831.00 L 680.00,828.50 L 682.50,828.50 L 684.50,825.50 L 688.50,824.50 L 700.50,824.50 L 701.50,825.50 L 701.50,816.00 Z" fill="#dab068"/>
+      <path d="M 509.50,807.00 L 508.50,807.50 L 505.50,804.50 L 499.50,811.00 L 492.00,813.50 L 489.50,816.50 L 486.50,818.00 L 483.00,818.50 L 482.50,824.00 L 483.50,824.50 L 484.00,827.00 L 488.00,827.00 L 488.50,828.50 L 489.50,828.50 L 491.50,825.50 L 495.00,824.50 L 503.00,824.50 L 505.50,823.50 L 514.00,824.00 L 513.50,816.00 L 512.50,813.00 L 511.00,813.50 L 511.50,810.50 L 510.00,810.50 L 510.50,808.50 L 509.00,808.50 Z" fill="#dab068"/>
+      <path d="M 768.50,801.00 L 768.50,824.00 L 769.50,824.50 L 770.00,839.50 L 771.00,838.50 L 774.00,841.00 L 782.50,860.50 L 783.50,859.50 L 786.00,863.00 L 788.00,861.50 L 791.50,861.50 L 794.00,865.00 L 795.00,864.50 L 795.50,861.00 L 797.00,861.50 L 797.50,860.50 L 799.00,864.00 L 799.00,868.00 L 800.00,860.50 L 812.50,861.00 L 812.50,859.50 L 804.00,859.50 L 803.00,858.50 L 800.00,858.50 L 800.00,839.50 L 799.00,839.00 L 798.00,831.00 L 793.00,832.50 L 789.00,832.00 L 785.00,833.50 L 780.50,830.50 L 778.00,822.00 L 773.00,816.00 L 771.00,815.00 L 770.50,818.00 L 769.50,818.00 L 769.50,805.00 Z" fill="#dab068"/>
+      <path d="M 488.00,614.50 L 489.00,619.50 L 489.00,614.50 Z" fill="#dab068"/>
+      <path d="M 714.50,612.00 L 710.50,615.00 L 708.50,614.50 L 707.50,616.50 L 706.00,616.00 L 706.00,619.00 L 702.50,620.50 L 700.00,624.50 L 698.00,625.50 L 696.50,631.50 L 695.00,632.00 L 692.00,636.00 L 692.00,638.00 L 690.00,641.50 L 687.50,642.50 L 692.00,653.50 L 691.00,654.50 L 692.50,654.50 L 692.00,656.50 L 695.00,663.00 L 696.50,663.50 L 696.00,665.00 L 699.00,671.50 L 698.50,667.00 L 693.50,655.50 L 694.50,655.00 L 696.50,657.00 L 697.50,661.50 L 699.00,663.00 L 698.00,657.50 L 696.00,654.50 L 700.00,650.00 L 699.50,647.50 L 702.00,643.50 L 704.50,643.50 L 703.50,639.00 L 704.00,638.50 L 706.50,640.50 L 711.00,633.50 L 712.00,634.00 L 711.50,629.50 L 716.50,629.50 L 718.00,626.00 L 719.00,626.50 L 721.00,632.00 L 718.50,620.00 L 717.00,619.50 Z" fill="#dab068"/>
+      <path d="M 488.00,604.50 L 488.00,611.50 L 489.00,611.50 L 489.00,604.50 Z" fill="#dab068"/>
+      <path d="M 585.50,588.50 L 584.50,590.00 L 583.50,606.00 L 579.50,619.50 L 577.50,623.00 L 577.00,620.00 L 575.50,620.00 L 576.00,617.50 L 572.00,613.00 L 568.50,615.50 L 568.00,614.00 L 569.00,612.50 L 567.00,613.50 L 567.00,611.50 L 565.50,611.50 L 565.00,609.50 L 563.50,610.00 L 563.00,611.50 L 562.50,611.00 L 563.00,607.00 L 560.00,602.00 L 560.00,605.50 L 558.50,607.50 L 556.00,599.00 L 554.50,598.50 L 553.50,595.00 L 552.00,596.00 L 551.00,595.50 L 552.00,592.50 L 550.50,591.50 L 553.50,589.00 L 551.50,586.50 L 543.50,607.00 L 542.00,606.50 L 542.50,609.50 L 541.00,610.00 L 534.00,637.00 L 534.00,640.50 L 536.50,629.50 L 538.00,627.50 L 538.50,629.00 L 541.50,631.00 L 540.50,635.00 L 542.50,633.50 L 545.00,634.50 L 543.50,637.50 L 545.00,637.50 L 546.50,641.50 L 547.50,641.00 L 548.50,642.00 L 547.50,644.50 L 551.00,641.00 L 552.00,646.50 L 553.00,647.00 L 553.00,645.50 L 554.50,645.00 L 558.00,649.50 L 557.50,651.00 L 558.50,653.00 L 562.00,649.50 L 563.00,649.50 L 563.50,651.00 L 564.50,650.50 L 576.00,628.00 L 577.50,628.00 L 577.00,626.00 L 578.50,625.50 L 580.50,620.50 L 585.00,602.00 Z" fill="#dab068"/>
+      <path d="M 750.50,553.00 L 749.50,555.50 L 748.50,555.00 L 744.00,558.50 L 743.50,561.00 L 741.50,561.00 L 735.50,566.50 L 733.50,566.00 L 733.50,570.00 L 732.00,571.00 L 730.50,576.50 L 729.50,577.00 L 728.00,576.00 L 730.50,584.00 L 730.00,587.50 L 735.50,604.50 L 736.00,603.00 L 733.00,591.00 L 734.00,590.50 L 736.00,592.00 L 736.50,588.50 L 738.50,591.00 L 741.00,590.00 L 741.50,587.50 L 740.50,586.00 L 743.50,586.50 L 747.50,583.00 L 748.00,578.00 L 750.50,579.50 L 750.50,578.00 L 752.50,578.00 L 753.50,576.00 L 755.50,577.00 L 757.50,575.50 L 757.50,572.50 L 758.50,571.50 L 762.50,581.50 L 760.50,572.00 L 758.00,568.50 L 758.50,566.50 L 757.00,566.50 Z" fill="#dab068"/>
+      <path d="M 506.50,550.50 L 496.50,570.00 L 497.50,571.50 L 496.00,571.50 L 497.00,573.50 L 494.00,583.50 L 494.00,587.50 L 495.00,586.50 L 496.00,589.50 L 500.50,587.50 L 500.50,590.00 L 502.00,590.50 L 504.00,587.00 L 505.00,591.00 L 506.00,590.50 L 506.50,592.50 L 507.50,591.50 L 510.00,592.50 L 511.50,590.50 L 512.00,594.50 L 515.50,594.50 L 518.00,597.00 L 519.50,595.00 L 520.50,596.00 L 519.50,599.50 L 520.00,602.50 L 523.50,591.50 L 523.00,589.00 L 524.50,588.50 L 524.00,586.00 L 525.50,585.50 L 525.00,583.00 L 526.50,583.00 L 525.50,582.00 L 528.50,571.50 L 526.50,573.00 L 524.50,570.50 L 524.50,569.00 L 522.50,568.50 L 523.00,567.00 L 521.00,567.50 L 519.00,564.50 L 517.00,565.50 L 516.50,560.00 L 514.00,561.00 L 515.00,556.50 L 512.50,556.50 L 509.00,553.00 L 507.00,553.00 Z" fill="#dab068"/>
+      <path d="M 683.50,537.50 L 681.00,542.00 L 681.50,544.50 L 680.00,545.00 L 682.00,551.00 L 681.50,551.50 L 677.50,546.50 L 678.00,549.00 L 676.00,549.50 L 675.00,555.00 L 677.00,554.00 L 680.50,556.50 L 680.50,558.00 L 678.50,559.50 L 679.50,560.50 L 678.00,562.50 L 678.50,565.00 L 677.00,566.00 L 678.00,570.50 L 677.50,575.00 L 676.00,575.50 L 675.50,578.00 L 674.00,577.50 L 672.00,587.50 L 671.00,580.00 L 671.50,603.50 L 673.50,612.50 L 676.00,618.50 L 681.50,610.50 L 683.00,611.00 L 683.00,609.00 L 685.00,608.50 L 687.00,603.00 L 690.00,602.50 L 692.00,592.00 L 691.50,588.50 L 692.50,588.00 L 692.00,584.50 L 694.50,585.00 L 694.00,573.50 L 695.50,565.50 L 697.50,567.50 L 695.00,560.50 L 693.00,558.50 L 693.50,557.00 L 692.50,557.00 L 692.50,555.00 L 691.00,554.50 L 691.50,552.50 L 690.00,552.00 L 690.50,550.00 L 689.00,550.00 L 689.50,547.50 L 688.00,547.50 L 688.50,545.50 L 687.00,545.00 L 687.50,543.00 L 686.00,542.50 L 686.50,541.00 L 685.00,540.50 Z" fill="#dab068"/>
+      <path d="M 562.00,499.00 L 560.00,500.50 L 560.00,502.00 Z" fill="#dab068"/>
+      <path d="M 688.00,485.00 L 689.00,488.50 L 688.00,490.50 L 689.50,490.00 L 693.00,496.00 L 694.50,488.50 L 696.00,486.50 L 695.00,485.00 Z" fill="#dab068"/>
+      <path d="M 567.50,474.50 L 558.00,487.00 L 560.00,485.50 L 561.00,487.00 L 563.50,487.50 L 566.50,490.00 L 570.50,482.00 L 570.50,479.50 L 565.50,478.50 Z" fill="#dab068"/>
+      <path d="M 579.50,456.00 L 569.50,471.50 L 575.00,464.50 L 576.50,465.50 Z" fill="#dab068"/>
+      <path d="M 673.50,447.00 L 674.50,451.00 L 674.00,451.50 L 673.50,450.00 L 673.00,451.00 L 674.00,454.50 L 675.00,453.50 L 676.50,455.50 L 676.00,460.50 L 679.00,468.50 L 681.50,470.50 L 683.50,476.00 L 685.50,477.50 L 688.00,475.50 L 688.00,474.00 L 689.50,473.50 L 684.50,466.50 Z" fill="#dab068"/>
+      <path d="M 670.50,442.00 L 671.50,444.50 L 672.00,443.00 Z" fill="#dab068"/>
+      <path d="M 606.00,415.00 L 608.00,425.50 L 607.00,416.50 Z" fill="#dab068"/>
+      <path d="M 603.00,395.50 L 604.00,400.50 L 604.00,397.00 Z" fill="#dab068"/>
+      <path d="M 647.00,370.00 L 648.00,378.50 L 648.00,372.00 Z" fill="#dab068"/>
+      <path d="M 669.00,347.00 L 667.50,347.00 L 666.50,348.50 L 667.00,350.00 L 668.00,350.00 Z" fill="#dab068"/>
+      <path d="M 583.50,341.00 L 583.50,343.50 L 584.50,343.50 Z" fill="#dab068"/>
+      <path d="M 582.00,308.50 L 582.00,312.50 L 583.00,313.50 Z" fill="#dab068"/>
+      <path d="M 581.00,303.00 L 582.00,307.00 L 582.00,304.00 Z" fill="#dab068"/>
+      <path d="M 598.50,302.00 L 597.00,302.50 L 596.00,306.00 L 596.00,328.50 L 592.00,330.50 L 589.00,334.00 L 588.50,336.00 L 586.00,338.00 L 585.50,344.00 L 584.00,345.00 L 584.00,346.00 L 585.50,346.50 L 585.00,348.00 L 586.50,348.50 L 586.00,350.50 L 587.50,350.50 L 587.00,352.50 L 588.50,353.00 L 588.00,354.00 L 589.50,355.00 L 589.00,356.00 L 592.00,358.50 L 597.50,354.50 L 599.50,351.00 L 599.50,331.00 L 605.50,316.50 L 605.00,314.00 L 606.50,314.50 L 600.00,304.00 L 598.00,303.00 Z" fill="#dab068"/>
+      <path d="M 664.50,295.00 L 661.00,299.00 L 661.50,300.00 L 660.50,301.50 L 659.00,301.50 L 658.00,303.00 L 658.50,304.00 L 657.00,304.50 L 654.50,308.00 L 654.50,310.00 L 649.00,318.50 L 647.50,318.50 L 646.50,339.50 L 648.00,330.00 L 649.00,336.50 L 650.50,336.50 L 652.00,339.00 L 653.50,338.50 L 656.00,333.00 L 657.50,333.50 L 657.50,335.50 L 660.00,334.00 L 660.00,329.50 L 658.50,330.50 L 657.00,329.00 L 657.00,326.50 L 658.50,324.00 L 661.50,329.00 L 661.50,332.00 L 663.50,333.50 L 663.50,335.00 L 669.00,337.50 L 673.00,337.00 L 672.50,343.00 L 668.00,352.50 L 667.00,357.00 L 673.50,343.00 L 674.50,331.00 L 673.50,335.50 L 672.50,320.00 L 671.50,319.50 L 672.50,318.50 L 671.00,317.50 L 669.00,311.00 L 666.50,308.50 Z" fill="#dab068"/>
+      <path d="M 570.00,277.50 L 575.50,284.50 L 575.00,286.50 L 576.50,286.50 L 576.00,288.50 L 577.50,288.50 L 577.00,290.50 L 578.50,291.00 L 579.50,295.50 L 581.50,297.00 L 580.00,300.50 L 581.00,300.50 L 582.00,298.50 L 583.00,299.50 L 586.50,294.00 L 587.00,291.00 L 583.50,287.00 L 584.00,286.00 Z" fill="#dab068"/>
+      <path d="M 553.00,249.00 L 550.00,254.50 L 550.50,257.00 L 549.00,257.50 L 549.00,266.00 L 551.00,267.00 L 551.00,268.50 L 552.50,267.00 L 554.50,260.00 L 554.50,253.50 L 552.50,251.50 Z" fill="#dab068"/>
+      <path d="M 702.00,243.50 L 700.50,245.00 L 701.00,247.50 L 700.00,249.50 L 703.00,255.50 L 704.00,260.00 L 705.00,261.00 L 705.00,259.00 L 707.50,257.50 L 709.00,258.50 L 710.50,262.50 L 709.50,256.00 L 707.50,250.00 L 706.00,249.00 L 706.50,247.50 L 705.50,247.50 L 703.50,244.00 Z" fill="#dab068"/>
+      <path d="M 807.00,940.50 L 816.00,941.50 L 884.00,941.00 Z" fill="#edd18f"/>
+      <path d="M 680.50,896.00 L 679.50,912.00 L 676.50,922.00 L 673.00,928.50 L 667.50,934.50 L 660.00,939.00 L 652.00,941.50 L 628.00,943.00 L 647.50,943.00 L 659.50,940.00 L 667.00,936.00 L 673.50,929.50 L 677.50,922.50 L 680.50,909.00 Z" fill="#edd18f"/>
+      <path d="M 767.00,873.50 L 767.50,945.00 L 768.00,905.50 Z" fill="#edd18f"/>
+      <path d="M 190.50,872.50 L 187.50,875.00 L 187.00,877.50 Z" fill="#edd18f"/>
+      <path d="M 470.50,865.00 L 466.00,865.50 L 463.50,864.00 L 460.50,864.00 L 460.00,865.50 L 461.00,866.50 L 460.00,871.50 L 458.50,873.00 L 457.00,873.00 L 455.00,877.50 L 451.00,880.50 L 448.50,885.50 L 447.00,886.00 L 456.00,899.50 L 462.00,892.50 L 463.50,892.50 L 469.50,887.00 L 478.50,884.50 L 484.50,884.50 L 485.00,883.50 L 488.50,886.00 Z" fill="#edd18f"/>
+      <path d="M 665.00,861.00 L 676.50,862.50 L 679.50,864.00 L 674.50,871.50 L 673.00,872.00 L 678.00,882.00 L 679.50,887.50 L 684.50,881.50 L 688.00,874.50 L 694.50,869.50 L 696.50,869.50 L 702.00,872.50 L 696.00,868.00 L 685.00,863.50 L 675.00,861.50 Z" fill="#edd18f"/>
+      <path d="M 804.00,858.00 L 804.00,859.00 L 815.50,859.50 L 816.00,860.50 L 832.00,860.50 L 832.50,859.50 L 843.50,858.50 L 862.00,858.50 Z" fill="#edd18f"/>
+      <path d="M 1009.50,857.50 L 1010.00,859.00 L 1008.50,860.00 L 1001.50,872.50 L 995.50,878.50 L 989.50,880.50 L 989.50,881.50 L 1007.00,900.00 L 1006.50,897.50 L 1010.00,893.50 L 1009.50,892.00 L 1013.50,885.50 L 1013.00,883.50 L 1015.50,881.50 L 1022.50,881.00 L 1029.50,877.50 Z" fill="#edd18f"/>
+      <path d="M 478.50,859.50 L 475.50,859.00 L 475.50,855.00 L 474.50,854.50 L 471.50,858.00 L 474.50,859.50 L 470.00,861.50 Z" fill="#edd18f"/>
+      <path d="M 481.00,834.50 L 478.50,843.50 L 475.00,850.00 L 469.50,856.00 L 462.50,860.00 L 450.50,862.50 L 396.50,862.50 L 396.50,863.50 L 451.00,863.50 L 461.50,861.50 L 471.00,856.50 L 474.50,852.50 L 480.00,842.00 Z" fill="#edd18f"/>
+      <path d="M 672.00,826.00 L 671.00,833.50 L 667.50,844.50 L 663.50,850.50 L 658.50,855.00 L 654.00,857.50 L 645.50,859.50 L 623.50,860.50 L 646.00,860.50 L 655.00,858.00 L 659.50,855.50 L 666.00,848.50 L 669.50,842.00 L 672.00,832.50 Z" fill="#edd18f"/>
+      <path d="M 242.00,787.00 L 173.50,891.00 L 182.50,879.00 L 196.00,858.50 L 197.50,859.00 L 198.00,860.50 L 197.00,862.50 L 199.00,860.50 L 204.50,851.00 L 225.00,821.50 L 231.00,829.00 L 235.50,837.50 L 248.50,857.00 L 250.50,850.50 L 247.50,846.50 L 248.00,842.50 L 249.50,842.50 L 248.50,839.50 L 251.00,836.50 L 251.00,834.00 L 253.00,833.50 L 257.50,829.50 L 264.50,827.00 L 265.50,824.00 Z" fill="#edd18f"/>
+      <path d="M 969.50,786.50 L 937.00,786.50 L 937.00,945.00 L 938.00,940.00 L 937.50,847.00 L 938.50,798.00 L 939.50,798.00 L 940.00,816.50 L 947.50,822.50 L 949.00,827.50 L 953.00,832.50 L 953.00,834.50 L 959.00,837.00 L 964.00,837.00 L 966.50,834.00 L 968.50,837.00 L 968.50,788.00 Z" fill="#edd18f"/>
+      <path d="M 378.50,786.50 L 378.50,787.50 L 448.50,787.50 L 464.50,790.50 L 470.00,793.50 L 475.50,799.00 L 479.00,805.00 L 481.00,814.00 L 481.00,832.50 L 482.50,817.50 L 486.50,817.50 L 489.50,816.00 L 492.00,813.00 L 499.50,810.50 L 503.50,807.00 L 505.50,803.50 L 507.50,805.00 L 504.00,800.00 L 494.50,793.50 L 487.50,790.50 L 474.50,787.50 L 466.00,786.50 Z" fill="#edd18f"/>
+      <path d="M 767.00,863.50 L 768.00,801.00 L 769.00,795.50 L 770.00,816.00 L 771.00,814.00 L 774.00,816.00 L 774.00,817.50 L 779.00,823.00 L 781.00,830.50 L 784.50,832.50 L 795.50,831.00 L 797.50,829.50 L 799.50,836.50 L 799.50,790.00 L 800.50,788.50 L 878.00,789.00 L 878.50,786.00 L 767.00,786.00 Z" fill="#edd18f"/>
+      <path d="M 584.50,846.00 L 586.00,804.50 L 588.00,815.50 L 592.50,817.50 L 595.50,821.00 L 598.00,828.50 L 602.00,831.50 L 604.00,830.00 L 606.00,831.50 L 608.00,830.50 L 613.00,831.00 L 616.00,833.50 L 617.50,840.00 L 618.00,788.50 L 619.00,787.50 L 638.50,787.50 L 646.50,788.50 L 654.50,790.50 L 660.50,794.00 L 666.00,799.00 L 670.00,807.50 L 672.00,823.50 L 672.50,818.50 L 673.50,817.50 L 675.00,818.00 L 682.00,813.50 L 688.50,811.50 L 691.50,808.00 L 696.50,806.00 L 690.50,798.50 L 684.50,794.50 L 675.50,790.50 L 662.50,787.50 L 652.50,786.50 L 585.00,786.00 Z" fill="#edd18f"/>
+      <path d="M 1083.00,784.50 L 1074.00,785.00 L 1003.00,840.50 L 998.50,845.00 L 1021.00,828.00 L 1023.00,828.00 L 1022.00,829.50 L 1024.50,828.50 L 1050.00,808.50 Z" fill="#edd18f"/>
+      <path d="M 670.50,570.50 L 669.50,597.00 L 671.00,606.50 L 673.00,612.00 L 670.50,599.50 Z" fill="#edd18f"/>
+      <path d="M 683.50,532.00 L 696.50,563.00 L 698.00,569.00 L 697.50,569.50 L 695.50,567.00 L 694.50,575.00 L 695.00,585.50 L 692.50,585.00 L 692.50,595.00 L 691.00,597.50 L 690.50,602.50 L 689.50,603.50 L 687.50,603.00 L 685.50,608.50 L 683.50,609.00 L 683.00,611.50 L 681.00,611.50 L 676.50,619.00 L 675.50,618.50 L 673.50,613.00 L 673.00,614.00 L 680.00,632.50 L 691.00,652.50 L 687.00,642.50 L 689.50,641.50 L 691.50,636.00 L 693.00,635.00 L 694.50,631.50 L 696.00,631.50 L 697.50,625.50 L 702.50,620.00 L 704.00,620.00 L 705.50,618.50 L 706.00,615.00 L 707.50,615.50 L 708.50,614.00 L 710.50,614.50 L 713.50,613.00 L 714.00,611.00 L 715.50,614.00 L 716.50,614.00 L 709.50,592.00 L 702.50,574.50 Z" fill="#edd18f"/>
+      <path d="M 576.00,524.00 L 557.50,564.00 L 544.50,595.00 L 534.50,626.50 L 530.00,649.50 L 528.50,678.50 L 530.50,698.00 L 536.00,721.50 L 545.50,745.00 L 544.50,736.50 L 544.50,717.00 L 546.00,704.50 L 548.50,694.00 L 557.00,670.00 L 573.50,635.50 L 571.50,637.50 L 565.00,650.50 L 563.50,652.00 L 563.00,650.00 L 562.00,650.00 L 558.50,654.00 L 556.00,647.00 L 554.50,645.50 L 553.50,645.50 L 553.00,647.50 L 551.50,646.50 L 550.50,644.50 L 551.00,641.50 L 547.50,645.00 L 547.00,644.00 L 548.00,642.00 L 546.50,642.00 L 545.00,638.00 L 544.00,638.00 L 541.50,641.50 L 539.00,642.50 L 544.00,636.00 L 543.00,634.00 L 541.00,635.50 L 540.00,635.00 L 541.00,631.00 L 538.00,629.00 L 537.00,629.50 L 534.00,643.00 L 533.00,641.00 L 533.50,637.00 L 541.50,606.50 L 547.00,591.00 L 565.00,549.00 L 570.00,539.50 Z" fill="#edd18f"/>
+      <path d="M 674.00,508.50 L 674.00,511.50 L 675.00,511.50 Z" fill="#edd18f"/>
+      <path d="M 682.00,460.50 L 690.00,474.50 L 688.50,474.50 L 688.50,475.50 L 685.00,478.50 L 680.50,470.50 L 687.00,487.50 L 688.00,487.50 L 688.00,484.00 L 691.00,484.00 L 691.50,485.00 L 694.50,484.00 L 696.50,486.50 L 695.00,488.50 L 693.00,497.00 L 689.50,492.00 L 690.00,494.50 L 721.00,563.00 L 729.00,584.00 L 730.00,584.50 L 727.50,575.00 L 728.00,574.50 L 730.00,576.50 L 731.50,571.00 L 733.00,570.00 L 732.50,568.50 L 733.50,565.50 L 736.00,565.50 L 742.00,560.00 L 743.50,560.00 L 743.50,558.50 L 749.50,554.50 L 750.00,552.50 L 752.00,554.50 L 756.00,563.00 L 756.50,562.00 L 747.50,544.50 L 741.00,535.00 L 700.00,486.00 Z" fill="#edd18f"/>
+      <path d="M 669.00,433.00 L 671.00,441.00 L 672.00,441.50 L 677.00,453.00 L 681.00,458.50 Z" fill="#edd18f"/>
+      <path d="M 589.00,432.00 L 580.50,451.00 L 566.00,473.50 L 548.50,495.50 L 519.00,529.00 L 506.50,546.00 L 495.00,569.50 L 490.50,585.00 L 489.00,596.00 L 495.00,572.50 L 503.00,555.00 L 507.00,549.50 L 507.00,552.50 L 509.00,552.50 L 511.50,555.50 L 515.50,556.50 L 514.50,560.50 L 516.00,559.50 L 517.00,560.00 L 517.00,565.00 L 519.00,564.00 L 520.50,566.50 L 524.00,565.50 L 523.00,568.50 L 525.50,568.50 L 525.00,570.50 L 526.00,572.00 L 529.00,571.00 L 526.50,580.00 L 527.50,579.50 L 541.00,547.00 L 574.50,476.50 L 578.50,463.50 L 584.50,449.00 Z" fill="#edd18f"/>
+      <path d="M 598.50,301.00 L 607.00,315.00 L 605.00,317.50 L 600.00,331.00 L 599.50,352.50 L 594.50,357.00 L 593.00,360.00 L 591.00,357.50 L 590.50,358.00 L 596.00,369.00 L 602.50,387.50 L 606.50,394.50 L 609.50,377.50 L 611.50,318.00 Z" fill="#edd18f"/>
+      <path d="M 689.50,275.00 L 683.00,277.50 L 675.00,283.00 L 659.00,299.50 L 645.50,318.50 L 645.50,331.00 L 646.50,331.00 L 647.00,318.50 L 660.00,299.50 L 665.50,294.00 L 667.00,308.50 L 669.50,311.00 L 671.50,317.50 L 672.00,314.00 L 673.00,314.00 L 673.00,328.50 L 674.00,330.50 L 673.50,316.00 L 676.50,298.50 L 680.50,288.50 Z" fill="#edd18f"/>
+      <path d="M 567.00,274.50 L 568.00,276.00 L 571.00,277.00 L 584.00,285.50 L 576.50,279.00 Z" fill="#edd18f"/>
+      <path d="M 614.50,202.00 L 599.50,205.50 L 583.00,213.00 L 572.00,221.00 L 563.00,229.50 L 553.50,243.00 L 549.00,253.00 L 545.50,266.50 L 545.00,282.00 L 547.00,262.00 L 552.50,248.00 L 553.50,248.00 L 553.00,251.50 L 555.00,253.50 L 555.00,256.00 L 565.50,236.00 L 579.00,220.50 L 594.50,209.50 Z" fill="#edd18f"/>
+      <path d="M 641.00,201.50 L 657.00,206.00 L 672.50,214.50 L 687.00,227.50 L 694.00,237.00 L 700.00,247.50 L 700.00,245.00 L 702.50,242.50 L 705.00,245.50 L 702.00,239.00 L 696.50,231.00 L 682.00,217.00 L 670.50,210.00 L 662.50,206.50 L 649.50,202.50 Z" fill="#edd18f"/>
+    </g>
+    <symbol id="arbek-logo" viewBox="118 180 1004 790"><use href="#arbek-paths"/></symbol>
+    <symbol id="arbek-emblem" viewBox="470 185 314 580"><use href="#arbek-paths"/></symbol>
+    <symbol id="arbek-word" viewBox="120 790 1000 170"><use href="#arbek-paths"/></symbol>
+  </defs>
+</svg>
+
+<!-- Preloader -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <svg class="loader-emblem" viewBox="0 0 314 580"><use href="#arbek-emblem"/></svg>
+    <svg class="loader-word" viewBox="0 0 1000 170"><use href="#arbek-word"/></svg>
+    <div class="loader-bar"><span></span></div>
+  </div>
+</div>
+
+<!-- Announcement bar -->
+<div class="bar" id="bar">
+  <span>Complimentary shipping on orders over $250</span>
+  <span class="sep">·</span>
+  <span class="hide-m">Private appointments now open</span>
+  <span class="sep">·</span>
+  <span class="hide-m">Ships worldwide</span>
+</div>
+
+<!-- Header -->
+<header class="site" id="header">
+  <div class="shell-wide nav-wrap">
+    <nav class="nav" aria-label="Primary">
+      <button class="menu-btn" id="menuOpen" aria-label="Open menu" aria-controls="menu" aria-expanded="false">
+        <span class="lines"><span></span><span></span></span>
+        <span class="hide-m">Menu</span>
+      </button>
+
+      <ul class="nav-links">
+        <li class="has-mega">
+          <a href="#worlds" aria-haspopup="true">Shop</a>
+          <div class="mega" role="region" aria-label="Shop categories">
+            <div class="mega-intro">
+              <div class="eyebrow">Five worlds</div>
+              <h4 class="serif">One house. Five ways to be remembered.</h4>
+              <p>Every ARBEK piece is chosen to complete a presence, from the first impression to the lasting trace.</p>
+              <a class="btn-text" href="#edit">View the edit <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+            </div>
+            <div class="mega-grid" id="megaGrid"></div>
+          </div>
+        </li>
+        <li><a href="#edit" data-open-cat="all">Collection</a></li>
+        <li><a href="#hair">Hair</a></li>
+        <li><a href="#fragrance">Fragrance</a></li>
+        <li><a href="#story">The House</a></li>
+      </ul>
+
+      <a class="brand-mark" href="#top" aria-label="ARBEK home">
+        <svg class="emblem" viewBox="0 0 314 580"><use href="#arbek-emblem"/></svg>
+        <svg class="word" viewBox="0 0 1000 170"><use href="#arbek-word"/></svg>
+      </a>
+
+      <div class="nav-actions">
+        <a class="u hide-m" href="#services">Services</a>
+        <button class="icon-btn u" id="searchOpen" aria-label="Search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <span class="hide-m">Search</span>
+        </button>
+        <a class="icon-btn u hide-m" href="#" aria-label="Account">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        </a>
+        <button class="icon-btn" id="cartOpen" aria-label="Open bag" aria-controls="cart" aria-expanded="false">
+          <svg viewBox="0 0 24 24"><path d="M5 8h14l-1 13H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+          <span class="hide-m">Bag</span>
+          <span class="bag-count" id="bagCount">0</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div id="top"></div>
+
+<!-- ==========================================================
+     HERO
+     ========================================================== -->
+<section class="hero" id="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="glow"></div>
+    <div class="grain"></div>
+    <div class="rules"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+  <svg class="hero-emblem" id="heroEmblem" viewBox="0 0 314 580" aria-hidden="true"><use href="#arbek-emblem"/></svg>
+
+  <div class="shell">
+    <div class="hero-grid">
+      <div class="hero-copy in">
+        <div class="eyebrow reveal-line"><span>Fashion · Fragrance · Hair · Beauty</span></div>
+        <h1>
+          <span class="reveal-line" style="--d:.15s"><span>Wear</span></span>
+          <span class="reveal-line" style="--d:.3s"><span>the <em class="it">presence.</em></span></span>
+        </h1>
+        <p class="lede reveal" style="--d:.55s">
+          ARBEK is a modern luxury house bringing together statement fashion, signature perfumes,
+          premium hair and refined beauty. Designed for clients who value presence, detail, confidence and distinction.
+        </p>
+        <div class="hero-actions reveal" style="--d:.7s">
+          <a class="btn filled" href="#worlds">Explore the collection <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+          <a class="btn" href="#story">Discover the house</a>
+        </div>
+      </div>
+      <div class="hero-aside in">
+        <div class="spec reveal" style="--d:.8s"><b>05</b><span>Worlds</span></div>
+        <div class="spec reveal" style="--d:.9s"><b>01</b><span>House</span></div>
+        <div class="spec reveal" style="--d:1s"><b class="serif it">Limited</b><span>Seasonal capsules</span></div>
+      </div>
+    </div>
+    <div class="hero-foot reveal in" style="--d:1.1s">
+      <a class="scroll-cue" href="#worlds"><i></i> Scroll to enter</a>
+      <span>The House of ARBEK · Est. MMXXVI</span>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <ul>
+      <li>Clothing</li><li>Perfumes</li><li>Wigs &amp; Weaves</li><li>Lip Balms</li><li>Beauty</li>
+      <li>Private Appointments</li><li>Limited Capsules</li><li>Worldwide Shipping</li>
+    </ul>
+    <ul>
+      <li>Clothing</li><li>Perfumes</li><li>Wigs &amp; Weaves</li><li>Lip Balms</li><li>Beauty</li>
+      <li>Private Appointments</li><li>Limited Capsules</li><li>Worldwide Shipping</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==========================================================
+     FIVE WORLDS — categories
+     ========================================================== -->
+<section class="worlds pad" id="worlds">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Five worlds. One house.</div>
+        <h2>Shop <em class="it">ARBEK</em></h2>
+      </div>
+      <div class="side">
+        <p>Fashion and hair anchor the house. Fragrance, lip care and beauty complete the presence. Every category is curated with the same controlled eye: black, gold, and nothing unnecessary.</p>
+        <a class="btn-text" href="#edit">See the first edit <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+      </div>
+    </div>
+    <div class="world-grid" id="worldGrid"></div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     FIRST EDIT — products
+     ========================================================== -->
+<section class="edit pad" id="edit">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">First edit</div>
+        <h2>Featured <em class="it">pieces</em></h2>
+      </div>
+      <div class="rail-ctrl" aria-label="Scroll products">
+        <button id="railPrev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <button id="railNext" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="rail" id="rail" tabindex="0" aria-label="Featured products"></div>
+    </div>
+    <p class="rail-note reveal">Product names, imagery and pricing shown are placeholders for the prototype. Drop photos into <code>public/images/products/&lt;category&gt;/</code> and they appear here automatically.</p>
+  </div>
+</section>
+
+<!-- ==========================================================
+     STATEMENT — the house
+     ========================================================== -->
+<section class="statement pad" id="story">
+  <div class="shell">
+    <div class="reveal">
+      <div class="eyebrow center">The House of ARBEK</div>
+      <h2 class="big">Designed to be <em class="it">recognized.</em></h2>
+      <p class="lede">
+        ARBEK is positioned as a distinctive luxury house rather than a standard online boutique.
+        The visual language is intentionally controlled: black, gold, sharp typography, generous space
+        and a signature bird emblem. Fashion, fragrance, hair and beauty live under one name because each
+        is part of the final presence: what you wear, how you enter a room, and how you are remembered.
+      </p>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal" style="--d:.05s"><span class="n">I</span><h3>Presence</h3><p>Pieces chosen to hold a room. Silhouette, finish and proportion before trend.</p></div>
+      <div class="pillar reveal" style="--d:.15s"><span class="n">II</span><h3>Detail</h3><p>Hand-finished edges, considered closures, textures selected to be seen up close.</p></div>
+      <div class="pillar reveal" style="--d:.25s"><span class="n">III</span><h3>Rarity</h3><p>Limited drops and seasonal capsules. When a piece is gone, it is gone.</p></div>
+      <div class="pillar reveal" style="--d:.35s"><span class="n">IV</span><h3>Service</h3><p>Private appointments, hair consultations and a client team that remembers your name.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     SPOTLIGHTS — hair atelier, fragrance & beauty
+     ========================================================== -->
+<section class="pad" id="hair">
+  <div class="shell">
+    <div class="spot">
+      <div class="spot-art reveal">
+        <div class="art" data-cat="hair" data-img="public/images/products/hair/spotlight.jpg">
+          <svg class="emb" viewBox="0 0 314 580" aria-hidden="true"><use href="#arbek-emblem"/></svg>
+          <span class="frame"></span>
+        </div>
+        <div class="plate"><b>Atelier</b><span>Wigs · Weaves · Consultations</span></div>
+      </div>
+      <div class="spot-copy reveal" style="--d:.15s">
+        <div class="eyebrow">The Hair Atelier</div>
+        <h2>Hair, treated as <em class="it">couture.</em></h2>
+        <p class="lede">Premium wigs and weaves selected for density, movement and a finish that reads as your own. Each unit is reviewed by hand before it leaves the house.</p>
+        <ul class="spec-list">
+          <li><span class="k">01</span><span class="v">Lace-front &amp; full-lace wigs</span><span class="d">Pre-plucked, HD lace</span></li>
+          <li><span class="k">02</span><span class="v">Bundles &amp; closures</span><span class="d">Straight · Body wave · Curly</span></li>
+          <li><span class="k">03</span><span class="v">Lengths 12" to 30"</span><span class="d">Natural &amp; custom colour</span></li>
+          <li><span class="k">04</span><span class="v">Private consultation</span><span class="d">In person or virtual</span></li>
+        </ul>
+        <div class="actions">
+          <a class="btn filled" href="#worlds" data-open-cat="hair">Shop hair</a>
+          <a class="btn" href="#services">Book a consultation</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="spot flip" id="fragrance">
+      <div class="spot-art reveal">
+        <div class="art" data-cat="perfumes" data-img="public/images/products/perfumes/spotlight.jpg">
+          <svg class="emb" viewBox="0 0 314 580" aria-hidden="true"><use href="#arbek-emblem"/></svg>
+          <span class="frame"></span>
+        </div>
+        <div class="plate"><b>Scent</b><span>Perfume · Lip balm · Beauty</span></div>
+      </div>
+      <div class="spot-copy reveal" style="--d:.15s">
+        <div class="eyebrow">Fragrance &amp; Beauty</div>
+        <h2>The trace you <em class="it">leave behind.</em></h2>
+        <p class="lede">Signature eaux de parfum, nourishing lip balms and a tight edit of beauty essentials. Small objects, finished to the same standard as the clothes.</p>
+        <ul class="spec-list">
+          <li><span class="k">01</span><span class="v">Eau de parfum, 50 ml &amp; 100 ml</span><span class="d">Signature house scents</span></li>
+          <li><span class="k">02</span><span class="v">Tinted &amp; clear lip balms</span><span class="d">Shea · Vitamin E</span></li>
+          <li><span class="k">03</span><span class="v">Glow &amp; skin essentials</span><span class="d">Curated, not crowded</span></li>
+          <li><span class="k">04</span><span class="v">Signature gift wrapping</span><span class="d">Complimentary</span></li>
+        </ul>
+        <div class="actions">
+          <a class="btn filled" href="#worlds" data-open-cat="perfumes">Shop fragrance</a>
+          <a class="btn" href="#worlds" data-open-cat="beauty">Shop beauty</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     SERVICES
+     ========================================================== -->
+<section class="services pad" id="services">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Client services</div>
+        <h2>The ARBEK <em class="it">standard</em></h2>
+      </div>
+      <div class="side"><p>Luxury is what happens after you click. Every order and every question is handled by the house.</p></div>
+    </div>
+    <div class="service-grid">
+      <article class="service reveal" style="--d:.05s">
+        <svg viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="30"/><path d="M6 18h36M16 10V6M32 10V6"/></svg>
+        <div><h3>Private appointments</h3><p>One-to-one styling and hair consultations, in person or by video. Reserved for clients who want the house to themselves.</p></div>
+      </article>
+      <article class="service reveal" style="--d:.15s">
+        <svg viewBox="0 0 48 48"><path d="M4 30h30l6-10h4"/><path d="M4 30V14h24v16"/><circle cx="12" cy="36" r="3"/><circle cx="32" cy="36" r="3"/></svg>
+        <div><h3>Complimentary shipping</h3><p>On orders over $250, delivered worldwide with tracking. Express and same-city courier on request.</p></div>
+      </article>
+      <article class="service reveal" style="--d:.25s">
+        <svg viewBox="0 0 48 48"><rect x="8" y="18" width="32" height="24"/><path d="M8 26h32M24 18v24"/><path d="M24 18c-6 0-10-4-10-8 0-3 3-4 5-2 2 2 4 6 5 10 1-4 3-8 5-10 2-2 5-1 5 2 0 4-4 8-10 8z"/></svg>
+        <div><h3>Signature wrapping</h3><p>Every piece arrives in black and gold ARBEK packaging with a handwritten card when gifting.</p></div>
+      </article>
+      <article class="service reveal" style="--d:.35s">
+        <svg viewBox="0 0 48 48"><path d="M24 6c8 10 12 16 12 24a12 12 0 0 1-24 0c0-8 4-14 12-24z"/><path d="M24 44V22"/></svg>
+        <div><h3>Care &amp; aftercare</h3><p>Hair care guidance, garment care notes and 14-day returns on unworn pieces. The relationship does not end at delivery.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     Q&A
+     ========================================================== -->
+<section class="pad" id="qa">
+  <div class="shell qa-grid">
+    <div class="qa-intro reveal">
+      <div class="eyebrow">Q&amp;A</div>
+      <h2>Questions, <em class="it">answered.</em></h2>
+      <p class="small">Can't find what you need? The client team replies within one business day.</p>
+      <a class="btn" href="mailto:hello@arbek.co">Contact the house</a>
+    </div>
+    <div class="qa-list" id="qaList">
+      <div class="qa-item open">
+        <button class="qa-q" aria-expanded="true"><span class="n">01</span><span>What does ARBEK sell?</span><span class="pm" aria-hidden="true"></span></button>
+        <div class="qa-a"><div><p>Luxury clothing and statement fashion, signature perfumes, premium wigs and weaves, nourishing lip balms and a curated edit of beauty products. Five worlds under one house.</p></div></div>
+      </div>
+      <div class="qa-item">
+        <button class="qa-q" aria-expanded="false"><span class="n">02</span><span>Are collections limited?</span><span class="pm" aria-hidden="true"></span></button>
+        <div class="qa-a"><div><p>Yes. ARBEK releases limited drops and seasonal capsules to preserve rarity. Members of the Private List receive early access before pieces reach the public store.</p></div></div>
+      </div>
+      <div class="qa-item">
+        <button class="qa-q" aria-expanded="false"><span class="n">03</span><span>Can I filter hair by length, texture and colour?</span><span class="pm" aria-hidden="true"></span></button>
+        <div class="qa-a"><div><p>Yes. Wigs and weaves are organised by length, texture, lace type, density and colour so you can find your match quickly. A consultation is available if you would like guidance.</p></div></div>
+      </div>
+      <div class="qa-item">
+        <button class="qa-q" aria-expanded="false"><span class="n">04</span><span>Do you ship internationally?</span><span class="pm" aria-hidden="true"></span></button>
+        <div class="qa-a"><div><p>ARBEK ships worldwide with full tracking. Shipping is complimentary on orders over $250. Duties and taxes for international orders are calculated at checkout where available.</p></div></div>
+      </div>
+      <div class="qa-item">
+        <button class="qa-q" aria-expanded="false"><span class="n">05</span><span>What is your returns policy?</span><span class="pm" aria-hidden="true"></span></button>
+        <div class="qa-a"><div><p>Unworn clothing with tags may be returned within 14 days. For hygiene reasons, hair, perfumes, lip balms and beauty products are final sale once opened. Damaged or incorrect items are always replaced.</p></div></div>
+      </div>
+      <div class="qa-item">
+        <button class="qa-q" aria-expanded="false"><span class="n">06</span><span>Do you offer private or VIP shopping?</span><span class="pm" aria-hidden="true"></span></button>
+        <div class="qa-a"><div><p>Yes. Private appointments, invitation-only collections and VIP client access are available. Request an appointment through client services and the house will arrange a time.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     PRIVATE LIST — newsletter
+     ========================================================== -->
+<section class="private pad" id="private">
+  <div class="shell reveal">
+    <div class="eyebrow center">The Private List</div>
+    <h2>Enter the world of <em class="it">ARBEK.</em></h2>
+    <p class="lede">Early access to new collections, hair launches, private appointments and limited releases. Rarely, and only when it matters.</p>
+    <form class="signup" id="signup" novalidate>
+      <label class="skip" for="email">Email address</label>
+      <input id="email" type="email" name="email" placeholder="Your email address" autocomplete="email" required />
+      <button type="submit">Join <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 8h13M9 3l5 5-5 5"/></svg></button>
+    </form>
+    <div class="signup-msg" id="signupMsg" role="status" aria-live="polite"></div>
+    <p class="fine">By joining you agree to receive ARBEK communications. Unsubscribe at any time.</p>
+  </div>
+</section>
+</main>
+
+<!-- ==========================================================
+     FOOTER
+     ========================================================== -->
+<footer>
+  <div class="shell">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <svg class="emblem" viewBox="0 0 314 580" aria-hidden="true"><use href="#arbek-emblem"/></svg>
+        <p>Luxury fashion, fragrance, hair and beauty. The House of ARBEK.</p>
+        <a class="btn-text" href="mailto:hello@arbek.co">hello@arbek.co</a>
+      </div>
+      <div class="foot-col">
+        <strong>Shop</strong>
+        <a href="#worlds" data-open-cat="clothing">Clothing</a>
+        <a href="#worlds" data-open-cat="perfumes">Perfumes</a>
+        <a href="#worlds" data-open-cat="hair">Wigs &amp; Weaves</a>
+        <a href="#worlds" data-open-cat="lip-balms">Lip Balms</a>
+        <a href="#worlds" data-open-cat="beauty">Beauty</a>
+        <a href="#edit">New Arrivals</a>
+      </div>
+      <div class="foot-col">
+        <strong>Client services</strong>
+        <a href="#qa">Q&amp;A</a>
+        <a href="#services">Shipping</a>
+        <a href="#services">Returns</a>
+        <a href="#services">Appointments</a>
+        <a href="#services">Gift wrapping</a>
+      </div>
+      <div class="foot-col">
+        <strong>The House</strong>
+        <a href="#story">About ARBEK</a>
+        <a href="#" rel="noopener">Instagram</a>
+        <a href="#" rel="noopener">TikTok</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+    <div class="foot-word reveal" aria-hidden="true">
+      <svg viewBox="0 0 1000 170"><use href="#arbek-word"/></svg>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> ARBEK. All rights reserved.</span>
+      <div class="links"><span>USD $</span><span>English</span><span>arbek.co</span></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ==========================================================
+     Overlays
+     ========================================================== -->
+<div class="scrim" id="scrim"></div>
+
+<aside class="drawer" id="cart" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+  <div class="drawer-head">
+    <h3 id="cartTitle">Your bag <span class="gold" id="cartCountTitle"></span></h3>
+    <button class="x" id="cartClose" aria-label="Close bag"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg></button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot">
+    <div class="totals"><span>Subtotal</span><b id="cartTotal">$0</b></div>
+    <a class="btn filled" href="#" id="checkoutBtn">Proceed to checkout</a>
+    <span class="small">Shipping and taxes calculated at checkout</span>
+  </div>
+</aside>
+
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
+  <div class="menu-head">
+    <svg viewBox="0 0 314 580" style="width:36px" aria-hidden="true"><use href="#arbek-emblem"/></svg>
+    <button class="x" id="menuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg></button>
+  </div>
+  <nav class="menu-body" aria-label="Mobile">
+    <a href="#worlds" style="transition-delay:.1s"><small>01</small> Shop</a>
+    <a href="#edit" data-open-cat="all" style="transition-delay:.16s"><small>02</small> Collection</a>
+    <a href="#hair" style="transition-delay:.22s"><small>03</small> Hair</a>
+    <a href="#fragrance" style="transition-delay:.28s"><small>04</small> Fragrance</a>
+    <a href="#story" style="transition-delay:.34s"><small>05</small> The House</a>
+    <a href="#services" style="transition-delay:.4s"><small>06</small> Services</a>
+    <a href="#qa" style="transition-delay:.46s"><small>07</small> Q&amp;A</a>
+  </nav>
+  <div class="menu-foot">
+    <span>hello@arbek.co</span>
+    <span>Instagram · TikTok</span>
+  </div>
+</div>
+
+<div class="search" id="search" role="dialog" aria-modal="true" aria-label="Search" aria-hidden="true">
+  <div class="search-box">
+    <div class="row">
+      <input id="searchInput" type="search" placeholder="Search the house" autocomplete="off" />
+      <button class="x" id="searchClose" aria-label="Close search"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg></button>
+    </div>
+    <div class="search-hint" id="searchHint">Try: <button type="button" data-q="wig">Wig</button><button type="button" data-q="perfume">Perfume</button><button type="button" data-q="dress">Dress</button><button type="button" data-q="balm">Lip balm</button></div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- Collection view: every piece in a category -->
+<div class="collection" id="collection" role="dialog" aria-modal="true" aria-labelledby="colTitle" aria-hidden="true" data-stackable="1">
+  <div class="col-shell">
+    <div class="col-head">
+      <div>
+        <div class="eyebrow" id="colKicker"></div>
+        <h2 id="colTitle"></h2>
+      </div>
+      <div class="col-meta">
+        <span id="colCount"></span>
+        <button class="x" id="colClose" data-autofocus aria-label="Close collection"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg></button>
+      </div>
+    </div>
+    <div class="col-grid" id="colGrid"></div>
+    <p class="col-note">Tap any piece to open its gallery and scroll through the pictures. Add to bag from the gallery, or close it and add from the card.</p>
+  </div>
+</div>
+
+<!-- Gallery: three pictures per piece -->
+<div class="gallery" id="gallery" role="dialog" aria-modal="true" aria-labelledby="galName" aria-hidden="true" data-stackable="1">
+  <div class="gallery-inner">
+    <button class="x gal-x" id="galClose" data-autofocus aria-label="Close gallery"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg></button>
+    <div class="gal-media">
+      <div class="slides" id="galSlides" aria-live="polite"></div>
+      <div class="gal-count"><span id="galIdx">1</span> / <span id="galTotal">3</span></div>
+      <button class="gal-nav prev" id="galPrev" type="button" aria-label="Previous picture"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <button class="gal-nav next" id="galNext" type="button" aria-label="Next picture"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <div class="thumbs" id="galThumbs"></div>
+    </div>
+    <div class="gal-info">
+      <div class="eyebrow" id="galCat"></div>
+      <h3 id="galName"></h3>
+      <div class="gal-price" id="galPrice"></div>
+      <p id="galDesc"></p>
+      <div class="gal-sizes" id="galSizes"></div>
+      <div class="gal-actions">
+        <button class="btn filled" id="galAdd" type="button">Add to bag</button>
+        <button class="wish-btn" id="galWish" type="button" aria-label="Save to wishlist"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg></button>
+        <button class="btn" id="galBack" type="button">Close</button>
+      </div>
+      <button class="btn-text gal-viewbag" id="galViewBag" type="button" hidden>View bag <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 8h13M9 3l5 5-5 5"/></svg></button>
+      <ul class="gal-notes">
+        <li>Complimentary shipping on orders over $250</li>
+        <li>Signature black and gold wrapping included</li>
+        <li>14-day returns on unworn clothing with tags</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><i></i><span id="toastText"></span></div>
+<button class="totop" id="totop" aria-label="Back to top"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+
+<script>
+/* ==============================================================
+   ARBEK — storefront prototype logic
+   Catalogue data lives here until the real backend exists.
+   ============================================================== */
+const CATEGORIES = [
+  { slug: 'clothing',  name: 'Clothing',       kicker: 'Ready-to-wear & occasion', blurb: 'Elevated ready-to-wear, statement pieces, occasion dressing and limited seasonal capsules.', idx: '01' },
+  { slug: 'hair',      name: 'Wigs & Weaves',  kicker: 'The hair atelier',         blurb: 'Premium lace-front wigs, bundles and closures selected for density, movement and finish.', idx: '02' },
+  { slug: 'perfumes',  name: 'Perfumes',       kicker: 'Signature scents',         blurb: 'Eaux de parfum composed to be remembered long after you have left the room.', idx: '03' },
+  { slug: 'lip-balms', name: 'Lip Balms',      kicker: 'Nourish & tint',           blurb: 'Shea-rich balms in clear and tinted finishes. Small, considered, essential.', idx: '04' },
+  { slug: 'beauty',    name: 'Beauty',         kicker: 'Skin & glow',              blurb: 'A tight edit of glow oils, skin essentials and finishing touches.', idx: '05' },
+];
+
+/* Placeholder catalogue. Prices are sample values; edit freely.
+   Every product has a gallery of `images` pictures (3 by default).
+   Image path convention: public/images/products/<category>/<id>-1.jpg, <id>-2.jpg, <id>-3.jpg
+   The first picture (<id>-1.jpg) is also the card image. */
+const SIZES = ['XS', 'S', 'M', 'L', 'XL'];
+const PRODUCTS = [
+  /* Clothing: the four outfits photographed in Photos/clothing (three shots each) */
+  { id: 'gold-dot-midi',     name: 'Gold Dot Wrap Midi',        cat: 'clothing',  price: 420, tag: 'Signature look', sizes: SIZES,
+    desc: 'Chocolate and gold micro-dot midi with blouson sleeves, a bateau neckline and a draped wrap skirt finished with a bold border hem. The house colours, worn head to toe.' },
+  { id: 'grey-power-suit',   name: 'Grey Power Suit',           cat: 'clothing',  price: 590, tag: 'Tailoring', sizes: SIZES,
+    desc: 'Two-button single-breasted blazer with a deep lapel and a matching straight-leg trouser in mid-grey wool blend. Cut close through the waist. Discipline builds freedom.' },
+  { id: 'olive-pleat-set',   name: 'Olive Satin Shirt & Pleated Midi', cat: 'clothing', price: 360, tag: 'Two-piece', sizes: SIZES,
+    desc: 'A fluid olive satin shirt, worn tucked, over a black knife-pleat midi skirt with a clean waistband. Quiet, polished and made for the office to evening.' },
+  { id: 'ivory-dot-tiered',  name: 'Ivory Polka Dot Tiered Dress', cat: 'clothing', price: 380, tag: 'Occasion', sizes: SIZES,
+    desc: 'Sheer-overlay tiered midi in ivory with black polka dots, a sweetheart neckline and soft cap sleeves. Fully lined, with a gentle flare that moves when you do.' },
+  { id: 'the-crown',         name: 'The ARBEK Crown',           cat: 'hair',      price: 520, tag: 'Premium wig',
+    desc: '13x6 HD lace-front unit in 100% raw human hair. Pre-plucked hairline, bleached knots, 180% density. 22 inches, natural black.' },
+  { id: 'silk-length',       name: 'Silk Length Bundles',       cat: 'hair',      price: 310, tag: 'Weave · 3 bundles',
+    desc: 'Three double-drawn bundles of raw straight hair, cuticle aligned. 18, 20 and 22 inches. Takes colour beautifully.' },
+  { id: 'noir-eclat',        name: 'Noir Éclat Eau de Parfum',  cat: 'perfumes',  price: 185, tag: '100 ml',
+    desc: 'Black pepper and saffron over smoked oud and amber. Made to be noticed after you have left the room.' },
+  { id: 'golden-hour',       name: 'Golden Hour Eau de Parfum', cat: 'perfumes',  price: 165, tag: '50 ml',
+    desc: 'Neroli, fig leaf and warm sandalwood. The scent of late light on skin.' },
+  { id: 'velvet-tint',       name: 'Velvet Tint Lip Balm',      cat: 'lip-balms', price: 28,  tag: 'Tinted',
+    desc: 'Shea, jojoba and vitamin E in a sheer bordeaux tint. Gold-capped, refillable.' },
+  { id: 'radiance-oil',      name: 'Radiance Glow Oil',         cat: 'beauty',    price: 72,  tag: 'Skin',
+    desc: 'A dry face and body oil with squalane and marula, finished with light-catching gold pearl. Absorbs without trace.' },
+];
+const chosenSize = {}; // remembers the size a client picked in the gallery, per product
+
+const catOf = slug => CATEGORIES.find(c => c.slug === slug);
+const money = n => '$' + n.toLocaleString('en-US');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+const EMB = '<svg class="emb" viewBox="0 0 314 580" aria-hidden="true"><use href="#arbek-emblem"/></svg>';
+const ARROW = '<svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 8h13M9 3l5 5-5 5"/></svg>';
+const artHTML = (cat, img, frame = true, variant = 1) =>
+  `<div class="art" data-cat="${cat}" data-variant="${variant}" data-img="${img || ''}">${EMB}${frame ? '<span class="frame"></span>' : ''}</div>`;
+const imgPath = (p, n = 1) => `public/images/products/${p.cat}/${p.id}-${n}.jpg`;
+const byId = id => PRODUCTS.find(p => p.id === id);
+
+/* ---------- Progressive photo loading: a real photo replaces the placeholder art when it exists ---------- */
+function hydrateArt(scope = document) {
+  $$('.art[data-img]', scope).forEach(el => {
+    const src = el.dataset.img;
+    if (!src || el.dataset.tried) return;
+    el.dataset.tried = '1';
+    const img = new Image();
+    img.alt = '';
+    img.onload = () => { el.prepend(img); setTimeout(() => img.classList.add('loaded'), 30); };
+    img.onerror = () => {};
+    img.src = src;
+  });
+}
+
+/* ---------- Render: categories ---------- */
+$('#worldGrid').innerHTML = CATEGORIES.map(c => `
+  <a class="world reveal" href="#worlds" data-cat="${c.slug}" data-open-cat="${c.slug}" aria-label="Shop ${c.name}">
+    ${artHTML(c.slug, `public/images/products/${c.slug}/category.jpg`, false)}
+    <div class="world-body">
+      <div class="world-top"><span class="idx">${c.idx}</span><span>${c.kicker}</span></div>
+      <div>
+        <h3>${c.name}</h3>
+        <p>${c.blurb}</p>
+        <span class="btn-text">Discover ${ARROW}</span>
+      </div>
+    </div>
+  </a>`).join('');
+
+$('#megaGrid').innerHTML = CATEGORIES.map(c => `
+  <a class="mega-item" href="#worlds" data-open-cat="${c.slug}">
+    ${artHTML(c.slug, `public/images/products/${c.slug}/category.jpg`, false)}
+    <div><strong>${c.name}</strong><small>${c.kicker}</small></div>
+  </a>`).join('');
+
+/* ---------- Render: products ---------- */
+const productCard = (p, i = 0) => `
+  <article class="product reveal" style="--d:${Math.min(i * .07, .5)}s" data-id="${p.id}">
+    <div class="media">
+      ${artHTML(p.cat, imgPath(p, 1))}
+      <button class="view" type="button" data-view="${p.id}" aria-label="View ${p.name} gallery"></button>
+      <span class="tag">${p.tag}</span>
+      <button class="wish" data-wish="${p.id}" aria-label="Save to wishlist"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg></button>
+      <button class="quick" data-add="${p.id}"><span>Add to bag</span><span>${money(p.price)}</span></button>
+    </div>
+    <div class="product-info">
+      <span class="product-name" data-view="${p.id}">${p.name}</span>
+      <span class="product-price">${money(p.price)}</span>
+      <span class="product-cat">${catOf(p.cat).name}</span>
+    </div>
+  </article>`;
+$('#rail').innerHTML = PRODUCTS.map(productCard).join('');
+hydrateArt();
+
+/* ---------- Preloader ---------- */
+const loader = $('#loader');
+const seen = sessionStorage.getItem('arbek.seen');
+const minWait = seen || reduced ? 250 : 1900;
+const t0 = performance.now();
+window.addEventListener('load', () => {
+  const wait = Math.max(0, minWait - (performance.now() - t0));
+  setTimeout(() => { loader.classList.add('done'); try { sessionStorage.setItem('arbek.seen', '1'); } catch {} }, wait);
+});
+setTimeout(() => loader.classList.add('done'), 5000); // hard failsafe
+
+/* ---------- Header: solid on scroll, hide on scroll down, bar collapse ---------- */
+const header = $('#header');
+const bar = $('#bar');
+const totop = $('#totop');
+let lastY = 0;
+function onScroll() {
+  const y = scrollY;
+  header.classList.toggle('solid', y > 20);
+  header.classList.toggle('pinned', y > bar.offsetHeight);
+  header.classList.toggle('hidden', y > 600 && y > lastY + 4 && !document.body.classList.contains('lock'));
+  totop.classList.toggle('show', y > innerHeight * 1.2);
+  lastY = y;
+}
+addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+totop.addEventListener('click', () => scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }));
+
+/* ---------- Reveal on scroll ---------- */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+$$('.reveal').forEach(el => io.observe(el));
+
+/* ---------- Hero emblem parallax + fade ---------- */
+const heroEmblem = $('#heroEmblem');
+if (!reduced && matchMedia('(pointer:fine)').matches) {
+  $('#hero').addEventListener('mousemove', e => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const dx = (e.clientX - r.left) / r.width - .5, dy = (e.clientY - r.top) / r.height - .5;
+    heroEmblem.style.transform = `translateY(-52%) translate(${dx * -22}px, ${dy * -22}px)`;
+  });
+}
+addEventListener('scroll', () => {
+  if (reduced) return;
+  const y = scrollY; if (y > innerHeight) return;
+  heroEmblem.style.opacity = String(Math.max(0, .16 - y / innerHeight * .16));
+}, { passive: true });
+
+/* ---------- Product rail: arrows + drag ---------- */
+const rail = $('#rail');
+const step = () => rail.firstElementChild ? rail.firstElementChild.getBoundingClientRect().width + 14 : 300;
+$('#railPrev').addEventListener('click', () => rail.scrollBy({ left: -step() * 2, behavior: 'smooth' }));
+$('#railNext').addEventListener('click', () => rail.scrollBy({ left: step() * 2, behavior: 'smooth' }));
+let drag = null;
+rail.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; drag = { x: e.clientX, left: rail.scrollLeft, moved: false }; });
+rail.addEventListener('pointermove', e => {
+  if (!drag) return;
+  const dx = e.clientX - drag.x;
+  if (Math.abs(dx) > 6) { drag.moved = true; rail.classList.add('dragging'); }
+  if (drag.moved) rail.scrollLeft = drag.left - dx;
+});
+const endDrag = () => { if (!drag) return; drag = null; setTimeout(() => rail.classList.remove('dragging'), 30); };
+rail.addEventListener('pointerup', endDrag); rail.addEventListener('pointerleave', endDrag);
+
+/* ---------- Cart ---------- */
+const CART_KEY = 'arbek.cart';
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]').filter(l => PRODUCTS.some(p => p.id === l.id)); } catch { cart = []; }
+const cartEl = $('#cart'), scrim = $('#scrim'), cartBody = $('#cartBody'), bagCount = $('#bagCount');
+
+function saveCart() { try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch {} }
+function cartQty() { return cart.reduce((n, l) => n + l.qty, 0); }
+const lineKey = l => l.size ? `${l.id}|${l.size}` : l.id;
+function renderCart() {
+  const n = cartQty();
+  bagCount.textContent = n;
+  $('#cartCountTitle').textContent = n ? `(${n})` : '';
+  const total = cart.reduce((s, l) => s + l.qty * byId(l.id).price, 0);
+  $('#cartTotal').textContent = money(total);
+  $('#checkoutBtn').style.opacity = n ? 1 : .4;
+  $('#checkoutBtn').style.pointerEvents = n ? 'auto' : 'none';
+  if (!n) {
+    cartBody.innerHTML = `<div class="cart-empty">
+      <svg viewBox="0 0 314 580" style="width:44px;opacity:.6" aria-hidden="true"><use href="#arbek-emblem"/></svg>
+      <p>Your bag is empty.</p>
+      <button class="btn" type="button" data-close-cart>Explore the collection</button></div>`;
+    return;
+  }
+  cartBody.innerHTML = cart.map(l => {
+    const p = byId(l.id), k = lineKey(l);
+    return `<div class="line-item" data-id="${p.id}">
+      <button type="button" class="li-view" data-view="${p.id}" aria-label="View ${p.name}">${artHTML(p.cat, imgPath(p, 1), false)}</button>
+      <div>
+        <div class="li-top"><span class="name">${p.name}</span><span class="price">${money(p.price * l.qty)}</span></div>
+        <div class="cat">${catOf(p.cat).name} · ${p.tag}${l.size ? ` · Size ${l.size}` : ''}</div>
+        <div class="li-bottom">
+          <div class="qty"><button type="button" data-dec="${k}" aria-label="Decrease">−</button><span>${l.qty}</span><button type="button" data-inc="${k}" aria-label="Increase">+</button></div>
+          <button type="button" class="remove" data-remove="${k}">Remove</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  hydrateArt(cartBody);
+}
+function addToCart(id, size) {
+  const p = byId(id); if (!p) return false;
+  if (p.sizes && !size) size = chosenSize[id];
+  if (p.sizes && !size) { openGallery(id, null, true); return false; }   // needs a size: open the gallery to choose one
+  const line = cart.find(l => l.id === id && (l.size || null) === (size || null));
+  line ? line.qty++ : cart.push(size ? { id, qty: 1, size } : { id, qty: 1 });
+  saveCart(); renderCart();
+  bagCount.classList.add('pop'); setTimeout(() => bagCount.classList.remove('pop'), 400);
+  toast(`${p.name}${size ? ` · ${size}` : ''} added to bag`);
+  return true;
+}
+function changeQty(key, d) {
+  const line = cart.find(l => lineKey(l) === key); if (!line) return;
+  line.qty += d; if (line.qty <= 0) cart = cart.filter(l => lineKey(l) !== key);
+  saveCart(); renderCart();
+}
+renderCart();
+
+/* ---------- Overlays: open / close ---------- */
+/* Panels stack: e.g. Collection -> Gallery -> Bag. Escape, the scrim and the X close the top one. */
+const stack = [];
+const topPanel = () => stack[stack.length - 1]?.el || null;
+function openPanel(el, trigger) {
+  const i = stack.findIndex(s => s.el === el);
+  if (i > -1) { while (stack.length > i + 1) closePanel(); return; } // already open: close what sits above it
+  // menu, search and the bag are single-level; opening one of them from the page replaces any other single-level panel
+  if (!el.dataset.stackable && stack.length && !topPanel().dataset.stackable) closePanel();
+  stack.push({ el, trigger, restore: document.activeElement });
+  const z = 100 + stack.length * 10;
+  el.style.zIndex = z; scrim.style.zIndex = z - 1;
+  el.classList.add('show'); el.setAttribute('aria-hidden', 'false');
+  scrim.classList.add('show'); document.body.classList.add('lock');
+  header.classList.remove('hidden');
+  trigger && trigger.setAttribute && trigger.setAttribute('aria-expanded', 'true');
+  const focus = el.querySelector('[data-autofocus], input, button'); focus && setTimeout(() => focus.focus({ preventScroll: true }), 60);
+}
+function closePanel() {
+  const top = stack.pop(); if (!top) return;
+  const { el, trigger, restore } = top;
+  el.classList.remove('show'); el.setAttribute('aria-hidden', 'true');
+  if (trigger && trigger.setAttribute) trigger.setAttribute('aria-expanded', 'false');
+  if (stack.length) { scrim.style.zIndex = 100 + stack.length * 10 - 1; }
+  else { scrim.classList.remove('show'); document.body.classList.remove('lock'); }
+  const back = (trigger && trigger.focus) ? trigger : restore;
+  back && back.focus && back.focus({ preventScroll: true });
+}
+function closeAll() { while (stack.length) closePanel(); }
+/* Shop mega-menu: hover intent so the panel survives the trip from the link down to it */
+const megaLi = $('.has-mega'); let megaT;
+megaLi.addEventListener('mouseenter', () => { clearTimeout(megaT); megaLi.classList.add('open'); });
+megaLi.addEventListener('mouseleave', () => { clearTimeout(megaT); megaT = setTimeout(() => megaLi.classList.remove('open'), 350); });
+megaLi.addEventListener('click', e => { if (e.target.closest('.mega-item, .mega .btn-text')) megaLi.classList.remove('open'); });
+
+$('#cartOpen').addEventListener('click', e => openPanel(cartEl, e.currentTarget));
+$('#cartClose').addEventListener('click', closePanel);
+$('#menuOpen').addEventListener('click', e => openPanel($('#menu'), e.currentTarget));
+$('#menuClose').addEventListener('click', closePanel);
+$('#searchOpen').addEventListener('click', e => openPanel($('#search'), e.currentTarget));
+$('#searchClose').addEventListener('click', closePanel);
+scrim.addEventListener('click', closePanel);
+addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closePanel(); return; }
+  if (topPanel() === gallery && !e.target.closest('input')) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); goSlide(gal.idx + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goSlide(gal.idx - 1); }
+  }
+});
+$$('#menu .menu-body a').forEach(a => a.addEventListener('click', closePanel));
+
+/* ---------- Search ---------- */
+const searchInput = $('#searchInput'), searchResults = $('#searchResults');
+function runSearch(q) {
+  q = q.trim().toLowerCase();
+  if (!q) { searchResults.innerHTML = ''; return; }
+  const hits = PRODUCTS.filter(p => (p.name + ' ' + p.tag + ' ' + catOf(p.cat).name + ' ' + catOf(p.cat).kicker).toLowerCase().includes(q));
+  searchResults.innerHTML = hits.length
+    ? hits.map((p, i) => productCard(p, i).replace('class="product reveal"', 'class="product in"')).join('')
+    : `<p class="small" style="grid-column:1/-1">Nothing found for “${q.replace(/[<>&]/g, '')}”. Try a category or a material.</p>`;
+  hydrateArt(searchResults);
+}
+searchInput.addEventListener('input', e => runSearch(e.target.value));
+$('#searchHint').addEventListener('click', e => { const b = e.target.closest('[data-q]'); if (b) { searchInput.value = b.dataset.q; runSearch(b.dataset.q); } });
+
+/* ---------- Wishlist + global click delegation ---------- */
+let wishlist = new Set();
+try { wishlist = new Set(JSON.parse(localStorage.getItem('arbek.wish') || '[]')); } catch {}
+$$('.wish').forEach(b => b.classList.toggle('on', wishlist.has(b.dataset.wish)));
+document.addEventListener('click', e => {
+  const oc = e.target.closest('[data-open-cat]');
+  if (oc) { e.preventDefault(); openCollection(oc.dataset.openCat, oc); return; }
+  const view = e.target.closest('[data-view]');
+  if (view) { e.preventDefault(); openGallery(view.dataset.view, view); return; }
+  const add = e.target.closest('[data-add]');
+  if (add) { addToCart(add.dataset.add); return; }
+  const inc = e.target.closest('[data-inc]'); if (inc) return changeQty(inc.dataset.inc, 1);
+  const dec = e.target.closest('[data-dec]'); if (dec) return changeQty(dec.dataset.dec, -1);
+  const rm = e.target.closest('[data-remove]'); if (rm) return changeQty(rm.dataset.remove, -Infinity);
+  if (e.target.closest('[data-close-cart]')) { closeAll(); location.hash = '#worlds'; return; }
+  const sz = e.target.closest('[data-size]'); if (sz) return pickSize(sz.dataset.size);
+  const th = e.target.closest('[data-thumb]'); if (th) return goSlide(+th.dataset.thumb);
+  const w = e.target.closest('[data-wish]');
+  if (w) {
+    const id = w.dataset.wish;
+    wishlist.has(id) ? wishlist.delete(id) : wishlist.add(id);
+    try { localStorage.setItem('arbek.wish', JSON.stringify([...wishlist])); } catch {}
+    $$(`[data-wish="${id}"]`).forEach(b => b.classList.toggle('on', wishlist.has(id)));
+    toast(wishlist.has(id) ? 'Saved to your wishlist' : 'Removed from wishlist');
+  }
+});
+$('#checkoutBtn').addEventListener('click', e => { e.preventDefault(); toast('Checkout connects at launch'); });
+
+/* ---------- Collection view: all pieces in one category ---------- */
+const collection = $('#collection');
+function openCollection(slug, from) {
+  const c = slug === 'all'
+    ? { idx: 'ARBEK', kicker: 'Every piece, every world', name: 'The Collection' }
+    : catOf(slug);
+  if (!c) return;
+  const items = slug === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === slug);
+  $('#colKicker').textContent = `${c.idx} · ${c.kicker}`;
+  $('#colTitle').textContent = c.name;
+  $('#colCount').textContent = `${items.length} ${items.length === 1 ? 'piece' : 'pieces'}`;
+  $('#colGrid').innerHTML = items.length
+    ? items.map((p, i) => productCard(p, i).replace('class="product reveal"', 'class="product in"')).join('')
+    : `<p class="small" style="grid-column:1/-1">Pieces for this world are arriving soon.</p>`;
+  hydrateArt(collection);
+  collection.scrollTop = 0;
+  openPanel(collection, from && from.setAttribute ? from : null);
+}
+$('#colClose').addEventListener('click', closePanel);
+
+/* ---------- Gallery: three pictures per piece, size, add to bag ---------- */
+const gallery = $('#gallery'), galSlides = $('#galSlides'), galThumbs = $('#galThumbs'), galAdd = $('#galAdd');
+const CAPTIONS = {
+  clothing: ['Front', 'Detail', 'Back'],
+  hair: ['The unit', 'Texture', 'Worn'],
+  perfumes: ['The bottle', 'Detail', 'Packaging'],
+  'lip-balms': ['The balm', 'Finish', 'Packaging'],
+  beauty: ['The product', 'Texture', 'Packaging'],
+};
+let gal = { id: null, size: null, idx: 0, n: 3 };
+let galAddT;
+function openGallery(id, from, needSize = false) {
+  const p = byId(id); if (!p) return;
+  const n = p.images || 3;
+  gal = { id, size: chosenSize[id] || null, idx: 0, n };
+  galSlides.innerHTML = Array.from({ length: n }, (_, i) => `
+    <div class="slide" role="group" aria-label="Picture ${i + 1} of ${n}">
+      ${artHTML(p.cat, imgPath(p, i + 1), false, i + 1)}
+      <span class="cap">${String(i + 1).padStart(2, '0')} · ${(CAPTIONS[p.cat] || [])[i] || 'Detail'}</span>
+    </div>`).join('');
+  galThumbs.innerHTML = Array.from({ length: n }, (_, i) =>
+    `<button type="button" data-thumb="${i}" class="${i === 0 ? 'on' : ''}" aria-label="Show picture ${i + 1}">${artHTML(p.cat, imgPath(p, i + 1), false, i + 1)}</button>`).join('');
+  $('#galCat').textContent = `${catOf(p.cat).name} · ${p.tag}`;
+  $('#galName').textContent = p.name;
+  $('#galPrice').textContent = money(p.price);
+  $('#galDesc').textContent = p.desc || '';
+  $('#galTotal').textContent = n; $('#galIdx').textContent = 1;
+  const sz = $('#galSizes');
+  sz.classList.toggle('need', !!needSize);
+  sz.hidden = !p.sizes;
+  sz.innerHTML = p.sizes ? `
+    <div class="lbl"><span>Select size</span><span class="need">Please select a size</span></div>
+    <div class="sizes">${p.sizes.map(s => `<button type="button" data-size="${s}" class="${s === gal.size ? 'on' : ''}" aria-pressed="${s === gal.size}">${s}</button>`).join('')}</div>` : '';
+  const wish = $('#galWish'); wish.dataset.wish = id; wish.classList.toggle('on', wishlist.has(id));
+  clearTimeout(galAddT); galAdd.classList.remove('done'); galAdd.disabled = false;
+  galAdd.innerHTML = `Add to bag <span class="dot"></span> ${money(p.price)}`;
+  $('#galViewBag').hidden = true;
+  galSlides.scrollLeft = 0;
+  hydrateArt(gallery);
+  openPanel(gallery, from && from.setAttribute ? from : null);
+}
+function setGalIdx(i) {
+  gal.idx = i; $('#galIdx').textContent = i + 1;
+  $$('button', galThumbs).forEach((b, k) => b.classList.toggle('on', k === i));
+}
+function goSlide(i, smooth = true) {
+  if (!gal.id) return;
+  i = (i + gal.n) % gal.n;
+  galSlides.scrollTo({ left: i * galSlides.clientWidth, behavior: smooth && !reduced ? 'smooth' : 'auto' });
+  setGalIdx(i);
+}
+galSlides.addEventListener('scroll', () => {
+  const i = Math.round(galSlides.scrollLeft / Math.max(1, galSlides.clientWidth));
+  if (i !== gal.idx && i >= 0 && i < gal.n) setGalIdx(i);
+}, { passive: true });
+$('#galPrev').addEventListener('click', () => goSlide(gal.idx - 1));
+$('#galNext').addEventListener('click', () => goSlide(gal.idx + 1));
+$('#galClose').addEventListener('click', closePanel);
+$('#galBack').addEventListener('click', closePanel);
+function pickSize(s) {
+  gal.size = s; chosenSize[gal.id] = s;
+  const sz = $('#galSizes'); sz.classList.remove('need');
+  $$('[data-size]', sz).forEach(b => { const on = b.dataset.size === s; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+}
+galAdd.addEventListener('click', () => {
+  const p = byId(gal.id); if (!p) return;
+  if (p.sizes && !gal.size) { const sz = $('#galSizes'); sz.classList.add('need'); sz.querySelector('[data-size]').focus(); return; }
+  if (!addToCart(gal.id, gal.size)) return;
+  galAdd.classList.add('done'); galAdd.innerHTML = 'Added to bag';
+  $('#galViewBag').hidden = false;
+  clearTimeout(galAddT);
+  galAddT = setTimeout(() => { galAdd.classList.remove('done'); galAdd.innerHTML = `Add another <span class="dot"></span> ${money(p.price)}`; }, 1600);
+});
+$('#galViewBag').addEventListener('click', e => openPanel(cartEl, e.currentTarget));
+
+/* ---------- Q&A accordion ---------- */
+$('#qaList').addEventListener('click', e => {
+  const btn = e.target.closest('.qa-q'); if (!btn) return;
+  const item = btn.closest('.qa-item'); const open = item.classList.contains('open');
+  $$('.qa-item', $('#qaList')).forEach(i => { i.classList.remove('open'); $('.qa-q', i).setAttribute('aria-expanded', 'false'); });
+  if (!open) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+});
+
+/* ---------- Newsletter ---------- */
+$('#signup').addEventListener('submit', e => {
+  e.preventDefault();
+  const input = $('#email'), msg = $('#signupMsg');
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim());
+  msg.className = 'signup-msg ' + (ok ? 'ok' : 'err');
+  msg.textContent = ok ? 'Welcome to the Private List. Your first invitation is on its way.' : 'Please enter a valid email address.';
+  if (ok) { input.value = ''; toast('You are on the Private List'); }
+});
+
+/* ---------- Toast ---------- */
+let toastT;
+function toast(text) {
+  const el = $('#toast'); $('#toastText').textContent = text;
+  el.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('show'), 2600);
+}
+
+$('#year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
