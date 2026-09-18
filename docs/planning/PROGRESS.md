@@ -56,6 +56,12 @@ Original v6 prototype kept at `docs/design/prototype-v6-reference.html`.
 - Gotcha hit on the way: the domain was first added to Vercel as `arbek.com` instead of `arbek.co`.
 - `.env.example` `NEXT_PUBLIC_SITE_URL` now points at `https://www.arbek.co`.
 
+### Hero photo
+- Hero background is now a photo: `public/images/banners/hero.jpg` (214 KB, 1672×941, from `Photos/banners/hero.png`). Preloaded with `fetchpriority="high"`.
+- Layers over it: `.veil` gradient (dark bottom + left for the copy), glow at .45, grain at .32. The heron `.hero-emblem` is hidden while the photo is in place (JS still targets it harmlessly).
+- Phone (≤900px): hero gets `46vh` extra top padding so the face sits clear above the headline; image anchored `44% 0%`.
+- Flagged: the hero shows Bath & Body Works and Nine West branding, same concern as the category photos.
+
 ---
 
 ## Open items / next steps
